@@ -1,0 +1,176 @@
+<div class="bg-light">
+  <div class="col main-col border bg-white rounded mb-5">
+    <h3 class="p-4">Create a new product</h3>
+    <div class="row p-4">
+      <div class="col col-sm-6">
+        <!-- <div> -->
+        Industry Category
+        <select class="form-control mb-3">
+          <option>Default select</option>
+        </select>Product Templete
+        <select class="form-control mb-3">
+          <option>Default select</option>
+        </select>Weight:
+        <select class="form-control mb-3">
+          <option>Default select</option>
+        </select>
+        cost:
+        <select class="form-control mb-3">
+          <option>Default select</option>
+        </select>
+        surface area:
+        <select class="form-control mb-3">
+          <option>Default select</option>
+        </select>
+      </div>
+
+      <div class="col col-sm-6">
+        <!-- <div> -->
+        Product Category
+        <select class="form-control mb-3">
+          <option>Default select</option>
+        </select>
+        Product Subtype
+        <select class="form-control mb-3">
+          <option>Default select</option>
+        </select>
+        Prefix:
+        <select class="form-control mb-3">
+          <option>Default select</option>
+        </select>
+        Product wieght calculator:
+        <select class="form-control mb-3">
+          <option>Default select</option>
+        </select>
+        Size:
+        <select class="form-control mb-3">
+          <option>Default select</option>
+        </select>
+      </div>
+      <div class="col col-sm-6">
+        <!-- <div> -->
+        Product Type
+        <select class="form-control mb-3">
+          <option>Default select</option>
+        </select>
+        HSN Code
+        <input type="number" class="form-control mb-3">
+        Product Code
+        <input type="number" class="form-control mb-3">
+      </div>
+      <div class="col-2 col-sm-6">
+        Upload product picture
+        <input type="file">
+      </div>
+    </div>
+    <!-- table-striped -->
+    <div class="row p-4">
+      <table class="table  table-bordered table-sm table-responsive-sm">
+        <thead class="text-center">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col" colspan="4">Package Summary</th>
+            <th scope="col" colspan="2">Eloborate Process</th>
+            <th scope="col" colspan="3">Costing Summary Sheet</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <tr class="row-color">
+            <td> package</td>
+            <td></td>
+            <td>THICKNESS</td>
+            <td></td>
+            <td>%UESD(GSM)</td>
+            <td></td>
+            <td>%UESD(WEIGHT)</td>
+            <td></td>
+            <td>COST</td>
+            <td></td>
+          </tr>
+          <tr *ngFor="let data of dataarray">
+            <td>{{data.size}}</td>
+            <td>MICRON</td>
+            <td>MIL</td>
+            <td>GSM</td>
+            <td></td>
+            <td>WEIGHT(GM)</td>
+            <td></td>
+            <td>Product</td>
+            <td>Conversion</td>
+            <td>USD/MT</td>
+          </tr>
+          <tr>
+            <td>woven Fabric</td>
+            <td>4*5*6</td>
+            <td>1 Bag</td>
+            <td></td>
+            <td>77</td>
+            <td>#REF</td>
+            <td>78</td>
+            <td>NA</td>
+            <td>NA</td>
+            <td></td>
+          </tr>
+        </tbody>
+        <!-- <mat-paginator [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons aria-label="Select page of periodic elements"
+          class="row-color">
+        </mat-paginator> -->
+      </table>
+      <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+      </mat-paginator> -->
+    </div>
+
+    <!-- <div class="row p-4">
+      <table class="table  table-bordered table-sm table-responsive-sm">
+        <thead class="text-center">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col" colspan="4">Package Summary</th>
+            <th scope="col" colspan="2">Eloborate Process</th>
+            <th scope="col" colspan="3">Costing Summary Sheet</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <tr class="row-color">
+            <td>SUBPRODUCT</td>
+            <td></td>
+            <td>THICKNESS</td>
+            <td></td>
+            <td>%UESD(GSM)</td>
+            <td></td>
+            <td>%UESD(WEIGHT)</td>
+            <td></td>
+            <td>COST</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>MICRON</td>
+            <td>MIL</td>
+            <td>GSM</td>
+            <td></td>
+            <td>WEIGHT(GM)</td>
+            <td></td>
+            <td>Product</td>
+            <td>Conversion</td>
+            <td>USD/MT</td>
+          </tr>
+          <tr>
+            <td>woven Fabric</td>
+            <td>4*5*6</td>
+            <td>1 Bag</td>
+            <td></td>
+            <td>77</td>
+            <td>#REF</td>
+            <td>78</td>
+            <td>NA</td>
+            <td>NA</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div> -->
+    <app-table-package class="full"></app-table-package>
+  </div>
+</div>

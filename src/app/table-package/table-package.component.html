@@ -1,0 +1,53 @@
+<div class="mat-elevation-z8">
+  <table class=" table-sm" mat-table [dataSource]="dataSource">
+    <!-- Position Column -->
+    <ng-container matColumnDef="package">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> Package. </th>
+      <td mat-cell *matCellDef="let element"> {{element.package}} </td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="size">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> Size </th>
+      <td mat-cell *matCellDef="let element"> {{element.size}} </td>
+    </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="NoOfitem">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> NoOfitem </th>
+      <td mat-cell *matCellDef="let element"> {{element.NoOfitem}} </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="relation">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> Relation </th>
+      <td mat-cell *matCellDef="let element"> {{element.relation}} </td>
+    </ng-container>
+    <ng-container matColumnDef="grossWeight">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> GrossWeight </th>
+      <td mat-cell *matCellDef="let element"> {{element.grossWeight}} </td>
+    </ng-container>
+    <ng-container matColumnDef="cost">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> Cost </th>
+      <td mat-cell *matCellDef="let element"> {{element.cost}} </td>
+    </ng-container>
+    <ng-container matColumnDef="volume">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> Volume </th>
+      <td mat-cell *matCellDef="let element"> {{element.volume}} </td>
+    </ng-container>
+    <ng-container matColumnDef="class">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> Class </th>
+      <td mat-cell *matCellDef="let element"> {{element.class}} </td>
+    </ng-container>
+    <ng-container matColumnDef="view">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> mxbvh</th>
+      <td mat-cell *matCellDef="let element"> {{element.view}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons aria-label="Select page of periodic elements"
+    class="row-color">
+  </mat-paginator>
+
+  <!-- <app-add-new [message]='PeriodicElement'></app-add-new> -->
+
+</div>
