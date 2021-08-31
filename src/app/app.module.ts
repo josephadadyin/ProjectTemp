@@ -6,6 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+// import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,6 +39,7 @@ import { LoginComponent } from './login/login.component';
     RouterModule,
     HttpClientModule,
     FormsModule,
+    // AngularFontAwesomeModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: 'admin-header', component: AdminHeaderComponent },
