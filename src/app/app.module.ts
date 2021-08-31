@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { NgxFileDropModule } from 'ngx-file-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,7 @@ import { AdminHeaderComponent } from './admin-header/admin-header.component';
 import { AddNewComponent } from './add-new/add-new.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TablePackageComponent } from './table-package/table-package.component';
+import { DragDropComponent } from './drag-drop/drag-drop.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { TablePackageComponent } from './table-package/table-package.component';
     AdminHeaderComponent,
     AddNewComponent,
     TablePackageComponent,
+    DragDropComponent,
   ],
   imports: [
     MatSidenavModule,
@@ -43,6 +46,7 @@ import { TablePackageComponent } from './table-package/table-package.component';
     ]),
     NgbModule,
     BrowserAnimationsModule,
+    NgxFileDropModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
