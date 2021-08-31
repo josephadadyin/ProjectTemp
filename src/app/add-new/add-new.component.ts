@@ -7,10 +7,7 @@ import * as $ from 'jquery';
   styleUrls: ['./add-new.component.scss'],
 })
 export class AddNewComponent implements OnInit {
-  // $('.file-upload').file_upload();
   constructor() {}
 
-  ngOnInit(): void {
-    // $('.file-upload').file_upload();
-  }
+  ngOnInit(): void {}
 }

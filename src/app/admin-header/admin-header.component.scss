@@ -29,8 +29,8 @@
 }
 
 .main {
-  margin-left: 5rem; /* Same as the width of the sidenav */
-  font-size: 28px; /* Increased text to enable scrolling */
+  margin-left: 5rem;
+  font-size: 28px;
   padding: 0px 10px;
   background-color: #f1efefd5;
 }
@@ -48,8 +48,6 @@
 }
 .bell-icon {
   border-right: 2px solid rgba(128, 128, 128, 0.767);
-  // width: 40px;
-  // padding-right: 10px;
 }
 
 .bell-icon:hover {
@@ -63,22 +61,3 @@
 .div-width {
   width: 100%;
 }
-
-// ====================== Material sidenav
-
-// .example-container {
-//   width: 500px;
-//   height: 300px;
-//   border: 1px solid rgba(0, 0, 0, 0.5);
-// }
-
-// .example-sidenav-content {
-//   display: flex;
-//   height: 100%;
-//   align-items: center;
-//   justify-content: center;
-// }
-
-// .example-sidenav {
-//   padding: 20px;
-// }

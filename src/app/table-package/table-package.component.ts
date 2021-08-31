@@ -12,7 +12,6 @@ export interface PeriodicElement {
   cost: number;
   volume: number;
   class: string;
-  // view: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -25,7 +24,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
     cost: 25,
     volume: 0,
     class: 'NA',
-    // view: 'View more',
   },
   {
     size: 2,
@@ -36,7 +34,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
     cost: 25,
     volume: 0,
     class: 'NA',
-    // view: 'View more',
   },
   {
     size: 3,
@@ -47,7 +44,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
     cost: 25,
     volume: 0,
     class: 'NA',
-    // // view: 'View more',
   },
   {
     size: 4,
@@ -58,7 +54,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
     cost: 25,
     volume: 0,
     class: 'NA',
-    // view: 'View more',
   },
   {
     size: 5,
@@ -69,7 +64,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
     cost: 25,
     volume: 0,
     class: 'NA',
-    // view: 'View more',
   },
   {
     size: 6,
@@ -80,22 +74,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     cost: 25,
     volume: 0,
     class: 'NA',
-    // view: 'View more',
   },
-  // { size: 7, package: 'Nitrogen', grossWeight: 14.0067, symbol: 'N' },
-  // { size: 8, package: 'Oxygen', grossWeight: 15.9994, symbol: 'O' },
-  // { size: 9, package: 'Fluorine', grossWeight: 18.9984, symbol: 'F' },
-  // { size: 10, package: 'Neon', grossWeight: 20.1797, symbol: 'Ne' },
-  // { size: 11, package: 'Sodium', grossWeight: 22.9897, symbol: 'Na' },
-  // { size: 12, package: 'Magnesium', grossWeight: 24.305, symbol: 'Mg' },
-  // { size: 13, package: 'Aluminum', grossWeight: 26.9815, symbol: 'Al' },
-  // { size: 14, package: 'Silicon', grossWeight: 28.0855, symbol: 'Si' },
-  // { size: 15, package: 'Phosphorus', grossWeight: 30.9738, symbol: 'P' },
-  // { size: 16, package: 'Sulfur', grossWeight: 32.065, symbol: 'S' },
-  // { size: 17, package: 'Chlorine', grossWeight: 35.453, symbol: 'Cl' },
-  // { size: 18, package: 'Argon', grossWeight: 39.948, symbol: 'Ar' },
-  // { size: 19, package: 'Potassium', grossWeight: 39.0983, symbol: 'K' },
-  // { size: 20, package: 'Calcium', grossWeight: 40.078, symbol: 'Ca' },
 ];
 
 @Component({
@@ -113,7 +92,6 @@ export class TablePackageComponent implements OnInit {
     'cost',
     'volume',
     'class',
-    // ' view',
   ];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 

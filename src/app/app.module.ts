@@ -40,7 +40,6 @@ import { LoginComponent } from './login/login.component';
     RouterModule,
     HttpClientModule,
     FormsModule,
-    // AngularFontAwesomeModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: 'admin-header', component: AdminHeaderComponent },
