@@ -1,6 +1,7 @@
 .main-col {
-  max-width: 88vw;
-  margin-left: 8rem;
+  width: auto;
+  margin-right: 15px;
+  margin-left: 6rem;
   font-size: smaller;
 }
 
@@ -8,6 +9,18 @@
   background-color: #007bff17;
 }
 
+@media (max-width: 780px) {
+  .main-col {
+    margin-left: 4rem;
+    margin-right: 8px;
+  }
+}
+@media (max-width: 440px) {
+  .main-col {
+    margin-left: 0.8rem;
+    margin-right: 8px;
+  }
+}
 .table-width {
   width: auto;
   margin: 100px;

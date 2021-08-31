@@ -15,9 +15,6 @@ import { AdminHeaderComponent } from './admin-header/admin-header.component';
 import { AddNewComponent } from './add-new/add-new.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TablePackageComponent } from './table-package/table-package.component';
-import { CostSummaryComponent } from './cost-summary/cost-summary.component';
-import { DetailPackagingComponent } from './detail-packaging/detail-packaging.component';
-import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -26,9 +23,6 @@ import { LoginComponent } from './login/login.component';
     AdminHeaderComponent,
     AddNewComponent,
     TablePackageComponent,
-    CostSummaryComponent,
-    DetailPackagingComponent,
-    LoginComponent,
   ],
   imports: [
     MatSidenavModule,
@@ -45,10 +39,7 @@ import { LoginComponent } from './login/login.component';
       { path: 'admin-header', component: AdminHeaderComponent },
       // { path: '', redirectTo: 'admin-header', pathMatch: 'full' },
       { path: 'add-new', component: AddNewComponent },
-      { path: 'login', component: LoginComponent },
       { path: 'table-package', component: TablePackageComponent },
-      { path: 'cost-summary', component: CostSummaryComponent },
-      { path: 'detail-packaging', component: DetailPackagingComponent },
     ]),
     NgbModule,
     BrowserAnimationsModule,
