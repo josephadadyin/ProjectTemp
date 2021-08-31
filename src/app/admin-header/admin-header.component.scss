@@ -35,6 +35,9 @@
   background-color: #f1efefd5;
 }
 
+.chart-pie {
+  margin-top: 100px;
+}
 @media screen and (max-height: 450px) {
   .sidenav {
     padding-top: 15px;
@@ -60,3 +63,22 @@
 .div-width {
   width: 100%;
 }
+
+// ====================== Material sidenav
+
+// .example-container {
+//   width: 500px;
+//   height: 300px;
+//   border: 1px solid rgba(0, 0, 0, 0.5);
+// }
+
+// .example-sidenav-content {
+//   display: flex;
+//   height: 100%;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+// .example-sidenav {
+//   padding: 20px;
+// }

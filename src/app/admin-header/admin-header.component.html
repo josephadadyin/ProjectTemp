@@ -1,10 +1,31 @@
-<div class="sidenav">
+<!-- <div class="sidenav">
   <a class="nav-link nav-link-css"><img src="./../../assets/bars-solid.svg" class="text-primary" width="25px"
       alt=""></a>
   <a class="nav-link nav-link-css"><img src="./../../assets/chart-pie-solid.svg" width="25px" alt=""></a>
   <a class="nav-link nav-link-css" routerLinkActive="sam-primary" [routerLink]="['/add-new']"><img
       src="./../../assets/plus-circle-solid.svg" width="25px" alt=""></a>
-</div>
+</div> -->
+<!-- ========================= -->
+<!-- example-container    -->
+<mat-drawer-container class="sidenav" autosize>
+  <a class="nav-link nav-link-css" mat-button (click)="drawer.toggle()"><img src=" ./../../assets/bars-solid.svg"
+      class="text-primary" width="25px" alt=""></a>
+  <mat-drawer #drawer class="sidenav" mode="side">
+    <a class="nav-link nav-link-css" mat-button (click)="drawer.toggle()"><img src=" ./../../assets/bars-solid.svg"
+        class="text-primary " width="25px" alt=""></a>
+    <a class="nav-link nav-link-css chart-pie "><img src="./../../assets/chart-pie-solid.svg" width="25px" alt=""></a>
+    <a class="nav-link nav-link-css mt-3" routerLinkActive="sam-primary" [routerLink]="['/add-new']"><img
+        src="./../../assets/plus-circle-solid.svg" width="25px" alt=""></a>
+  </mat-drawer>
+  <!-- <div class="example-sidenav-content">
+    <button type="button" mat-button (click)="drawer.toggle()">
+      Toggle sidenav
+    </button>
+  </div> -->
+</mat-drawer-container>
+
+<!-- ======================= -->
+
 
 <div class="main bg-light">
   <!-- <div class="row p-4"> -->

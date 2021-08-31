@@ -6,7 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +31,7 @@ import { LoginComponent } from './login/login.component';
     LoginComponent,
   ],
   imports: [
+    MatSidenavModule,
     MatPaginatorModule,
     MatSliderModule,
     MatTableModule,
