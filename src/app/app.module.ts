@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { NgxFileDropModule } from 'ngx-file-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { TablePackageComponent } from './table-package/table-package.component';
 import { CostSummaryComponent } from './cost-summary/cost-summary.component';
 import { DetailPackagingComponent } from './detail-packaging/detail-packaging.component';
 import { LoginComponent } from './login/login.component';
+import { DragDropComponent } from './drag-drop/drag-drop.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { LoginComponent } from './login/login.component';
     CostSummaryComponent,
     DetailPackagingComponent,
     LoginComponent,
+    DragDropComponent,
   ],
   imports: [
     MatSidenavModule,
@@ -52,6 +55,7 @@ import { LoginComponent } from './login/login.component';
     ]),
     NgbModule,
     BrowserAnimationsModule,
+    NgxFileDropModule
   ],
   providers: [],
   bootstrap: [AppComponent],
