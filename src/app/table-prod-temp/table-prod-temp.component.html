@@ -1,0 +1,113 @@
+<div class="row pr-5">
+  <p class="h4 ml-auto"><a href="">+ Add New Process</a></p>
+</div>
+<div class=" overflow-fix ">
+  <table class="table-sm table-bordered text-center " mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="price">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> USD/MT Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+      <!-- <td mat-footer-cell *matFooterCellDef> Total </td> -->
+    </ng-container>
+    <ng-container matColumnDef="ProductName">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> Product Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.ProductName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="density">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> DENSITY </th>
+      <td mat-cell *matCellDef="let element"> {{element.density}} </td>
+    </ng-container>
+    <ng-container matColumnDef="AvgDensity">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> Avgerage Density </th>
+      <td mat-cell *matCellDef="let element"> {{element.AvgDensity}} </td>
+    </ng-container>
+    <ng-container matColumnDef="weight">
+      <th class="row-color" mat-header-cell *matHeaderCellDef>%USED (Weight) </th>
+      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+    </ng-container>
+    <ng-container matColumnDef="costAdd">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> CostAddOn </th>
+      <td mat-cell *matCellDef="let element"> {{element.costAdd }} </td>
+      <!-- <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td> -->
+    </ng-container>
+    <ng-container matColumnDef="waste">
+      <th class="row-color" mat-header-cell *matHeaderCellDef> Waste % </th>
+      <td mat-cell *matCellDef="let element"> {{element.waste}} </td>
+    </ng-container>
+    <ng-container matColumnDef="class">
+      <th class="row-color" mat-header-cell *matHeaderCellDef [attr.colspan]="3"></th>
+      <td mat-cell *matCellDef="let element"><a href="" class="pl-5 pr-5 text-secondary"><i class="fa fa-pencil"
+            aria-hidden="true"></i></a>
+        <a href="" class="pr-5 pl-5 text-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></a> </td>
+    </ng-container>
+    <ng-container matColumnDef="header-row-first-group">
+      <th class=" h6" mat-header-cell *matHeaderCellDef [attr.colspan]="8">
+        <span class="pr-5">
+          <span class="h5">Process Name:</span>1
+        </span>
+        <span class="p-5">
+          <span class="h5">Name:</span>Boiled Rice with salt
+        </span>
+        <span class="p-5">
+          <span class="h5">Total Cost:</span>57$
+        </span>
+        <span class="p-5">
+          <span class="h5">Product of this process:</span>Boiled rice
+        </span>
+        <span class="pl-5 text-right"><a href="">+ Add new product</a></span>
+      </th>
+    </ng-container>
+    <ng-container matColumnDef="footer-row-first-group">
+      <th class="text-left pl-4 h4" mat-footer-cell *matFooterCellDef [attr.colspan]="5">
+        Total
+      </th>
+    </ng-container>
+    <ng-container matColumnDef="footer-row-second-group">
+      <th class="" mat-footer-cell *matFooterCellDef [attr.colspan]="">
+        75$
+      </th>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="['header-row-first-group']"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="['footer-row-first-group','footer-row-second-group']"></tr>
+    <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr> -->
+  </table>
+  <div class="border text-white ">
+    <p class="bg-color-tr pl-4 pt-2 pb-2 pr-5 mb-0 h5"> Conversion Cost Calculation <span class="pl-5 ml-5 "><a href=""
+          class="text-white">+
+          Add
+          New</a> </span>
+    </p>
+    <table class="table pb-0 mb-0 ">
+      <tbody>
+        <tr class="bg-color-tr text-white">
+          <th class="pr-0 main-th">Cook Charges</th>
+          <th class="cost text-center ">25$</th>
+          <th><a href="" class="text-dark"><i class="fa fa-trash-o text-white" aria-hidden="true"></i></a></th>
+        </tr>
+        <tr class="bg-color-tr text-white">
+          <th class="pr-0 main-th">Gas</th>
+          <th class="cost text-center">25$</th>
+          <th><a href="" class="text-dark"><i class="fa fa-trash-o text-white" aria-hidden="true"></i></a></th>
+        </tr>
+        <tr class="bg-color-tr text-white">
+          <th class="pr-0 main-th">Cook Charges</th>
+          <th class="cost text-center">25$</th>
+          <th><a href=""><i class="fa fa-trash-o text-white" aria-hidden="true"></i></a></th>
+        </tr>
+        <tr class="bg-color-total text-white">
+          <th class="pr-0 main-th h5">Total</th>
+          <th class="cost text-center">100$</th>
+          <th></th>
+        </tr>
+      </tbody>
+    </table>
+    <p class="bg-dark text-white pt-2 pb-2 pb-0 mb-0"><span class="h4 pl-3">Cost Bifergation : </span> <span
+        class="h5">Material
+        Cost +
+        Conversion
+        Cost: 45 + 32 = 57$
+      </span>
+    </p>
+  </div>
+</div>

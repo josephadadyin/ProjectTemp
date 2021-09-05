@@ -1,0 +1,92 @@
+<div class="bg-light pb-3 ">
+  <div class="col main-col border  rounded  pb-3">
+    <div class="row">
+      <h5 class="p-4 text-secondary">Create a new product Templete</h5>
+      <span class=" pr-3 ml-auto mr-2 mt-auto mb-auto"> <button class="btn btn-light"> <img
+            src="./../../assets/sign-out-alt-solid.svg" width="25px" alt="">Logout</button></span>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="row pl-4 pr-4 pt-4">
+          <div class="col-md-3"> Product Type
+            <select class="form-control mb-3 font-weight-light  ">
+              <option> Product Type A</option>
+              <option> Product Type B</option>
+              <option> Product Type C</option>
+            </select></div>
+          <div class="col-md-3"> Clone From Templete
+            <input type="text" class="form-control mb-3" placeholder="100">
+          </div>
+        </div>
+        <div class="row pl-4 pr-4 ">
+          <div class="col-md-3">
+            Select Attribute
+            <select class="form-control mb-3 font-weight-light  ">
+              <option> Attribute A</option>
+              <option> Attribute B</option>
+              <option> Attribute C</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            + Add new Attribute
+            <a class="form-control mb-3" href="">Click Here To Add</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col ml-4">
+            Size <p class="pt-2"> <input type="checkbox"> Width</p>
+            <p> <input type="checkbox"> Length</p>
+          </div>
+          <div class="col">
+            Unit of length <p class="pt-2"> <input type="checkbox"> Bottom</p>
+            <p> <input type="checkbox"> Valve Length</p>
+          </div>
+          <div class="col">
+            Weight <p class="pt-2"> <input type="checkbox"> Unit wt</p>
+            <p> <input type="checkbox"> Sku wt</p>
+          </div>
+          <div class="col">
+            Unit of mass <p class="pt-2"> <input type="checkbox"> Pallet wt</p>
+            <p> <input type="checkbox"> Add new</p>
+          </div>
+          <div class="col">
+            Thickness <p class="pt-2"> <input type="checkbox"> GSM</p>
+            <p> <input type="checkbox"> Micron</p>
+          </div>
+          <div class="col">
+            Matrix Calculator<p class="pt-2"> <input type="checkbox"> MIL</p>
+            <p> <input type="checkbox"> Gauze</p>
+          </div>
+          <div class="col">
+            Others<p class="pt-2"> <input type="checkbox"> Weight/Pcs</p>
+            <p> <input type="checkbox"> Pcs/1kg</p>
+          </div>
+        </div>
+        <div class="row pl-4 pr-4 pt-4">
+          <div class="col-md-3"> Process
+            <select class="form-control mb-3 font-weight-light">
+              <option><a href="https://www.wikipedia.org/"> Create new process</a></option>
+              <option> Process A</option>
+              <option> Process B</option>
+            </select></div>
+          <div class="col-md-3"> Product Weight Calcuator
+            <select class="form-control mb-3 font-weight-light">
+              <option><a href="https://www.wikipedia.org/"> Create new Calculator</a></option>
+              <option> Calculator 1</option>
+              <option> Calculator 2</option>
+            </select></div>
+        </div>
+      </div>
+      <div class="border ">
+        <!-- <div class="row"> -->
+        <div class=" upload-btn-wrapper ml-auto mr-auto mt-3 p-3">
+          <app-drag-drop></app-drag-drop>
+        </div>
+        <!-- </div> -->
+      </div>
+    </div>
+    <app-table-prod-temp class="table-width"></app-table-prod-temp>
+    <!-- <br> <br> -->
+    <!-- <app-table-package class="table-width "></app-table-package> -->
+  </div>
+</div>

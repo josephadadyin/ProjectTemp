@@ -1,0 +1,34 @@
+table {
+  width: 100%;
+  margin-left: auto;
+}
+.row-color {
+  background-color: #007bff0c;
+  text-align: center;
+}
+.overflow-fix {
+  overflow-x: scroll;
+}
+.th a {
+  color: rgb(133, 131, 131);
+}
+
+.main-th {
+  width: 15rem;
+  border-right: 1px solid white;
+  padding-left: 35px;
+}
+.cost {
+  width: 10rem;
+}
+
+.bg-color-tr {
+  background-color: #2485a6;
+  font-weight: 300;
+}
+.bg-color-total {
+  background-color: #80bbcf;
+}
+.table th {
+  font-weight: 300;
+}
