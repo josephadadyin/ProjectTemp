@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatTable } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
 import { map, filter, switchMap } from 'rxjs/operators';
 
@@ -71,7 +72,15 @@ export class TableProdTempComponent implements OnInit {
     { title: 'Gas', cost: 5 },
     { title: 'Cook charges', cost: 30 },
   ];
+  @ViewChild(MatTable) table: MatTable<PeriodicElement>;
 
+  addData() {
+    const randomElementIndex = Math.floor(
+      Math.random() * this.dataSource.length
+    );
+    this.dataSource.push(this.dataSource[randomElementIndex]);
+    this.table.renderRows();
+  }
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor() {}
 

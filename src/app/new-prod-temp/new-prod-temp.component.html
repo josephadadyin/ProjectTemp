@@ -9,13 +9,14 @@
       <div class="col">
         <div class="row pl-4 pr-4 pt-4">
           <div class="col-md-3"> Product Type
-            <select class="form-control mb-3 font-weight-light  ">
-              <option> Product Type A</option>
+            <select class="form-control mb-3 font-weight-light">
+              <option selected>Select</option>
+              <option value="https://www.wikipedia.org/">Product Type A</option>
               <option> Product Type B</option>
               <option> Product Type C</option>
             </select></div>
           <div class="col-md-3"> Clone From Templete
-            <input type="text" class="form-control mb-3" placeholder="100">
+            <input type="text" class="form-control mb-3" placeholder="Product Code">
           </div>
         </div>
         <div class="row pl-4 pr-4 ">
@@ -88,5 +89,8 @@
     <app-table-prod-temp class="table-width"></app-table-prod-temp>
     <!-- <br> <br> -->
     <!-- <app-table-package class="table-width "></app-table-package> -->
+    <div class="ml-auto text-right pt-4 pb-4">
+      <button type="submit" class="btn btn-color btn-lg pe-2 px-4 text-white ">Save</button>
+    </div>
   </div>
 </div>

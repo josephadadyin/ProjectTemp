@@ -1,5 +1,5 @@
 <div class="row pr-5">
-  <p class="h4 ml-auto"><a href="">+ Add New Process</a></p>
+  <p class="h4 ml-auto "><a href="" class="a-color">+ Add New Process</a></p>
 </div>
 <div class=" overflow-fix ">
   <table class="table-sm table-bordered text-center " mat-table [dataSource]="dataSource">
@@ -53,7 +53,10 @@
         <span class="p-5">
           <span class="h5">Product of this process:</span>Boiled rice
         </span>
-        <span class="pl-5 text-right"><a href="">+ Add new product</a></span>
+        <span> <button mat-raised-button (click)="addData()" class=" btn btn-color   demo-button">
+            + Add new product
+          </button></span>
+        <!-- <span class="pl-5 text-right"><a href="" class="a-color">+ Add new product</a></span> -->
       </th>
     </ng-container>
     <ng-container matColumnDef="footer-row-first-group">
@@ -117,7 +120,7 @@
         class="h5">Material
         Cost +
         Conversion
-        Cost: {{getTotalCost()}} + {{getCost()}} = {{getTotalCost() + getCost()}}
+        Cost: {{getTotalCost()}} + {{getCost()}} = {{getTotalCost() + getCost() | currency }}
       </span>
     </p>
   </div>
