@@ -83,10 +83,26 @@ export class TableProdTempComponent implements OnInit {
     this.table.renderRows();
   }
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  conversionCost;
   constructor() {}
 
   ngOnInit(): void {
     // this.dataSource.paginator = this.paginator;
+    // this.Conversion();
+  }
+
+  Conversion() {
+    axios
+      .get(
+        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/conversion_types/'
+      )
+      .then((response) => {
+        this.conversionCost = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(function () {});
   }
   getTotalCost() {
     return this.dataSource

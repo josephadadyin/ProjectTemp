@@ -1,3 +1,17 @@
+<div class="row pl-4 pr-4 pb-4">
+  <div class="col-md-3"> Process
+    <select class="form-control mb-3 font-weight-light">
+      <option><a href="https://www.wikipedia.org/"> Create new process</a></option>
+      <option> Process A</option>
+      <option> Process B</option>
+    </select></div>
+  <div class="col-md-3"> Product Weight Calcuator
+    <select class="form-control mb-3 font-weight-light">
+      <option><a href="https://www.wikipedia.org/"> Create new Calculator</a></option>
+      <option> Calculator 1</option>
+      <option> Calculator 2</option>
+    </select></div>
+</div>
 <div class="row pr-5">
   <p class="h4 ml-auto "><a href="" class="a-color">+ Add New Process</a></p>
 </div>
@@ -77,50 +91,31 @@
     <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr> -->
   </table>
   <div class="border text-white ">
-    <p class="bg-color-tr pl-4 pt-2 pb-2 pr-5 mb-0 h5"> Conversion Cost Calculation <span class="pl-5 ml-5 "><a href=""
-          class="text-white">+
-          Add
-          New</a> </span>
+    <p class="bg-color-tr pl-4 pt-2 pb-2 pr-5 mb-0 h5"> Conversion Cost Calculation <span class="pl-5 ml-5 "><button
+          class="text-white btn" (click)="Conversion()">+ Add New</button> </span>
+
     </p>
     <table class="table pb-0 mb-0 ">
       <tbody>
-        <tr *ngFor="let data of dataArray" class="bg-color-tr text-white">
-          <th class="pr-0 main-th">{{data.title}}</th>
+        <tr *ngFor="let data of conversionCost.results" class="bg-color-tr text-white">
+          <th class="pr-0 main-th">{{data.description}}</th>
           <th class="cost text-center ">{{data.cost}}</th>
           <th><a href="" class="text-dark"><i class="fa fa-trash-o text-white" aria-hidden="true"></i></a></th>
         </tr>
         <tr class="bg-color-total text-white">
           <th class="pr-0 main-th h5">Total</th>
-          <th class="cost text-center">{{getCost() | currency}}</th>
+          <!-- <th class="cost text-center">{{getCost() | currency}}</th> -->
+          <th class="cost text-center"></th>
           <th></th>
         </tr>
-        <!-- <tr class="bg-color-tr text-white">
-          <th class="pr-0 main-th">Cook Charges</th>
-          <th class="cost text-center ">25$</th>
-          <th><a href="" class="text-dark"><i class="fa fa-trash-o text-white" aria-hidden="true"></i></a></th>
-        </tr>
-        <tr class="bg-color-tr text-white">
-          <th class="pr-0 main-th">Gas</th>
-          <th class="cost text-center">25$</th>
-          <th><a href="" class="text-dark"><i class="fa fa-trash-o text-white" aria-hidden="true"></i></a></th>
-        </tr>
-        <tr class="bg-color-tr text-white">
-          <th class="pr-0 main-th">Cook Charges</th>
-          <th class="cost text-center">25$</th>
-          <th><a href=""><i class="fa fa-trash-o text-white" aria-hidden="true"></i></a></th>
-        </tr>
-        <tr class="bg-color-total text-white">
-          <th class="pr-0 main-th h5">Total</th>
-          <th class="cost text-center">100$</th>
-          <th></th>
-        </tr> -->
       </tbody>
     </table>
     <p class="bg-dark text-white pt-2 pb-2 pb-0 mb-0"><span class="h4 pl-3">Cost Bifergation : </span> <span
         class="h5">Material
         Cost +
         Conversion
-        Cost: {{getTotalCost()}} + {{getCost()}} = {{getTotalCost() + getCost() | currency }}
+        Cost: {{getTotalCost()}} = {{getTotalCost() | currency }}
+        <!-- Cost: {{getTotalCost()}} + {{getCost()}} = {{getTotalCost() + getCost() | currency }} -->
       </span>
     </p>
   </div>
