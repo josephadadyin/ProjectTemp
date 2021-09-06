@@ -26,7 +26,6 @@ export class NewProdTempComponent implements OnInit {
       )
       .then((response) => {
         this.productdata = response.data;
-        // console.log(this.productdata);
       })
       .catch((error) => {
         console.log(error);
@@ -40,7 +39,6 @@ export class NewProdTempComponent implements OnInit {
       )
       .then((response) => {
         this.attributeGroup = response.data.results;
-        console.log(this.attributeGroup);
       })
       .catch((error) => {
         console.log(error);
