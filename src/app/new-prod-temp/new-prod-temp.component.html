@@ -36,36 +36,9 @@
           </div>
         </div>
         <div class="row">
-          <!-- <div class="col ml-4"> -->
-          size <span *ngFor="let data of attributeGroup" class="pt-2 p-2">
-            <input type="checkbox" checked>{{data.description}}
-          </span>
-          <!-- <p> <input type="checkbox" checked> Length</p> -->
-          <!-- </div> -->
-          <!-- <div class="col">
-            Unit of length <p class="pt-2"> <input type="checkbox" checked> Bottom</p>
-            <p> <input type="checkbox" checked> Valve Length</p>
+          <div *ngFor="let attribt of attributesGroupAttributes" class="col-2 ml-4">
+            <input type="checkbox" [checked]="true"> {{attribt.attribute.description}}
           </div>
-          <div class="col">
-            Weight <p class="pt-2"> <input type="checkbox" checked> Unit wt</p>
-            <p> <input type="checkbox" checked> Sku wt</p>
-          </div>
-          <div class="col">
-            Unit of mass <p class="pt-2"> <input type="checkbox" checked> Pallet wt</p>
-            <p> <input type="checkbox" checked> Add new</p>
-          </div>
-          <div class="col">
-            Thickness <p class="pt-2"> <input type="checkbox" checked> GSM</p>
-            <p> <input type="checkbox" checked> Micron</p>
-          </div>
-          <div class="col">
-            Matrix Calculator<p class="pt-2"> <input type="checkbox" checked> MIL</p>
-            <p> <input type="checkbox" checked> Gauze</p>
-          </div>
-          <div class="col">
-            Others<p class="pt-2"> <input type="checkbox" checked> Weight/Pcs</p>
-            <p> <input type="checkbox" checked> Pcs/1kg</p>
-          </div> -->
         </div>
         <div class="row pl-4 pr-4 pt-4">
           <div class="col-md-3"> Process

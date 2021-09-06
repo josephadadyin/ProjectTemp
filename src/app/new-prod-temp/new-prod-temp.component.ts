@@ -10,6 +10,7 @@ export class NewProdTempComponent implements OnInit {
   productdata;
   attributeGroup;
   selectedDay;
+  attributesGroupAttributes;
   constructor() {}
 
   ngOnInit(): void {
@@ -47,8 +48,8 @@ export class NewProdTempComponent implements OnInit {
       .then(function () {});
   }
   selectChangeHandler(event: any) {
-    //update the ui
     this.selectedDay = event.target.value;
-    console.log(this.selectedDay);
+    const attrbs = this.attributeGroup.find(d=>(d.description===event.target.value));
+    this.attributesGroupAttributes = attrbs.attributesGroupAttributes;
   }
 }
