@@ -11,11 +11,13 @@ export class NewProdTempComponent implements OnInit {
   attributeGroup;
   selectedDay;
   attributesGroupAttributes;
+  addNewAttribute;
   constructor() {}
 
   ngOnInit(): void {
     this.ProductType();
     this.AttributeGroups();
+    this.AddAtribute();
     // this.productdata = {};
   }
 
@@ -45,6 +47,21 @@ export class NewProdTempComponent implements OnInit {
       })
       .then(function () {});
   }
+
+  AddAtribute() {
+    axios
+      .get(
+        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/attributes/'
+      )
+      .then((response) => {
+        this.addNewAttribute = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(function () {});
+  }
+
   selectChangeHandler(event: any) {
     this.selectedDay = event.target.value;
     const attrbs = this.attributeGroup.find(

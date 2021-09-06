@@ -32,7 +32,13 @@
           </div>
           <div class="col-md-3">
             + Add new Attribute
-            <a class="form-control mb-3" href="">Click Here To Add</a>
+            <select class="form-control mb-3 font-weight-light  ">
+              <option value="product">Add Attribute</option>
+              <option value="{{item.description}}" *ngFor="let item of addNewAttribute.results">
+                {{item.description}}
+              </option>
+            </select>
+            <!-- <a class="form-control mb-3" href="">Click Here To Add</a> -->
           </div>
         </div>
         <div class="row">
@@ -65,8 +71,6 @@
       </div>
     </div>
     <app-table-prod-temp class="table-width"></app-table-prod-temp>
-    <!-- <br> <br> -->
-    <!-- <app-table-package class="table-width "></app-table-package> -->
     <div class="ml-auto text-right pt-4 pb-4">
       <button type="submit" class="btn btn-color btn-lg pe-2 px-4 text-white ">Save</button>
     </div>
