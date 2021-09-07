@@ -33,7 +33,79 @@ interface PeriodicElement {
 export class NgbdModalConfirm {
   size?: 'sm' | 'lg' | 'xl';
   // AddProcessForm: FormGroup;
+  // formGroup: FormGroup;
+  processNumber;
+  productName;
+  usd;
+  costAddon;
+  processName;
+  watsePersentage;
+  INR;
+  conversionCost;
+  totalCost;
+  usedPersentage;
+  Density;
+  averageDensity;
   constructor(public modal: NgbActiveModal, public fb: FormBuilder) {}
+  ngOnInit(): void {
+    
+    }
+    formSubmit() {
+      console.log('hello');
+    }
+    onChangeprocessNumber(event: any){
+      console.log(event.target.value);
+      this.processNumber = event.target.value;
+    }
+    onChangeproductName(event: any){
+      console.log(event.target.value);
+      this.productName = event.target.value;
+    }
+    onChangeusd(event: any){
+      console.log(event.target.value);
+      this.usd =event.target.value;
+    }
+    onChangecostAddon(event: any){
+      console.log(event.target.value);
+      this.costAddon = event.target.value;
+    }
+    onChangeprocessName(event: any){
+      console.log(event.target.value);
+      this.processName = event.target.value;
+    }
+    
+
+
+    onChangewatsePersentage(event: any){
+      console.log(event.target.value);
+      this.watsePersentage = event.target.value;
+    }
+    onChangeINR(event: any){
+      console.log(event.target.value);
+      this.INR =event.target.value;
+    }
+    onChangeconversionCost(event: any){
+      console.log(event.target.value);
+      this.conversionCost = event.target.value
+    }
+    onChangetotalCost(event: any){
+      console.log(event.target.value);
+      this.totalCost = event.target.value;
+    }
+    onChangeusedPersentage(event: any){
+      console.log(event.target.value);
+      this.usedPersentage = event.target.value;
+    }
+    
+    onChangeusedDensity(event: any){
+      console.log(event.target.value);
+      this.Density = event.target.value;
+    }
+
+    onChangeusedaverageDensity(event: any){
+      console.log(event.target.value);
+      this.averageDensity = event.target.value;
+    }
 }
 
 const MODALS: { [name: string]: Type<any> } = {
@@ -47,7 +119,6 @@ const MODALS: { [name: string]: Type<any> } = {
 })
 export class TableProdTempComponent implements OnInit {
   formGroup: FormGroup;
-  AddProcessForm: FormGroup;
   displayedColumns: string[] = [
     'ProductName',
     'price',
@@ -116,21 +187,7 @@ export class TableProdTempComponent implements OnInit {
 
   ngOnInit(): void {
     // this.dataSource.paginator = this.paginator;
-    this.AddProcessForm = new FormGroup({
-      processNumber: new FormControl('', [Validators.required]),
-      productName: new FormControl('', [Validators.required]),
-      usd: new FormControl('', [Validators.required]),
-      costAddon: new FormControl('', [Validators.required]),
-      processName: new FormControl('', [Validators.required]),
-      watsePersentage: new FormControl('', [Validators.required]),
-      INR: new FormControl('', [Validators.required]),
-      conversionCost: new FormControl('', [Validators.required]),
-      totalCost: new FormControl('', [Validators.required]),
-      usedPersentage: new FormControl('', [Validators.required]),
-      Density: new FormControl('', [Validators.required]),
-      averageDensity: new FormControl('', [Validators.required]),
-    });
-
+  
     this.formGroup = new FormGroup({
       description: new FormControl('', [Validators.required]),
     });
@@ -205,9 +262,7 @@ export class TableProdTempComponent implements OnInit {
   open(name: string) {
     this._modalService.open(MODALS[name]);
   }
-  formSubmit() {
-    console.log(this.AddProcessForm.value());
-  }
+  
 }
 function MyModalComponent(MyModalComponent: any, arg1: { size: any }) {
   throw new Error('Function not implemented.');
