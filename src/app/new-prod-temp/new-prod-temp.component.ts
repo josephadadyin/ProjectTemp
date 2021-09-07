@@ -12,7 +12,7 @@ export class NewProdTempComponent implements OnInit {
   selectedDay;
   attributesGroupAttributes;
   addNewAttribute;
-  static templateCounter=1;
+  static templateCounter = 1;
   templateName;
   selectedProductType;
   constructor() {}
@@ -21,7 +21,6 @@ export class NewProdTempComponent implements OnInit {
     this.ProductType();
     this.AttributeGroups();
     this.AddAtribute();
-    // this.productdata = {};
   }
 
   ProductType() {
@@ -68,7 +67,6 @@ export class NewProdTempComponent implements OnInit {
   selectChangeHandler(event: any) {
     this.selectedDay = event.target.value;
     console.log(event.target.value);
-    
     const attrbs = this.attributeGroup.find(
       (d) => d.id.toString() === event.target.value.toString()
     );
@@ -76,7 +74,6 @@ export class NewProdTempComponent implements OnInit {
   }
   selectProductTypeChangeHandler(event: any) {
     this.selectedProductType = event.target.value;
-    
   }
 
   postNewTemplate(payload) {
@@ -86,8 +83,7 @@ export class NewProdTempComponent implements OnInit {
         payload
       )
       .then((response) => {
-        console.log('success',response);
-        
+        console.log('success', response);
       })
       .catch((error) => {
         console.log(error);
@@ -96,13 +92,14 @@ export class NewProdTempComponent implements OnInit {
   }
 
   onSave(event: any) {
-    const templateName = 'New Tempalate hexode' + NewProdTempComponent.templateCounter;
+    const templateName =
+      'New Tempalate hexode' + NewProdTempComponent.templateCounter;
     NewProdTempComponent.templateCounter++;
 
-   this.postNewTemplate({
-     description:this.templateName,
-     product_type: this.selectedProductType,
-     product_template_attributes: this.attributesGroupAttributes
+    this.postNewTemplate({
+      description: this.templateName,
+      product_type: this.selectedProductType,
+      product_template_attributes: this.attributesGroupAttributes,
     });
   }
 }

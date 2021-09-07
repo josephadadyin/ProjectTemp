@@ -17,7 +17,7 @@
   <div>+ Add New Process</div>
 </button>
 
-<br/>
+<br />
 
 <div class="">
   <table class="table-sm table-bordered text-center  overflow-fix" mat-table [dataSource]="dataSource">
@@ -25,11 +25,9 @@
       <ng-container matColumnDef="price" *ngIf="!addingRow">
         <th class="row-color" mat-header-cell *matHeaderCellDef> USD/MT Price </th>
         <td mat-cell *matCellDef="let element"> {{element.price}} </td>
-        <!-- <td mat-footer-cell *matFooterCellDef> Total </td> -->
       </ng-container>
       <ng-container matColumnDef="price" *ngIf="addingRow">
         <th class="row-color" mat-header-cell *matHeaderCellDef> USD/MT Price </th>
-        <!-- <td mat-cell *matCellDef="let element"> {{element.price}} </td> -->
         <td mat-cell *matCellDef="let element"><input type="number"> </td>
       </ng-container>
       <ng-container matColumnDef="ProductName" *ngIf="!addingRow">
@@ -60,7 +58,6 @@
       <ng-container matColumnDef="costAdd">
         <th class="row-color" mat-header-cell *matHeaderCellDef> CostAddOn </th>
         <td mat-cell *matCellDef="let element"> {{element.costAdd | currency }} </td>
-        <!-- <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td> -->
       </ng-container>
       <ng-container matColumnDef="waste">
         <th class="row-color" mat-header-cell *matHeaderCellDef> Waste % </th>
@@ -89,8 +86,6 @@
           <span> <button mat-raised-button mat-button (click)="addRow()" class=" btn btn-color  demo-button">
               + Add new product
             </button></span>
-          <!-- (click)="addData()" -->
-          <!-- <span class="pl-5 text-right"><a href="" class="a-color">+ Add new product</a></span> -->
         </th>
       </ng-container>
       <ng-container matColumnDef="footer-row-first-group">
@@ -99,38 +94,29 @@
         </th>
       </ng-container>
       <ng-container matColumnDef="footer-row-second-group">
-        <!-- <th class="" mat-footer-cell *matFooterCellDef>
-        75$
-      </th> -->
         <td mat-footer-cell *matFooterCellDef> {{ getTotalCost() | currency}} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="['header-row-first-group']"></tr>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       <tr mat-footer-row *matFooterRowDef="['footer-row-first-group','footer-row-second-group']"></tr>
-      <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr> -->
     </ng-container>
   </table>
   <div class="border text-white ">
     <p class="bg-color-tr pl-4 pt-2 pb-2 pr-5 mb-0 h5"> Conversion Cost Calculation <span class="pl-5 ml-5 "><button
           class="text-white btn" mat-button (click)="addRowConversion()">+ Add New</button> </span>
-      <!-- (click)="Conversion()" -->
     </p>
     <table class="table pb-0 mb-0 ">
       <tbody>
-        <!-- conversionCost.results , .description -->
         <ng-container *ngIf="!addingConversionRow">
           <tr *ngFor="let data of dataArray" class="bg-color-tr text-white">
             <th class="pr-0 main-th">{{data.title}}</th>
-            <!-- <th class="pr-0 main-th"> <input type="text" class="form-control" formControlName="discreption" required
-                placeholder="add new Attribute"></th> -->
             <th class="cost text-center ">{{data.cost}}</th>
             <th><a href="" class="text-dark"><i class="fa fa-trash-o text-white" aria-hidden="true"></i></a></th>
           </tr>
         </ng-container>
         <ng-container *ngIf="addingConversionRow">
           <tr class="bg-color-tr text-white">
-            <!-- <th class="pr-0 main-th">{{data.title}}</th> -->
             <th class="pr-0 main-th"><input type="text" class="form-control" formControlName="descreption" required
                 placeholder="add new Attribute"></th>
             <th class="cost text-center "><input type="text" class="form-control" formControlName="cost" required
@@ -141,24 +127,10 @@
 
         <tr class="bg-color-total text-white">
           <th class="pr-0 main-th h5">Total</th>
-          <!-- <th class="cost text-center">{{getCost() | currency}}</th> -->
           <th class="cost text-center"></th>
           <th></th>
         </tr>
       </tbody>
-      <!-- <tbody *ngIf="addingConversionRow">
-        <tr *ngFor="let data of conversionCost.results" class="bg-color-tr text-white">
-          <th class="pr-0 main-th" *ngIf="addingConversionRow"> <input type="text" class="form-control"
-              formControlName="discreption" required placeholder="add new Attribute"></th>
-          <th class="cost text-center ">{{data.cost}}</th>
-          <th><a href="" class="text-dark"><i class="fa fa-trash-o text-white" aria-hidden="true"></i></a></th>
-        </tr>
-        <tr class="bg-color-total text-white">
-          <th class="pr-0 main-th h5">Total</th>
-          <th class="cost text-center"></th>
-          <th></th>
-        </tr>
-      </tbody> -->
     </table>
     <p class="bg-dark text-white pt-2 pb-2 pb-0 mb-0"><span class="h4 pl-3">Cost Bifergation : </span> <span
         class="h5">Material

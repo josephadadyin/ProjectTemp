@@ -1,6 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import * as $ from 'jquery';
-
+import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-add-new',
   templateUrl: './add-new.component.html',

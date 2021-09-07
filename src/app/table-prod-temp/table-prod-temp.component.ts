@@ -2,17 +2,13 @@ import { Component, OnInit, Type } from '@angular/core';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
 import {
   FormControl,
   FormGroup,
   Validators,
   FormBuilder,
 } from '@angular/forms';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import axios from 'axios';
-import { MatTableDataSource } from '@angular/material/table';
-import { map, filter, switchMap } from 'rxjs/operators';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 interface PeriodicElement {
@@ -31,8 +27,6 @@ interface PeriodicElement {
   templateUrl: './modal-add-new-process.html',
 })
 export class NgbdModalConfirm {
-  size?: 'sm' | 'lg' | 'xl';
-  // AddProcessForm: FormGroup;
   constructor(public modal: NgbActiveModal, public fb: FormBuilder) {}
 }
 
@@ -90,8 +84,6 @@ export class TableProdTempComponent implements OnInit {
       class: 'NA',
     },
   ];
-  // dataSource1: any;
-  // dataSource = new MatTableDataSource<PeriodicElement>(dataSource1);
 
   dataArray = [
     { title: 'Cook carges', cost: 25 },
@@ -115,7 +107,6 @@ export class TableProdTempComponent implements OnInit {
   constructor(private _modalService: NgbModal, public fb: FormBuilder) {}
 
   ngOnInit(): void {
-    // this.dataSource.paginator = this.paginator;
     this.AddProcessForm = new FormGroup({
       processNumber: new FormControl('', [Validators.required]),
       productName: new FormControl('', [Validators.required]),
