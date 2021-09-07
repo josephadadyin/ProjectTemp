@@ -27,9 +27,6 @@ interface PeriodicElement {
   templateUrl: './modal-add-new-process.html',
 })
 export class NgbdModalConfirm {
-  size?: 'sm' | 'lg' | 'xl';
-  // AddProcessForm: FormGroup;
-  // formGroup: FormGroup;
   processNumber;
   productName;
   usd;
