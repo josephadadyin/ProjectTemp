@@ -127,7 +127,7 @@
 
         <tr class="bg-color-total text-white">
           <th class="pr-0 main-th h5">Total</th>
-          <th class="cost text-center"></th>
+          <th class="cost text-center">{{getCost()}}</th>
           <th></th>
         </tr>
       </tbody>
@@ -136,8 +136,7 @@
         class="h5">Material
         Cost +
         Conversion
-        Cost: {{getTotalCost()}} = {{getTotalCost() | currency }}
-        <!-- Cost: {{getTotalCost()}} + {{getCost()}} = {{getTotalCost() + getCost() | currency }} -->
+        Cost: {{getTotalCost()}} + {{getCost()}} = {{getTotalCost() + getCost() | currency }}
       </span>
     </p>
   </div>
