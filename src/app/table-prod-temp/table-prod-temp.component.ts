@@ -3,8 +3,13 @@ import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-// import { ConfirmDialogComponent } from './confirm-dialog/ConfirmDialogComponent/';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import axios from 'axios';
 import { MatTableDataSource } from '@angular/material/table';
 import { map, filter, switchMap } from 'rxjs/operators';
@@ -23,15 +28,16 @@ interface PeriodicElement {
 
 @Component({
   selector: 'ngbd-modal-confirm',
-  templateUrl: './modal-add-new-process.html'
+  templateUrl: './modal-add-new-process.html',
 })
-
 export class NgbdModalConfirm {
-  constructor(public modal: NgbActiveModal) {}
+  size?: 'sm' | 'lg' | 'xl';
+  // AddProcessForm: FormGroup;
+  constructor(public modal: NgbActiveModal, public fb: FormBuilder) {}
 }
 
-const MODALS: {[name: string]: Type<any>} = {
-  focusFirst: NgbdModalConfirm
+const MODALS: { [name: string]: Type<any> } = {
+  focusFirst: NgbdModalConfirm,
 };
 
 @Component({
@@ -41,6 +47,7 @@ const MODALS: {[name: string]: Type<any>} = {
 })
 export class TableProdTempComponent implements OnInit {
   formGroup: FormGroup;
+  AddProcessForm: FormGroup;
   displayedColumns: string[] = [
     'ProductName',
     'price',
@@ -103,11 +110,27 @@ export class TableProdTempComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   conversionCost;
   addingRow = false;
+
   addingConversionRow = false;
-  constructor(private _modalService: NgbModal) {}
+  constructor(private _modalService: NgbModal, public fb: FormBuilder) {}
 
   ngOnInit(): void {
     // this.dataSource.paginator = this.paginator;
+    this.AddProcessForm = new FormGroup({
+      processNumber: new FormControl('', [Validators.required]),
+      productName: new FormControl('', [Validators.required]),
+      usd: new FormControl('', [Validators.required]),
+      costAddon: new FormControl('', [Validators.required]),
+      processName: new FormControl('', [Validators.required]),
+      watsePersentage: new FormControl('', [Validators.required]),
+      INR: new FormControl('', [Validators.required]),
+      conversionCost: new FormControl('', [Validators.required]),
+      totalCost: new FormControl('', [Validators.required]),
+      usedPersentage: new FormControl('', [Validators.required]),
+      Density: new FormControl('', [Validators.required]),
+      averageDensity: new FormControl('', [Validators.required]),
+    });
+
     this.formGroup = new FormGroup({
       description: new FormControl('', [Validators.required]),
     });
@@ -172,21 +195,20 @@ export class TableProdTempComponent implements OnInit {
     const newRow = {
       title: '1212',
       cost: 10,
-      // price: '35',
-      // weight: '15',
-      // density: '20',
-      // AvgDensity: '25',
-      // costAdd: 5,
-      // waste: 5,
-      // class: '',
       isEdit: true,
       selected: false,
     };
     this.dataArray = [...this.dataArray, newRow];
     this.addingConversionRow = false;
   }
-  
+
   open(name: string) {
     this._modalService.open(MODALS[name]);
   }
+  formSubmit() {
+    console.log(this.AddProcessForm.value());
+  }
+}
+function MyModalComponent(MyModalComponent: any, arg1: { size: any }) {
+  throw new Error('Function not implemented.');
 }
