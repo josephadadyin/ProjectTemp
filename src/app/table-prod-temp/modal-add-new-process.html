@@ -5,41 +5,64 @@
     </button>
   </div>
   <div class="modal-body m-5 ">
-    <!-- (submit)="formSubmit()" -->
-    <form [formGroup]="AddProcessForm">
+    <!--  -->
+    <form>
       <div class="row">
         <div class="col">
           <label for="process_number" class="form-label">Process Number</label>
-          <input type="text" formControlName="processNumber" class=" form-control" id="process_number" placeholder="2"
-            disabled>
+          <input type="text" formControlName="processNumber" class=" form-control" id="process_number" 
+          (change)="onChangeprocessNumber($event)">
           <label for="process_name" class="form-label">Product Name</label>
-          <input type="text" formControlName="productName" class=" form-control" id="process_name">
+          <input type="text" formControlName="productName" class=" form-control" 
+          id="process_name"
+          (change)="onChangeproductName($event)">
           <label for="usd_mt" class="form-label">USD/MT</label>
-          <input type="text" formControlName="usd" class=" form-control" id="usd_mt">
+          <input type="text" 
+          formControlName="usd" class=" form-control" id="usd_mt"
+          (change)="onChangeusd($event)">
           <label for="costAdd" class="form-label">CostAddOn</label>
-          <input type="text" formControlName="costAddon" class=" form-control" id="costAdd">
+          <input type="text" 
+          (change)="onChangecostAddon($event)"
+          formControlName="costAddon" class=" form-control" id="costAdd">
         </div>
         <div class="col">
           <label for="process_name" class="form-label">Process Name</label>
-          <input type="text" formControlName="processName" class=" form-control" id="process_name">
+          <input 
+          type="text" 
+          (change)="onChangeprocessName($event)"
+          formControlName="processName" class=" form-control" id="process_name">
           <label for="watse" class="form-label">Waste %</label>
-          <input type="text" formControlName="watsePersentage" class=" form-control" id="waste">
+          <input 
+          (change)="onChangewatsePersentage($event)"
+          type="text" formControlName="watsePersentage" class=" form-control" id="waste">
           <label for="INR" class="form-label">INR/K.G</label>
-          <input type="text" formControlName="INR" class=" form-control" id="INR">
+          <input 
+          (change)="onChangeINR($event)"
+          type="text" formControlName="INR" class=" form-control" id="INR">
           <label for="conversion" class="form-label">Conversion Cost</label>
-          <input type="text" formControlName="conversionCost" class=" form-control" id="conversion">
+          <input 
+          (change)="onChangeconversionCost($event)"
+          type="text" formControlName="conversionCost" class=" form-control" id="conversion">
         </div>
         <div class="col">
           <label for="totalCost" class="form-label">Process Total Cost</label>
-          <input type="text" formControlName="totalCost" class=" form-control" id="totalCost">
+          <input  
+          (change)="onChangetotalCost($event)"
+          type="text" formControlName="totalCost" class=" form-control" id="totalCost">
           <label for="uses" class="form-label">Used %</label>
-          <input type="text" formControlName="usedPersentage" class=" form-control" id="uses">
+          <input 
+          (change)="onChangeusedPersentage($event)"
+          type="text" formControlName="usedPersentage" class=" form-control" id="uses">
           <label for="Density" class="form-label">Density</label>
-          <input type="text" formControlName="Density" class=" form-control" id="Density">
+          <input 
+          (change)="onChangeusedDensity($event)"
+           type="text" formControlName="Density" class=" form-control" id="Density">
           <label for="avgDensity" class="form-label">Average Density</label>
-          <input type="text" formControlName="averageDensity" class=" form-control" id="avgDensity">
+          <input 
+          (change)="onChangeusedaverageDensity($event)"
+          type="text" formControlName="averageDensity" class=" form-control" id="avgDensity">
         </div>
       </div>
-      <button type="submit" class="btn btn-primary text-center">Save</button>
+      <button class="btn btn-primary text-center" (click)="formSubmit()">Save</button>
     </form>
   </div>
