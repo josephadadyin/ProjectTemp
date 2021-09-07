@@ -12,10 +12,14 @@
       <option> Calculator 2</option>
     </select></div>
 </div>
-<div class="row pr-5">
-  <p class="h4 ml-auto "><a href="" class="a-color">+ Add New Process</a></p>
-</div>
-<div class=" ">
+
+<button class="btn btn-outline-primary mr-2" (click)="open('focusFirst')" style="margin-bottom: 20px;">
+  <div>+ Add New Process</div>
+</button>
+
+<br/>
+
+<div class="">
   <table class="table-sm table-bordered text-center  overflow-fix" mat-table [dataSource]="dataSource">
     <ng-container>
       <ng-container matColumnDef="price" *ngIf="!addingRow">

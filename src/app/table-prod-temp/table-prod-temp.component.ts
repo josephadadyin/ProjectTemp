@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
@@ -8,6 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import axios from 'axios';
 import { MatTableDataSource } from '@angular/material/table';
 import { map, filter, switchMap } from 'rxjs/operators';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 interface PeriodicElement {
   ProductName: string;
@@ -19,6 +20,19 @@ interface PeriodicElement {
   waste: number;
   class: string;
 }
+
+@Component({
+  selector: 'ngbd-modal-confirm',
+  templateUrl: './modal-add-new-process.html'
+})
+
+export class NgbdModalConfirm {
+  constructor(public modal: NgbActiveModal) {}
+}
+
+const MODALS: {[name: string]: Type<any>} = {
+  focusFirst: NgbdModalConfirm
+};
 
 @Component({
   selector: 'app-table-prod-temp',
@@ -90,7 +104,7 @@ export class TableProdTempComponent implements OnInit {
   conversionCost;
   addingRow = false;
   addingConversionRow = false;
-  constructor() {}
+  constructor(private _modalService: NgbModal) {}
 
   ngOnInit(): void {
     // this.dataSource.paginator = this.paginator;
@@ -170,5 +184,9 @@ export class TableProdTempComponent implements OnInit {
     };
     this.dataArray = [...this.dataArray, newRow];
     this.addingConversionRow = false;
+  }
+  
+  open(name: string) {
+    this._modalService.open(MODALS[name]);
   }
 }
