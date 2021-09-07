@@ -9,9 +9,10 @@
       <div class="col">
         <div class="row pl-4 pr-4 pt-4">
           <div class="col-md-3"> Product Type
-            <select class="form-control mb-3 font-weight-light" *ngIf="productdata && productdata.results">
+            <select class="form-control mb-3 font-weight-light" 
+            *ngIf="productdata && productdata.results" (change)="selectProductTypeChangeHandler($event)">
               <option value="product">Select Product Tye</option>
-              <option value="{{item.description}}" *ngFor="let item of productdata.results">
+              <option value="{{item.id}}" *ngFor="let item of productdata.results">
                 {{item.description}}
               </option>
             </select></div>
@@ -24,7 +25,7 @@
             Select Attribute
             <select class="form-control mb-3 font-weight-light  " (change)="selectChangeHandler($event)">
               <option value="product">Select Attribute</option>
-              <option value="{{item.description}}" *ngFor="let item of attributeGroup">
+              <option value="{{item.id}}" *ngFor="let item of attributeGroup">
                 {{item.description}}
               </option>
             </select>
@@ -70,6 +71,9 @@
       </div>
     </div>
     <app-table-prod-temp class="table-width"></app-table-prod-temp>
+    <div class="ml-auto text-right pt-4 pb-4">
+      <button class="btn btn-color btn-lg pe-2 px-4 text-white " (click)="onSave($event)">Save</button>
+    </div>
     <!-- <div class="ml-auto text-right pt-4 pb-4">
       <button type="submit" class="btn btn-color btn-lg pe-2 px-4 text-white ">Save</button>
     </div> -->
