@@ -15,6 +15,8 @@ export class NewProdTempComponent implements OnInit {
   static templateCounter = 1;
   templateName;
   selectedProductType;
+  AddAtributex;
+  AddAtributevalue = false;
   constructor() {}
 
   ngOnInit(): void {
@@ -62,6 +64,11 @@ export class NewProdTempComponent implements OnInit {
         console.log(error);
       })
       .then(function () {});
+  }
+  selectAddNewAttributeHandler(event: any) {
+    this.AddAtributex = event.target.value;
+    console.log(this.AddAtributex);
+    this.AddAtributevalue = true;
   }
 
   selectChangeHandler(event: any) {
