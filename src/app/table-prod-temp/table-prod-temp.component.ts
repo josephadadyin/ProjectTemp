@@ -118,39 +118,40 @@ export class TableProdTempComponent implements OnInit {
     'waste',
     'class',
   ];
-  dataSource: PeriodicElement[] = [
-    {
-      ProductName: 'Rice',
-      price: '87$',
-      weight: '76',
-      density: '76',
-      AvgDensity: '1bag/box',
-      costAdd: 35,
-      waste: 0,
-      class: 'NA',
-    },
-    {
-      ProductName: 'Salt',
-      price: '76$',
-      weight: '54',
-      density: '54',
-      AvgDensity: '1bag/box',
-      costAdd: 25,
-      waste: 0,
-      class: 'NA',
-    },
-    {
-      ProductName: 'Water',
-      price: '84$',
-      weight: '90',
-      density: '',
-      AvgDensity: '1bag/box',
-      costAdd: 25,
-      waste: 0,
-      class: 'NA',
-    },
-  ];
+  // dataSource: PeriodicElement[] = [
+  //   {
+  //     ProductName: 'Rice',
+  //     price: '87$',
+  //     weight: '76',
+  //     density: '76',
+  //     AvgDensity: '1bag/box',
+  //     costAdd: 35,
+  //     waste: 0,
+  //     class: 'NA',
+  //   },
+  //   {
+  //     ProductName: 'Salt',
+  //     price: '76$',
+  //     weight: '54',
+  //     density: '54',
+  //     AvgDensity: '1bag/box',
+  //     costAdd: 25,
+  //     waste: 0,
+  //     class: 'NA',
+  //   },
+  //   {
+  //     ProductName: 'Water',
+  //     price: '84$',
+  //     weight: '90',
+  //     density: '',
+  //     AvgDensity: '1bag/box',
+  //     costAdd: 25,
+  //     waste: 0,
+  //     class: 'NA',
+  //   },
+  // ];
 
+  dataSource: any[] = [];
   dataArray = [
     { title: 'Cook carges', cost: 25 },
     { title: 'Gas', cost: 5 },
@@ -167,8 +168,13 @@ export class TableProdTempComponent implements OnInit {
   }
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   conversionCost;
+  addNewProduct;
+  addNewConversion = false;
+  cost;
+  cost1;
+  cost2;
+  addNewprocess = false;
   addingRow = false;
-
   addingConversionRow = false;
   constructor(private _modalService: NgbModal, public fb: FormBuilder) {}
 
@@ -176,16 +182,19 @@ export class TableProdTempComponent implements OnInit {
     this.formGroup = new FormGroup({
       description: new FormControl('', [Validators.required]),
     });
-    this.Conversion();
+    this.AddProduct();
+    // this.Conversion();
   }
 
   Conversion() {
+    this.addNewConversion = true;
     axios
       .get(
         'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/conversion_types/'
       )
       .then((response) => {
-        this.conversionCost = response.data;
+        this.conversionCost = response.data.results;
+        console.log(this.conversionCost);
       })
       .catch((error) => {
         console.log(error);
@@ -206,6 +215,20 @@ export class TableProdTempComponent implements OnInit {
       })
       .then(function () {});
   }
+  AddProduct() {
+    axios
+      .get(
+        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/products/'
+      )
+      .then((response) => {
+        this.dataSource = response.data.results;
+        console.log(this.addNewProduct);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(function () {});
+  }
   getTotalCost() {
     return this.dataSource
       .map((t) => t.costAdd)
@@ -216,11 +239,14 @@ export class TableProdTempComponent implements OnInit {
       .map((t) => t.cost)
       .reduce((acc, value) => acc + value, 0);
   }
+  AddProcess() {
+    this.addNewprocess = true;
+  }
   addRow() {
     this.addingRow = true;
     const newRow = {
       ProductName: '',
-      price: '35',
+      price: '',
       weight: '15',
       density: '20',
       AvgDensity: '25',
@@ -246,6 +272,21 @@ export class TableProdTempComponent implements OnInit {
 
   open(name: string) {
     this._modalService.open(MODALS[name]);
+  }
+  onChangeCost(event: any) {
+    console.log(event.target.value);
+    this.cost = event.target.value;
+  }
+  onChangeCost1(event: any) {
+    console.log(event.target.value);
+    this.cost1 = event.target.value;
+  }
+  onChangeCost2(event: any) {
+    console.log(event.target.value);
+    this.cost2 = event.target.value;
+  }
+  totalCost() {
+    return this.cost + this.cost1 + this.cost2;
   }
 }
 function MyModalComponent(MyModalComponent: any, arg1: { size: any }) {

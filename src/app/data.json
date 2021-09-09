@@ -1,0 +1,101 @@
+{
+  "count": 2,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "description": "Woven Fabric",
+      "productTemplate": null,
+      "process": null,
+      "productAttributeValues": [
+        {
+          "id": 1,
+          "attribute": {
+            "id": 15,
+            "description": "Weight",
+            "systemUom": {
+              "id": 7,
+              "description": "gm"
+            }
+          },
+          "attributeValue": "21",
+          "userConversionUom": "gm"
+        },
+        {
+          "id": 2,
+          "attribute": {
+            "id": 17,
+            "description": "Cost",
+            "systemUom": {
+              "id": 13,
+              "description": "USD"
+            }
+          },
+          "attributeValue": "22",
+          "userConversionUom": "USD"
+        },
+        {
+          "id": 3,
+          "attribute": {
+            "id": 22,
+            "description": "Density",
+            "systemUom": {
+              "id": 15,
+              "description": "gm/cm3"
+            }
+          },
+          "attributeValue": "65",
+          "userConversionUom": "gm/m3"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "description": "Lamination",
+      "productTemplate": null,
+      "process": null,
+      "productAttributeValues": [
+        {
+          "id": 4,
+          "attribute": {
+            "id": 15,
+            "description": "Weight",
+            "systemUom": {
+              "id": 7,
+              "description": "gm"
+            }
+          },
+          "attributeValue": "19",
+          "userConversionUom": "gm"
+        },
+        {
+          "id": 5,
+          "attribute": {
+            "id": 17,
+            "description": "Cost",
+            "systemUom": {
+              "id": 13,
+              "description": "USD"
+            }
+          },
+          "attributeValue": "45",
+          "userConversionUom": "USD"
+        },
+        {
+          "id": 6,
+          "attribute": {
+            "id": 22,
+            "description": "Density",
+            "systemUom": {
+              "id": 15,
+              "description": "gm/cm3"
+            }
+          },
+          "attributeValue": "65",
+          "userConversionUom": "gm/m3"
+        }
+      ]
+    }
+  ]
+}
