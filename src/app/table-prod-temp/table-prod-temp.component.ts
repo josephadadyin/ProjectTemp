@@ -2,6 +2,8 @@ import { Component, OnInit, Type } from '@angular/core';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
+import { MatButtonToggleGroup } from '@angular/material/button-toggle';
+
 import {
   FormControl,
   FormGroup,
@@ -10,6 +12,7 @@ import {
 } from '@angular/forms';
 import axios from 'axios';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ThrowStmt } from '@angular/compiler';
 
 interface PeriodicElement {
   ProductName: string;
@@ -41,60 +44,60 @@ export class NgbdModalConfirm {
   averageDensity;
   constructor(public modal: NgbActiveModal, public fb: FormBuilder) {}
   ngOnInit(): void {}
-  formSubmit() {
-    console.log('hello');
-  }
-  onChangeprocessNumber(event: any) {
-    console.log(event.target.value);
-    this.processNumber = event.target.value;
-  }
-  onChangeproductName(event: any) {
-    console.log(event.target.value);
-    this.productName = event.target.value;
-  }
-  onChangeusd(event: any) {
-    console.log(event.target.value);
-    this.usd = event.target.value;
-  }
-  onChangecostAddon(event: any) {
-    console.log(event.target.value);
-    this.costAddon = event.target.value;
-  }
-  onChangeprocessName(event: any) {
-    console.log(event.target.value);
-    this.processName = event.target.value;
-  }
+  // formSubmit() {
+  //   console.log('hello');
+  // }
+  // onChangeprocessNumber(event: any) {
+  //   console.log(event.target.value);
+  //   this.processNumber = event.target.value;
+  // }
+  // onChangeproductName(event: any) {
+  //   console.log(event.target.value);
+  //   this.productName = event.target.value;
+  // }
+  // onChangeusd(event: any) {
+  //   console.log(event.target.value);
+  //   this.usd = event.target.value;
+  // }
+  // onChangecostAddon(event: any) {
+  //   console.log(event.target.value);
+  //   this.costAddon = event.target.value;
+  // }
+  // onChangeprocessName(event: any) {
+  //   console.log(event.target.value);
+  //   this.processName = event.target.value;
+  // }
 
-  onChangewatsePersentage(event: any) {
-    console.log(event.target.value);
-    this.watsePersentage = event.target.value;
-  }
-  onChangeINR(event: any) {
-    console.log(event.target.value);
-    this.INR = event.target.value;
-  }
-  onChangeconversionCost(event: any) {
-    console.log(event.target.value);
-    this.conversionCost = event.target.value;
-  }
-  onChangetotalCost(event: any) {
-    console.log(event.target.value);
-    this.totalCost = event.target.value;
-  }
-  onChangeusedPersentage(event: any) {
-    console.log(event.target.value);
-    this.usedPersentage = event.target.value;
-  }
+  // onChangewatsePersentage(event: any) {
+  //   console.log(event.target.value);
+  //   this.watsePersentage = event.target.value;
+  // }
+  // onChangeINR(event: any) {
+  //   console.log(event.target.value);
+  //   this.INR = event.target.value;
+  // }
+  // onChangeconversionCost(event: any) {
+  //   console.log(event.target.value);
+  //   this.conversionCost = event.target.value;
+  // }
+  // onChangetotalCost(event: any) {
+  //   console.log(event.target.value);
+  //   this.totalCost = event.target.value;
+  // }
+  // onChangeusedPersentage(event: any) {
+  //   console.log(event.target.value);
+  //   this.usedPersentage = event.target.value;
+  // }
 
-  onChangeusedDensity(event: any) {
-    console.log(event.target.value);
-    this.Density = event.target.value;
-  }
+  // onChangeusedDensity(event: any) {
+  //   console.log(event.target.value);
+  //   this.Density = event.target.value;
+  // }
 
-  onChangeusedaverageDensity(event: any) {
-    console.log(event.target.value);
-    this.averageDensity = event.target.value;
-  }
+  // onChangeusedaverageDensity(event: any) {
+  //   console.log(event.target.value);
+  //   this.averageDensity = event.target.value;
+  // }
 }
 
 const MODALS: { [name: string]: Type<any> } = {
@@ -152,6 +155,7 @@ export class TableProdTempComponent implements OnInit {
   // ];
 
   dataSource: any[] = [];
+  tables = [0];
   dataArray = [
     { title: 'Cook carges', cost: 25 },
     { title: 'Gas', cost: 5 },
@@ -170,9 +174,6 @@ export class TableProdTempComponent implements OnInit {
   conversionCost;
   addNewProduct;
   addNewConversion = false;
-  cost;
-  cost1;
-  cost2;
   addNewprocess = false;
   addingRow = false;
   addingConversionRow = false;
@@ -181,6 +182,17 @@ export class TableProdTempComponent implements OnInit {
   xselectCost='';
   xselectDensity='';
   xnewRow={};
+  processProducts;
+  PrecessdataSource;
+  selectProductName;
+  processName;
+  productOfProcess;
+  percentageUsed;
+  percentageWaste;
+  selectConversion;
+  cost;
+  processNumberIs;
+  static processNumber = 1;
   constructor(private _modalService: NgbModal, public fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -206,20 +218,20 @@ export class TableProdTempComponent implements OnInit {
       })
       .then(function () {});
   }
-  AddConversion() {
-    axios
-      .post(
-        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/conversion_types/' +
-          this.formGroup
-      )
-      .then((response) => {
-        this.conversionCost = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .then(function () {});
-  }
+  // AddConversion() {
+  //   axios
+  //     .post(
+  //       'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/conversion_types/' +
+  //         this.formGroup
+  //     )
+  //     .then((response) => {
+  //       this.conversionCost = response.data;
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  //     .then(function () {});
+  // }
   AddProduct() {
     axios
       .get(
@@ -235,16 +247,62 @@ export class TableProdTempComponent implements OnInit {
       })
       .then(function () {});
   }
-getxPrice(id){
- const selectedProduct = this.dataSource.find(d=>(d.id===id)); 
+  processPostApi(payload) {
+    axios
+      .post(
+        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/processes/',
+        payload
+      )
+      .then((response) => {
+        this.PrecessdataSource = response.data.results;
+        console.log(this.addNewProduct);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(function () {});
+  }
+getxPrice(description){
+ const selectedProduct = this.dataSource.find(d=>(d.description===description)); 
  this.xselectCost = selectedProduct.productAttributeValues.find(d=>(d.attribute.description==="Cost"))['attributeValue'];
 
 }
 
-getxDensity(id){
-  const selectedProduct = this.dataSource.find(d=>(d.id===id));
+getxDensity(description){
+  const selectedProduct = this.dataSource.find(d=>(d.description===description));
   this.xselectDensity = selectedProduct.productAttributeValues.find(d=>(d.attribute.description==="Density"))['attributeValue'];
  }
+  ProcessNameChangeHandler(event: any) {
+    this.processName = event.target.value;
+  }
+  ProductOfProcessChangeHandler(event: any) {
+    this.productOfProcess = event.target.value;
+  }
+  selectProductNameChangeHandler(event: any) {
+    this.selectProductName = event.target.value;
+    console.log(event.target.value);
+    this.getxDensity(event.target.value);
+    this.getxPrice(event.target.value);
+
+    const proces = this.PrecessdataSource.find(
+      (d) => d.id.toString() === event.target.value.toString()
+    );
+    this.processProducts = proces.processProducts;
+    // this.getxPrice(event.tar);
+  }
+  PercentageUsedChangeHandler(event: any) {
+    this.percentageUsed = event.target.value;
+  }
+  PercentageWasteChangeHandler(event: any) {
+    this.percentageWaste = event.target.value;
+  }
+
+  selectConversionChangeHandler(event: any) {
+    this.selectConversion = event.target.value;
+  }
+  onChangeCost(event: any) {
+    this.cost = event.target.value;
+  }
 
   getTotalCost() {
     return this.dataSource
@@ -257,6 +315,7 @@ getxDensity(id){
       .reduce((acc, value) => acc + value, 0);
   }
   AddProcess() {
+    this.processNumberIs++;
     this.addNewprocess = true;
   }
   addRow() {
@@ -267,8 +326,8 @@ getxDensity(id){
 
 
     const selectedProduct = this.xproductName[0];
-    this.getxPrice(selectedProduct.id);
-    this.getxDensity(selectedProduct.id)
+    this.getxPrice(selectedProduct.description);
+    this.getxDensity(selectedProduct.description)
     
     // this.xnewRow = {
     //   price: this.xselectCost['attributeValue'],
@@ -302,20 +361,19 @@ getxDensity(id){
   open(name: string) {
     this._modalService.open(MODALS[name]);
   }
-  onChangeCost(event: any) {
-    console.log(event.target.value);
-    this.cost = event.target.value;
-  }
-  onChangeCost1(event: any) {
-    console.log(event.target.value);
-    this.cost1 = event.target.value;
-  }
-  onChangeCost2(event: any) {
-    console.log(event.target.value);
-    this.cost2 = event.target.value;
-  }
+
   totalCost() {
-    return this.cost + this.cost1 + this.cost2;
+    return this.cost;
+  }
+  Save(event: any) {
+    const ProcessNumbers = 'New Process' + TableProdTempComponent.processNumber;
+    TableProdTempComponent.processNumber++;
+    this.processPostApi({
+      description: ProcessNumbers,
+      process_products: this.productOfProcess,
+      process_conversion_types: this.selectConversion,
+      process_calculator: this.processProducts,
+    });
   }
 }
 function MyModalComponent(MyModalComponent: any, arg1: { size: any }) {
