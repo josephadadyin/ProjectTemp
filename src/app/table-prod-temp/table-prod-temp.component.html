@@ -12,21 +12,14 @@
       <option> Calculator 2</option>
     </select></div>
 </div>
-<!-- (click)="AddProcess()" -->
-<!-- (click)="tables.push(tables.length); AddProcess();" -->
 <button value="click" class="btn btn-outline-primary mr-2"
   (click)="Save($event); tables.push(tables.length); AddProcess();" style="margin-bottom: 20px;">
   <div>+ Add New Process</div>
 </button>
-<!-- <button class="btn btn-outline-primary mr-2" (click)="open('focusFirst')" style="margin-bottom: 20px;">
-  <div>+ Add New Process</div>
-</button> -->
 
 <br />
 
-<!-- *ngIf="addNewprocess==true" -->
-<!-- *ngFor="let table of tables" -->
-<ng-container>
+<ng-container *ngIf="addNewprocess==true">
   <div class="pt-3 mb-5" *ngFor="let table of tables">
 
     <table class="table-sm table-bordered text-center  overflow-fix" mat-table [dataSource]="dataSource">
@@ -37,11 +30,9 @@
         <th class=" h6 pt-3" mat-header-cell *matHeaderCellDef [attr.colspan]="8">
           <span class="pr-4">
             <span class="h5">Process Number: </span>
-            <!-- <input type="text" class="form-control-sm" placeholder="Process Number"> -->
             {{this.processNumberIs}}
           </span>
           <span class="p-4">
-            <!-- Boiled Rice with salt -->
             <span class="h5">Name: </span>
             <input type="text" class="form-control-sm" placeholder="Name" (change)="ProcessNameChangeHandler($event)">
           </span>
@@ -49,7 +40,6 @@
             <span class="h5">Total Cost: </span>{{getTotalCost() + getCost() | currency }}
           </span>
           <span class="p-4">
-            <!-- Boiled rice -->
             <span class="h5">Product of this process: </span>
             <input type="text" class="form-control-sm" placeholder="Name"
               (change)="ProductOfProcessChangeHandler($event)">
@@ -62,14 +52,8 @@
       </ng-container>
       <!-- ====================================== Table Header Ends============================================ -->
 
-
       <!-- ====================================== Table Content ============================================== -->
       <ng-container>
-        <!-- <ng-container matColumnDef="ProductName">
-        <th class="row-color" mat-header-cell *matHeaderCellDef> Product Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-      </ng-container> -->
-        <!--  -->
         <ng-container matColumnDef="ProductName" *ngIf="addingRow">
           <th class="row-color" mat-header-cell *matHeaderCellDef> Product Name </th>
           <td mat-cell *matCellDef="let element">
@@ -81,13 +65,8 @@
           <th class="row-color" mat-header-cell *matHeaderCellDef> USD/MT Price </th>
           <td mat-cell *matCellDef="let element"> {{xselectCost}} </td>
         </ng-container>
-        <!-- <ng-container matColumnDef="price" *ngIf="addingRow">
-        <th class="row-color" mat-header-cell *matHeaderCellDef> USD/MT Price </th>
-        <td mat-cell *matCellDef="let element"> </td>
-      </ng-container> -->
         <ng-container matColumnDef="weight">
           <th class="row-color" mat-header-cell *matHeaderCellDef>%USED (Weight) </th>
-          <!-- <td mat-cell *matCellDef="let element"> {{element.weight}} </td> -->
           <td mat-cell *matCellDef="let element"> <input type="number" placeholder="% used"
               (change)="PercentageUsedChangeHandler($event)"> </td>
         </ng-container>
@@ -105,7 +84,6 @@
         </ng-container>
         <ng-container matColumnDef="waste">
           <th class="row-color" mat-header-cell *matHeaderCellDef> Waste % </th>
-          <!-- <td mat-cell *matCellDef="let element"> {{element.waste}} </td> -->
           <td mat-cell *matCellDef="let element"> <input type="number" placeholder="% Waste"
               (change)="PercentageWasteChangeHandler($event)"> </td>
         </ng-container>
@@ -133,7 +111,7 @@
       </ng-container>
     </table>
 
-    <!-- ========================================== Footer Ends Here ================================================ -->
+    <!-- ==========================================Table Footer Ends Here ================================================ -->
 
     <!-- ========================================== Table1 Ends Here ================================================ -->
 
@@ -146,7 +124,6 @@
       </p>
       <table class="table pb-0 mb-0 ">
         <tbody>
-          <!-- <ng-container> -->
           <tr class="bg-color-tr text-white" *ngIf="  this.addNewConversion == true">
             <th class="pr-0 main-th"><select name="" id="" class="form-control-sm"
                 (change)="selectConversionChangeHandler($event)">
@@ -156,17 +133,6 @@
             </th>
             <th><a href="" class="text-dark"><i class="fa fa-trash-o text-white" aria-hidden="true"></i></a></th>
           </tr>
-          <!-- </ng-container> -->
-          <!-- <ng-container *ngIf="addingConversionRow">
-          <tr class="bg-color-tr text-white">
-            <th class="pr-0 main-th"><input type="text" class="form-control" formControlName="descreption" required
-                placeholder="add new Attribute"></th>
-            <th class="cost text-center "><input type="text" class="form-control" formControlName="cost" required
-                placeholder="add new cost"></th>
-            <th><a href="" class="text-dark"><i class="fa fa-trash-o text-white" aria-hidden="true"></i></a></th>
-          </tr>
-        </ng-container> -->
-
           <tr class="bg-color-total text-white">
             <th class="pr-0 main-th h5">Total</th>
             <th class="cost text-center">{{totalCost()}}</th>
@@ -174,17 +140,8 @@
           </tr>
         </tbody>
       </table>
-      <!-- <p class="bg-dark text-white pt-2 pb-2 pb-0 mb-0"><span class="h4 pl-3">Cost Bifergation : </span> <span
-        class="h5">Material
-        Cost +
-        Conversion
-        Cost: {{getTotalCost()}} + {{getCost()}} = {{getTotalCost() + getCost() | currency }}
-      </span>
-    </p> -->
     </div>
 
     <!-- ============================================ Table 2 Ends Here ==================================== -->
-
   </div>
-
 </ng-container>

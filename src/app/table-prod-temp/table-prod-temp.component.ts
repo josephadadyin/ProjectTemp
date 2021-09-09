@@ -26,19 +26,6 @@ interface PeriodicElement {
 }
 
 @Component({
-  selector: 'ngbd-modal-confirm',
-  templateUrl: './modal-add-new-process.html',
-})
-export class NgbdModalConfirm {
-  constructor(public modal: NgbActiveModal, public fb: FormBuilder) {}
-  ngOnInit(): void {}
-}
-
-const MODALS: { [name: string]: Type<any> } = {
-  focusFirst: NgbdModalConfirm,
-};
-
-@Component({
   selector: 'app-table-prod-temp',
   templateUrl: './table-prod-temp.component.html',
   styleUrls: ['./table-prod-temp.component.scss'],
@@ -56,7 +43,7 @@ export class TableProdTempComponent implements OnInit {
     'class',
   ];
   dataSource: any[] = [];
-  tables = [0];
+  tables = [1];
   dataArray = [
     { title: 'Cook carges', cost: 25 },
     { title: 'Gas', cost: 5 },
@@ -200,7 +187,7 @@ export class TableProdTempComponent implements OnInit {
       (d) => d.id.toString() === event.target.value.toString()
     );
     this.processProducts = proces.processProducts;
-    // this.getxPrice(event.tar);
+    this.getxPrice(event.tar);
   }
   PercentageUsedChangeHandler(event: any) {
     this.percentageUsed = event.target.value;
@@ -267,10 +254,6 @@ export class TableProdTempComponent implements OnInit {
     this.addingConversionRow = false;
   }
 
-  open(name: string) {
-    this._modalService.open(MODALS[name]);
-  }
-
   totalCost() {
     return this.cost;
   }
@@ -278,7 +261,7 @@ export class TableProdTempComponent implements OnInit {
     const ProcessNumbers = 'New Process' + TableProdTempComponent.processNumber;
     TableProdTempComponent.processNumber++;
     this.processPostApi({
-      description: ProcessNumbers,
+      description: this.processNumberIs,
       process_products: this.productOfProcess,
       process_conversion_types: this.selectConversion,
       process_calculator: this.processProducts,
