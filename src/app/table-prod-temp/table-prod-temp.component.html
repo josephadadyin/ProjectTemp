@@ -66,13 +66,14 @@
       <!--  -->
       <ng-container matColumnDef="ProductName" *ngIf="addingRow">
         <th class="row-color" mat-header-cell *matHeaderCellDef> Product Name </th>
-        <td mat-cell *matCellDef="let element"><select name="" id="" class="form-control-sm">
-            <option value="" *ngFor="let data of dataSource">{{data.description}}</option>
+        <td mat-cell *matCellDef="let element">
+          <select name="" id="" class="form-control-sm">
+            <option [ngValue]="data.id" *ngFor="let data of xproductName">{{data.description}}</option>
           </select> </td>
       </ng-container>
       <ng-container matColumnDef="price" *ngIf="addingRow">
         <th class="row-color" mat-header-cell *matHeaderCellDef> USD/MT Price </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        <td mat-cell *matCellDef="let element"> {{xselectCost}} </td>
       </ng-container>
       <!-- <ng-container matColumnDef="price" *ngIf="addingRow">
         <th class="row-color" mat-header-cell *matHeaderCellDef> USD/MT Price </th>
@@ -85,7 +86,7 @@
       </ng-container>
       <ng-container matColumnDef="density">
         <th class="row-color" mat-header-cell *matHeaderCellDef> DENSITY </th>
-        <td mat-cell *matCellDef="let element"> {{element.density}} </td>
+        <td mat-cell *matCellDef="let element"> {{xselectDensity}} </td>
       </ng-container>
       <ng-container matColumnDef="AvgDensity">
         <th class="row-color" mat-header-cell *matHeaderCellDef> Avgerage Density </th>

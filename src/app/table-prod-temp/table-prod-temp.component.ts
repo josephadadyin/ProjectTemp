@@ -176,6 +176,11 @@ export class TableProdTempComponent implements OnInit {
   addNewprocess = false;
   addingRow = false;
   addingConversionRow = false;
+  xproductName=[];
+  xproductsDetail=[];
+  xselectCost='';
+  xselectDensity='';
+  xnewRow={};
   constructor(private _modalService: NgbModal, public fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -222,6 +227,7 @@ export class TableProdTempComponent implements OnInit {
       )
       .then((response) => {
         this.dataSource = response.data.results;
+        this.xproductName = this.dataSource.map(d=>({description:d.description,id:d.id}));
         console.log(this.addNewProduct);
       })
       .catch((error) => {
@@ -229,6 +235,17 @@ export class TableProdTempComponent implements OnInit {
       })
       .then(function () {});
   }
+getxPrice(id){
+ const selectedProduct = this.dataSource.find(d=>(d.id===id)); 
+ this.xselectCost = selectedProduct.productAttributeValues.find(d=>(d.attribute.description==="Cost"))['attributeValue'];
+
+}
+
+getxDensity(id){
+  const selectedProduct = this.dataSource.find(d=>(d.id===id));
+  this.xselectDensity = selectedProduct.productAttributeValues.find(d=>(d.attribute.description==="Density"))['attributeValue'];
+ }
+
   getTotalCost() {
     return this.dataSource
       .map((t) => t.costAdd)
@@ -244,20 +261,32 @@ export class TableProdTempComponent implements OnInit {
   }
   addRow() {
     this.addingRow = true;
-    const newRow = {
-      ProductName: '',
-      price: '',
-      weight: '15',
-      density: '20',
-      AvgDensity: '25',
-      costAdd: 5,
-      waste: 5,
-      class: '',
-      isEdit: true,
-      selected: false,
-    };
-    this.dataSource = [...this.dataSource, newRow];
+    
+    // this.xproductName = this.dataSource.map(d=>(d.description));
+    // this.xproductAttributeValues = this.dataSource.map(d=>(d.productAttributeValues))
+
+
+    const selectedProduct = this.xproductName[0];
+    this.getxPrice(selectedProduct.id);
+    this.getxDensity(selectedProduct.id)
+    
+    // this.xnewRow = {
+    //   price: this.xselectCost['attributeValue'],
+    //   weight: '15',
+    //   density: this.xselectDensity['attributeValue'],
+    //   AvgDensity: '25',
+    //   costAdd: 5,
+    //   waste: 5,
+    //   class: '',
+    //   isEdit: true,
+    //   selected: false,
+    // };
   }
+
+  setProductDataOnProductName(id){
+
+  }
+
   addRowConversion() {
     this.addingConversionRow = true;
     const newRow = {
