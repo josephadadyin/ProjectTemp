@@ -30,74 +30,8 @@ interface PeriodicElement {
   templateUrl: './modal-add-new-process.html',
 })
 export class NgbdModalConfirm {
-  processNumber;
-  productName;
-  usd;
-  costAddon;
-  processName;
-  watsePersentage;
-  INR;
-  conversionCost;
-  totalCost;
-  usedPersentage;
-  Density;
-  averageDensity;
   constructor(public modal: NgbActiveModal, public fb: FormBuilder) {}
   ngOnInit(): void {}
-  // formSubmit() {
-  //   console.log('hello');
-  // }
-  // onChangeprocessNumber(event: any) {
-  //   console.log(event.target.value);
-  //   this.processNumber = event.target.value;
-  // }
-  // onChangeproductName(event: any) {
-  //   console.log(event.target.value);
-  //   this.productName = event.target.value;
-  // }
-  // onChangeusd(event: any) {
-  //   console.log(event.target.value);
-  //   this.usd = event.target.value;
-  // }
-  // onChangecostAddon(event: any) {
-  //   console.log(event.target.value);
-  //   this.costAddon = event.target.value;
-  // }
-  // onChangeprocessName(event: any) {
-  //   console.log(event.target.value);
-  //   this.processName = event.target.value;
-  // }
-
-  // onChangewatsePersentage(event: any) {
-  //   console.log(event.target.value);
-  //   this.watsePersentage = event.target.value;
-  // }
-  // onChangeINR(event: any) {
-  //   console.log(event.target.value);
-  //   this.INR = event.target.value;
-  // }
-  // onChangeconversionCost(event: any) {
-  //   console.log(event.target.value);
-  //   this.conversionCost = event.target.value;
-  // }
-  // onChangetotalCost(event: any) {
-  //   console.log(event.target.value);
-  //   this.totalCost = event.target.value;
-  // }
-  // onChangeusedPersentage(event: any) {
-  //   console.log(event.target.value);
-  //   this.usedPersentage = event.target.value;
-  // }
-
-  // onChangeusedDensity(event: any) {
-  //   console.log(event.target.value);
-  //   this.Density = event.target.value;
-  // }
-
-  // onChangeusedaverageDensity(event: any) {
-  //   console.log(event.target.value);
-  //   this.averageDensity = event.target.value;
-  // }
 }
 
 const MODALS: { [name: string]: Type<any> } = {
@@ -121,39 +55,6 @@ export class TableProdTempComponent implements OnInit {
     'waste',
     'class',
   ];
-  // dataSource: PeriodicElement[] = [
-  //   {
-  //     ProductName: 'Rice',
-  //     price: '87$',
-  //     weight: '76',
-  //     density: '76',
-  //     AvgDensity: '1bag/box',
-  //     costAdd: 35,
-  //     waste: 0,
-  //     class: 'NA',
-  //   },
-  //   {
-  //     ProductName: 'Salt',
-  //     price: '76$',
-  //     weight: '54',
-  //     density: '54',
-  //     AvgDensity: '1bag/box',
-  //     costAdd: 25,
-  //     waste: 0,
-  //     class: 'NA',
-  //   },
-  //   {
-  //     ProductName: 'Water',
-  //     price: '84$',
-  //     weight: '90',
-  //     density: '',
-  //     AvgDensity: '1bag/box',
-  //     costAdd: 25,
-  //     waste: 0,
-  //     class: 'NA',
-  //   },
-  // ];
-
   dataSource: any[] = [];
   tables = [0];
   dataArray = [
@@ -177,11 +78,11 @@ export class TableProdTempComponent implements OnInit {
   addNewprocess = false;
   addingRow = false;
   addingConversionRow = false;
-  xproductName=[];
-  xproductsDetail=[];
-  xselectCost='';
-  xselectDensity='';
-  xnewRow={};
+  xproductName = [];
+  xproductsDetail = [];
+  xselectCost = '';
+  xselectDensity = '';
+  xnewRow = {};
   processProducts;
   PrecessdataSource;
   selectProductName;
@@ -191,7 +92,7 @@ export class TableProdTempComponent implements OnInit {
   percentageWaste;
   selectConversion;
   cost;
-  processNumberIs;
+  processNumberIs = 1;
   static processNumber = 1;
   constructor(private _modalService: NgbModal, public fb: FormBuilder) {}
 
@@ -239,7 +140,10 @@ export class TableProdTempComponent implements OnInit {
       )
       .then((response) => {
         this.dataSource = response.data.results;
-        this.xproductName = this.dataSource.map(d=>({description:d.description,id:d.id}));
+        this.xproductName = this.dataSource.map((d) => ({
+          description: d.description,
+          id: d.id,
+        }));
         console.log(this.addNewProduct);
       })
       .catch((error) => {
@@ -262,16 +166,24 @@ export class TableProdTempComponent implements OnInit {
       })
       .then(function () {});
   }
-getxPrice(description){
- const selectedProduct = this.dataSource.find(d=>(d.description===description)); 
- this.xselectCost = selectedProduct.productAttributeValues.find(d=>(d.attribute.description==="Cost"))['attributeValue'];
+  getxPrice(description) {
+    const selectedProduct = this.dataSource.find(
+      (d) => d.description === description
+    );
+    this.xselectCost = selectedProduct.productAttributeValues.find(
+      (d) => d.attribute.description === 'Cost'
+    )['attributeValue'];
+  }
 
-}
+  getxDensity(description) {
+    const selectedProduct = this.dataSource.find(
+      (d) => d.description === description
+    );
+    this.xselectDensity = selectedProduct.productAttributeValues.find(
+      (d) => d.attribute.description === 'Density'
+    )['attributeValue'];
+  }
 
-getxDensity(description){
-  const selectedProduct = this.dataSource.find(d=>(d.description===description));
-  this.xselectDensity = selectedProduct.productAttributeValues.find(d=>(d.attribute.description==="Density"))['attributeValue'];
- }
   ProcessNameChangeHandler(event: any) {
     this.processName = event.target.value;
   }
@@ -315,20 +227,19 @@ getxDensity(description){
       .reduce((acc, value) => acc + value, 0);
   }
   AddProcess() {
-    this.processNumberIs++;
+    this.processNumberIs = this.processNumberIs + 1;
     this.addNewprocess = true;
   }
   addRow() {
     this.addingRow = true;
-    
+
     // this.xproductName = this.dataSource.map(d=>(d.description));
     // this.xproductAttributeValues = this.dataSource.map(d=>(d.productAttributeValues))
 
-
     const selectedProduct = this.xproductName[0];
     this.getxPrice(selectedProduct.description);
-    this.getxDensity(selectedProduct.description)
-    
+    this.getxDensity(selectedProduct.description);
+
     // this.xnewRow = {
     //   price: this.xselectCost['attributeValue'],
     //   weight: '15',
@@ -342,9 +253,7 @@ getxDensity(description){
     // };
   }
 
-  setProductDataOnProductName(id){
-
-  }
+  setProductDataOnProductName(id) {}
 
   addRowConversion() {
     this.addingConversionRow = true;
