@@ -23,6 +23,7 @@ import { TablePackageComponent } from './table-package/table-package.component';
 import { DragDropComponent } from './drag-drop/drag-drop.component';
 import { NewProdTempComponent } from './new-prod-temp/new-prod-temp.component';
 import { TableProdTempComponent } from './table-prod-temp/table-prod-temp.component';
+import { ProductTableComponent } from './product-table/product-table.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { TableProdTempComponent } from './table-prod-temp/table-prod-temp.compon
     DragDropComponent,
     NewProdTempComponent,
     TableProdTempComponent,
+    ProductTableComponent,
   ],
   imports: [
     MatSidenavModule,
@@ -57,6 +59,7 @@ import { TableProdTempComponent } from './table-prod-temp/table-prod-temp.compon
       { path: 'table-package', component: TablePackageComponent },
       { path: 'new-prod-temp', component: NewProdTempComponent },
       { path: 'table-prod-temp', component: TableProdTempComponent },
+      { path: 'product-table', component: ProductTableComponent },
     ]),
     NgbModule,
     BrowserAnimationsModule,

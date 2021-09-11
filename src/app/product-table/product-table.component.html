@@ -1,0 +1,124 @@
+<div class="container mt-5">
+  <button value="click" class="btn btn-outline-primary mr-2" (click)=" tables.push(tables.length)"
+    style="margin-bottom: 20px;">
+    + Add New Process
+  </button>
+  <div class="col-md-12 col-sm-12 shadow pb-1 pt-2 mb-5" *ngFor="let table of tables">
+    <tr>
+      <label class="h6 pl-2 pr-1 ">Process Number: </label>1
+      <label class="h6 pl-3">Name: </label> <input type="text" class="ml-1" placeholder="Name">
+      <label class="h6 pl-3 pr-1">Total: </label>500$
+      <label class="h6  pl-3">Product of this process: </label><input type="text" class="ml-1" placeholder="Name">
+      <button class="btn btn-default border ml-4 mb-1" type="button" (click)="addFieldValue()">+ Add New
+        Product</button>
+    </tr>
+    <table class="table table-bordered pb-0 mb-0">
+      <thead>
+        <tr class="row-color">
+          <td scope="col">Product Name</td>
+          <td scope="col">USD/MT price</td>
+          <td scope="col">%USED(WEIGHT)</td>
+          <td scope="col">DENSITY</td>
+          <td scope="col">AVG DENSITY</td>
+          <td scope="col">COST ADDON</td>
+          <td scope="col">WASTE %</td>
+          <td scope="col">Status</td>
+          <!-- <th scope="col">Status1</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let field of fieldArray; let i = index">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><a href="" class="pl-3 pr-3 text-secondary"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+            <a href="" class="pr-3 pl-3 text-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+          </td>
+        </tr>
+        <tr class="row-color text-left">
+          <td colspan="5">Total</td>
+          <td></td>
+          <td colspan="2"></td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered pb-5 mb-4">
+      <thead>
+        <tr class="pb-0">
+          <label for="" class="p-2 pr-5 h6">Conversion Cost Calculation</label>
+          <button class="btn btn-default ml-5" (click)="addFieldValue1()">+ Add New</button>
+        </tr>
+      </thead>
+      <tbody *ngFor="let field of fieldArray1; let i = index">
+        <tr>
+          <td scope="col">name</td>
+          <td scope="col">cost</td>
+          <td scope="col">Delete</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================================== -->
+<!--
+<span class="pr-3 pl-3">
+  <span class="h5">Process Number: </span>
+  <input type="text" placeholder="Process Number">
+</span>
+<span class="p-3">
+  <span class="h5">Name: </span>
+  <input type="text" placeholder="Name">
+</span>
+<span class="p-3">
+  <span class="h5">Total Cost: </span>{{getTotalCost() + getCost() | currency }}
+</span>
+<span class="p-3 ">
+  <span class="h5">Product of this process: </span>
+  <input type="text" class="" placeholder="Name">
+</span>
+<span class="pb-5">
+  <button (click)="addRow()" class=" btn btn-color  mb-1  mr-4 demo-button ">
+    + Add new product
+  </button>
+</span>
+<table class="table table-bordered text-center">
+  <thead>
+    <tr class="row-color">
+      <td>Product Name</td>
+      <td>USD/MT price</td>
+      <td>%USED(WEIGHT)</td>
+      <td>DENSITY</td>
+      <td>AVG DENSITY</td>
+      <td>COST ADDON</td>
+      <td>WASTE %</td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th><select name="" id="">
+          <option value="" *ngFor="let data of addNewProduct">{{data.description}}</option>
+        </select>
+      </th>
+      <th>{{data.attributeValue}}</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr class="row-color">
+      <th colspan="5" class="text-left">Total</th>
+      <th>{{ getTotalCost() | currency}} </th>
+      <th></th>
+      <th></th>
+    </tr>
+  </tbody>
+
+</table> -->
