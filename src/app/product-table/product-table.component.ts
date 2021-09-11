@@ -33,6 +33,25 @@ export class ProductTableComponent implements OnInit {
     this.newAttribute1 = {};
   }
 
+  // ==========================  Event Handler ===================
+  ProductWeightChangeHandler(event: any) {
+    console.log(event.target.value);
+  }
+  ProductWasteChangeHandler(event: any) {
+    console.log(event.target.value);
+  }
+  ProductNameChangeHandler(event: any) {
+    console.log(event.target.value);
+  }
+  ProductOfProcessChangeHandler(event: any) {
+    console.log(event.target.value);
+  }
+  selectConverionChangeHandler(event: any) {
+    console.log(event.target.value);
+  }
+  EnterCostChangeHandler(event: any) {
+    console.log(event.target.value);
+  }
   // ======================= Product Get API ======================================
 
   AddProduct() {
