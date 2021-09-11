@@ -7,13 +7,19 @@ import axios from 'axios';
   styleUrls: ['./product-table.component.scss'],
 })
 export class ProductTableComponent implements OnInit {
-  tables = [1];
+  tables = [0];
   AddProductData;
   xproductName = [];
   selectProductName;
   xselectCost = '';
   xselectDensity = '';
   ConversionName;
+  processName;
+  productWeight;
+  productWaste;
+  productOfProcess;
+  conversionName;
+  enterCost;
   constructor() {}
 
   ngOnInit(): void {
@@ -35,21 +41,27 @@ export class ProductTableComponent implements OnInit {
 
   // ==========================  Event Handler ===================
   ProductWeightChangeHandler(event: any) {
+    this.productWeight = event.target.value;
     console.log(event.target.value);
   }
   ProductWasteChangeHandler(event: any) {
+    this.productWaste = event.target.value;
     console.log(event.target.value);
   }
-  ProductNameChangeHandler(event: any) {
+  ProcessNameChangeHandler(event: any) {
+    this.processName = event.target.value;
     console.log(event.target.value);
   }
   ProductOfProcessChangeHandler(event: any) {
+    this.productOfProcess = event.target.value;
     console.log(event.target.value);
   }
   selectConverionChangeHandler(event: any) {
+    this.conversionName = event.target.value;
     console.log(event.target.value);
   }
   EnterCostChangeHandler(event: any) {
+    this.enterCost = event.target.value;
     console.log(event.target.value);
   }
   // ======================= Product Get API ======================================
@@ -120,5 +132,52 @@ export class ProductTableComponent implements OnInit {
         console.log(error);
       })
       .then(function () {});
+  }
+
+  // ============================= Process Post Api ========================
+
+  ProcessPost(payload) {
+    console.log('ProcessPostAPi Is called');
+    axios
+      .post(
+        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/processes/',
+        payload
+      )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    console.log('Process post API is successfully Called:');
+  }
+
+  saveProcess() {
+    console.log('SaveProcess function is called:');
+    this.ProcessPost({
+      description: this.processName,
+      processProducts: [
+        {
+          product: this.productOfProcess,
+          processProductAttributeValues: [
+            {
+              attribute: { description: this.selectProductName },
+              attributeValue: null,
+            },
+          ],
+          processConversionTypes: [
+            {
+              processConversionAttributeValues: [
+                {
+                  attribute: { description: this.conversionName },
+                  attributeValue: this.enterCost,
+                },
+              ],
+            },
+          ],
+          processCalculator: [null],
+        },
+      ],
+    });
   }
 }

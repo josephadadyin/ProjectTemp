@@ -1,18 +1,18 @@
 <!-- <div class="container mt-5"> -->
-<!-- <button value="click" class="btn btn-outline-primary mr-2" (click)=" tables.push(tables.length)"
+<button value="click" class="btn btn-outline-primary mr-2" (click)=" tables.push(tables.length)"
   style="margin-bottom: 20px;">
   + Add New Process
-</button> -->
+</button>
 <!-- *ngFor="let table of tables" -->
 <div class="col-md-12 col-sm-12 shadow pb-1 pt-2 mb-5">
   <tr>
     <label class="h6 pl-2 pr-1 ">Process Number: </label>1
     <label class="h6 pl-5">Name: </label> <input type="text" class="ml-1" placeholder="Name"
-      (change)="ProductNameChangeHandler($event)">
+      (change)="ProcessNameChangeHandler($event)">
     <label class="h6 pl-5 pr-1">Total: </label>500$
     <label class="h6  pl-5">Product of this process: </label><input type="text" class="ml-1" placeholder="Final Product"
       (change)="ProductOfProcessChangeHandler($event)">
-    <button class="btn btn-default border ml-5 mb-1" type="button" (click)="addFieldValue();  addData()">+ Add
+    <button class=" btn-default ml-5 mb-1 add-product-btn" type="button" (click)="addFieldValue();  addData()">+ Add
       New
       Product</button>
   </tr>
@@ -81,5 +81,8 @@
       </tr>
     </tbody>
   </table>
+  <div>
+    <button class="btn btn-default ml-5" (click)="saveProcess()">Save</button>
+  </div>
 </div>
 <!-- </div> -->

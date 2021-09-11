@@ -54,8 +54,24 @@
           <app-drag-drop></app-drag-drop>
         </div>
       </div>
+
     </div>
-    <app-table-prod-temp class="table-width"></app-table-prod-temp>
+    <div class="row pl-4 pr-4 pb-4">
+      <div class="col-md-3"> Process
+        <select class="form-control mb-3 font-weight-light">
+          <option><a href="https://www.wikipedia.org/"> Create new process</a></option>
+          <option> Process A</option>
+          <option> Process B</option>
+        </select></div>
+      <div class="col-md-3"> Product Weight Calcuator
+        <select class="form-control mb-3 font-weight-light">
+          <option><a href="https://www.wikipedia.org/"> Create new Calculator</a></option>
+          <option> Calculator 1</option>
+          <option> Calculator 2</option>
+        </select></div>
+    </div>
+    <!-- <app-table-prod-temp class="table-width"></app-table-prod-temp> -->
+    <app-product-table class="table-width"></app-product-table>
     <div class="ml-auto text-right pt-4 pb-4">
       <button class="btn btn-color btn-lg pe-2 px-4 text-white " (click)="onSave($event)">Save</button>
     </div>
