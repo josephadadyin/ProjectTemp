@@ -55,7 +55,12 @@
         </div>
       </div>
     </div>
-    <app-table-prod-temp class="table-width"></app-table-prod-temp>
+    <app-table-prod-temp class="table-width" 
+    (onProcessNameChange)="onProcessNameChangeHandler($event)"
+    (onProcessNumberChange)="onProcessNumberChangeHandler($event)"
+    (onConversionChange)="ononConversionChangeHandler($event)"
+    (onCostChange)="onCostChangeHandler($event)"
+    ></app-table-prod-temp>
     <div class="ml-auto text-right pt-4 pb-4">
       <button class="btn btn-color btn-lg pe-2 px-4 text-white " (click)="onSave($event)">Save</button>
     </div>

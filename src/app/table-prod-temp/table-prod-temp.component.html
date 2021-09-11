@@ -30,7 +30,8 @@
         <th class=" h6 pt-3" mat-header-cell *matHeaderCellDef [attr.colspan]="8">
           <span class="pr-4">
             <span class="h5">Process Number: </span>
-            {{this.processNumberIs}}
+            <label>{{this.processNumberIs}}</label>
+            
           </span>
           <span class="p-4">
             <span class="h5">Name: </span>
@@ -127,9 +128,10 @@
           <tr class="bg-color-tr text-white" *ngIf="  this.addNewConversion == true">
             <th class="pr-0 main-th"><select name="" id="" class="form-control-sm"
                 (change)="selectConversionChangeHandler($event)">
-                <option value="" *ngFor="let data of conversionCost">{{data.description}}</option>
+                <option value="{{data.id}}" *ngFor="let data of conversionCost">{{data.description}}</option>
               </select></th>
-            <th class="cost text-center "><input type="number" placeholder="Cost" (change)="onChangeCost($event)">
+            <th class="cost text-center ">
+              <input type="number" placeholder="Cost" (change)="onChangeCost($event)">
             </th>
             <th><a href="" class="text-dark"><i class="fa fa-trash-o text-white" aria-hidden="true"></i></a></th>
           </tr>

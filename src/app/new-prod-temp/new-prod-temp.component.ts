@@ -17,6 +17,10 @@ export class NewProdTempComponent implements OnInit {
   selectedProductType;
   AddAtributex;
   AddAtributevalue = false;
+  processName;
+  processNumber;
+  conversionNo;
+  cost;
   constructor() {}
 
   ngOnInit(): void {
@@ -81,6 +85,26 @@ export class NewProdTempComponent implements OnInit {
   }
   selectProductTypeChangeHandler(event: any) {
     this.selectedProductType = event.target.value;
+  }
+
+  onProcessNameChangeHandler(name: any){
+    this.processName = name;
+  }
+
+  ononConversionChangeHandler(no: any){
+    this.conversionNo = no;
+    console.log('this.ononConversionChangeHandler', this.conversionNo);
+    
+  }
+  onCostChangeHandler(no: any){
+    this.cost = no;
+    console.log('this.pncost', this.cost);
+    
+  }
+  onProcessNumberChangeHandler(no: any){
+    this.processNumber = no;
+    console.log('this.processNumber', this.processNumber);
+    
   }
 
   postNewTemplate(payload) {

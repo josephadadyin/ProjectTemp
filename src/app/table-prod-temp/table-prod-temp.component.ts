@@ -1,4 +1,4 @@
-import { Component, OnInit, Type } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Type } from '@angular/core';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
@@ -79,17 +79,23 @@ export class TableProdTempComponent implements OnInit {
   percentageWaste;
   selectConversion;
   cost;
-  processNumberIs = 1;
+  processNumberIs;
   static processNumber = 1;
-  constructor(private _modalService: NgbModal, public fb: FormBuilder) {}
+  constructor(private _modalService: NgbModal, public fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
       description: new FormControl('', [Validators.required]),
     });
+    this.processNumberIs = 1;
     this.AddProduct();
     // this.Conversion();
   }
+ 
+@Output() onProcessNameChange: EventEmitter<number> = new EventEmitter();
+@Output() onProcessNumberChange: EventEmitter<number> = new EventEmitter();
+@Output() onConversionChange: EventEmitter<number> = new EventEmitter();
+@Output() onCostChange: EventEmitter<number> = new EventEmitter();
 
   Conversion() {
     this.addNewConversion = true;
@@ -104,7 +110,7 @@ export class TableProdTempComponent implements OnInit {
       .catch((error) => {
         console.log(error);
       })
-      .then(function () {});
+      .then(function () { });
   }
   // AddConversion() {
   //   axios
@@ -136,7 +142,7 @@ export class TableProdTempComponent implements OnInit {
       .catch((error) => {
         console.log(error);
       })
-      .then(function () {});
+      .then(function () { });
   }
   processPostApi(payload) {
     axios
@@ -151,7 +157,7 @@ export class TableProdTempComponent implements OnInit {
       .catch((error) => {
         console.log(error);
       })
-      .then(function () {});
+      .then(function () { });
   }
   getxPrice(description) {
     const selectedProduct = this.dataSource.find(
@@ -173,6 +179,9 @@ export class TableProdTempComponent implements OnInit {
 
   ProcessNameChangeHandler(event: any) {
     this.processName = event.target.value;
+    console.log('this.processName = event.target.value;', event.target.value);
+    
+    this.onProcessNameChange.emit(this.processName);
   }
   ProductOfProcessChangeHandler(event: any) {
     this.productOfProcess = event.target.value;
@@ -198,9 +207,32 @@ export class TableProdTempComponent implements OnInit {
 
   selectConversionChangeHandler(event: any) {
     this.selectConversion = event.target.value;
+    this.onConversionChange.emit(this.selectConversion);
   }
   onChangeCost(event: any) {
     this.cost = event.target.value;
+    console.log('hello', this.cost);
+    this.onCostChange.emit(this.cost);
+  }
+
+  makeConversionPayload() {
+    return {
+      "conversionType": this.selectConversion,
+      "processConversionAttributeValues": [
+        {
+          "attribute": {
+            "id": 17,
+            "description": "Cost"
+
+          },
+          "attributeValue": this.cost
+        }
+      ]
+    }
+  }
+
+  makeAddProcessPayload(){
+
   }
 
   getTotalCost() {
@@ -208,14 +240,18 @@ export class TableProdTempComponent implements OnInit {
       .map((t) => t.costAdd)
       .reduce((acc, value) => acc + value, 0);
   }
+
   getCost() {
     return this.dataArray
       .map((t) => t.cost)
       .reduce((acc, value) => acc + value, 0);
   }
+
   AddProcess() {
     this.processNumberIs = this.processNumberIs + 1;
+    console.log('processNumberIs', this.processNumberIs);
     this.addNewprocess = true;
+    this.onProcessNumberChange.emit(this.processNumberIs);
   }
   addRow() {
     this.addingRow = true;
@@ -240,7 +276,7 @@ export class TableProdTempComponent implements OnInit {
     // };
   }
 
-  setProductDataOnProductName(id) {}
+  setProductDataOnProductName(id) { }
 
   addRowConversion() {
     this.addingConversionRow = true;
