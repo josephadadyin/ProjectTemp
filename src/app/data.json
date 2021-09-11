@@ -1,98 +1,141 @@
 {
-  "count": 1,
+  "count": 3,
   "next": null,
   "previous": null,
   "results": [
     {
       "id": 1,
-      "description": "Process1",
-      "processProducts": [
+      "description": "Woven Fabric",
+      "productTemplate": null,
+      "process": null,
+      "productAttributeValues": [
         {
           "id": 1,
-          "product": 1,
-          "processProductAttributeValues": [
-            {
-              "id": 1,
-              "attribute": {
-                "id": 1,
-                "description": "BodyWidth",
-                "systemUom": {
-                  "id": 1,
-                  "description": "mm"
-                }
-              },
-              "attributeValue": null,
-              "attributeValueExpression": "p1av1",
-              "userConversionUom": "mm"
-            },
-            {
-              "id": 2,
-              "attribute": {
-                "id": 2,
-                "description": "BodyLength",
-                "systemUom": {
-                  "id": 1,
-                  "description": "mm"
-                }
-              },
-              "attributeValue": null,
-              "attributeValueExpression": "p1av2",
-              "userConversionUom": "mm"
-            },
-            {
-              "id": 3,
-              "attribute": {
-                "id": 3,
-                "description": "BodySurfaceArea",
-                "systemUom": {
-                  "id": 6,
-                  "description": "m2"
-                }
-              },
-              "attributeValue": null,
-              "attributeValueExpression": "p1av3",
-              "userConversionUom": "m2"
+          "attribute": {
+            "id": 15,
+            "description": "Weight",
+            "systemUom": {
+              "id": 7,
+              "description": "gm"
             }
-          ]
-        }
-      ],
-      "processConversionTypes": [
+          },
+          "attributeValue": "21",
+          "userConversionUom": "gm"
+        },
         {
-          "id": 1,
-          "conversionType": 1,
-          "processConversionAttributeValues": [
-            {
-              "id": 1,
-              "attribute": {
-                "id": 17,
-                "description": "Cost",
-                "systemUom": {
-                  "id": 13,
-                  "description": "USD"
-                }
-              },
-              "attributeValue": "20",
-              "attributeValueExpression": null,
-              "userConversionUom": "USD"
-            },
-            {
-              "id": 2,
-              "attribute": {
-                "id": 15,
-                "description": "Weight",
-                "systemUom": {
-                  "id": 7,
-                  "description": "gm"
-                }
-              },
-              "attributeValue": "21",
-              "attributeValueExpression": null,
-              "userConversionUom": "kg"
+          "id": 2,
+          "attribute": {
+            "id": 17,
+            "description": "Cost",
+            "systemUom": {
+              "id": 13,
+              "description": "USD"
             }
-          ]
+          },
+          "attributeValue": "22",
+          "userConversionUom": "USD"
+        },
+        {
+          "id": 3,
+          "attribute": {
+            "id": 22,
+            "description": "Density",
+            "systemUom": {
+              "id": 15,
+              "description": "gm/cm3"
+            }
+          },
+          "attributeValue": "65",
+          "userConversionUom": "gm/m3"
         }
-      ],
-      "processCalculator": null
+      ]
+    },
+    {
+      "id": 2,
+      "description": "Lamination",
+      "productTemplate": null,
+      "process": null,
+      "productAttributeValues": [
+        {
+          "id": 4,
+          "attribute": {
+            "id": 15,
+            "description": "Weight",
+            "systemUom": {
+              "id": 7,
+              "description": "gm"
+            }
+          },
+          "attributeValue": "19",
+          "userConversionUom": "gm"
+        },
+        {
+          "id": 5,
+          "attribute": {
+            "id": 17,
+            "description": "Cost",
+            "systemUom": {
+              "id": 13,
+              "description": "USD"
+            }
+          },
+          "attributeValue": "45",
+          "userConversionUom": "USD"
+        },
+        {
+          "id": 6,
+          "attribute": {
+            "id": 22,
+            "description": "Density",
+            "systemUom": {
+              "id": 15,
+              "description": "gm/cm3"
+            }
+          },
+          "attributeValue": "65",
+          "userConversionUom": "gm/m3"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "description": "Product2",
+      "productTemplate": null,
+      "process": {
+        "id": 1,
+        "description": "Process1",
+        "processProducts": [],
+        "processConversionTypes": [],
+        "processCalculator": null
+      },
+      "productAttributeValues": [
+        {
+          "id": 7,
+          "attribute": {
+            "id": 1,
+            "description": "BodyWidth",
+            "systemUom": {
+              "id": 1,
+              "description": "mm"
+            }
+          },
+          "attributeValue": "21",
+          "userConversionUom": "mm"
+        },
+        {
+          "id": 8,
+          "attribute": {
+            "id": 1,
+            "description": "BodyWidth",
+            "systemUom": {
+              "id": 1,
+              "description": "mm"
+            }
+          },
+          "attributeValue": "22",
+          "userConversionUom": "mm"
+        }
+      ]
     }
   ]
 }
