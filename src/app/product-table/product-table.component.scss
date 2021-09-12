@@ -5,10 +5,18 @@
 
 .row-color1 {
   background-color: #2485a6;
+  // border: none;
 }
 .table1 {
   overflow-x: scroll;
 }
 .add-product-btn {
   background-color: #2485a6;
+}
+.process-table-div {
+  border-radius: 10px;
+}
+.tdcost {
+  border-left: 1px solid white;
+  border-right: 1px solid white;
 }
