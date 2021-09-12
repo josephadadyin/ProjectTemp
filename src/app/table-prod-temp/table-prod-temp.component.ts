@@ -249,7 +249,6 @@ export class TableProdTempComponent implements OnInit {
 
   AddProcess() {
     this.processNumberIs = this.processNumberIs + 1;
-    console.log('processNumberIs', this.processNumberIs);
     this.addNewprocess = true;
     this.onProcessNumberChange.emit(this.processNumberIs);
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import axios from 'axios';
 
 @Component({
@@ -7,19 +7,35 @@ import axios from 'axios';
   styleUrls: ['./product-table.component.scss'],
 })
 export class ProductTableComponent implements OnInit {
-  tables = [1];
+  tables = [0];
   AddProductData;
   xproductName = [];
   selectProductName;
   xselectCost = '';
   xselectDensity = '';
   ConversionName;
+  processName;
+  productWeight;
+  productWaste;
+  productOfProcess;
+  conversionName;
+  enterCost;
+  static processNumber = 1;
+  xprocessNumber;
+
   constructor() {}
 
   ngOnInit(): void {
     this.AddProduct();
     this.Conversion();
+    this.xprocessNumber = ProductTableComponent.processNumber;
+    this.onProcessNumberChange.emit(this.xprocessNumber);
   }
+  @Output() onProcessNameChange: EventEmitter<number> = new EventEmitter();
+@Output() onProcessNumberChange: EventEmitter<number> = new EventEmitter();
+@Output() onConversionChange: EventEmitter<number> = new EventEmitter();
+@Output() onCostChange: EventEmitter<number> = new EventEmitter();
+
   public fieldArray: Array<any> = [];
   public newAttribute: any = {};
   addFieldValue() {
@@ -35,23 +51,34 @@ export class ProductTableComponent implements OnInit {
 
   // ==========================  Event Handler ===================
   ProductWeightChangeHandler(event: any) {
+    this.productWeight = event.target.value;
     console.log(event.target.value);
   }
   ProductWasteChangeHandler(event: any) {
+    this.productWaste = event.target.value;
     console.log(event.target.value);
   }
-  ProductNameChangeHandler(event: any) {
+
+  ProcessNameChangeHandler(event: any) {
+    this.processName = event.target.value;
     console.log(event.target.value);
+    this.onProcessNameChange.emit(this.processName);
   }
   ProductOfProcessChangeHandler(event: any) {
+    this.productOfProcess = event.target.value;
     console.log(event.target.value);
   }
   selectConverionChangeHandler(event: any) {
+    this.conversionName = event.target.value;
     console.log(event.target.value);
+    this.onConversionChange.emit(this.conversionName);
   }
   EnterCostChangeHandler(event: any) {
+    this.enterCost = event.target.value;
     console.log(event.target.value);
+    this.onCostChange.emit(this.enterCost);
   }
+  
   // ======================= Product Get API ======================================
 
   AddProduct() {
@@ -120,5 +147,52 @@ export class ProductTableComponent implements OnInit {
         console.log(error);
       })
       .then(function () {});
+  }
+
+  // ============================= Process Post Api ========================
+
+  ProcessPost(payload) {
+    console.log('ProcessPostAPi Is called');
+    axios
+      .post(
+        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/processes/',
+        payload
+      )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    console.log('Process post API is successfully Called:');
+  }
+
+  saveProcess() {
+    console.log('SaveProcess function is called:');
+    this.ProcessPost({
+      description: this.processName,
+      processProducts: [
+        {
+          product: this.productOfProcess,
+          processProductAttributeValues: [
+            {
+              attribute: { description: this.selectProductName },
+              attributeValue: null,
+            },
+          ],
+          processConversionTypes: [
+            {
+              processConversionAttributeValues: [
+                {
+                  attribute: { description: this.conversionName },
+                  attributeValue: this.enterCost,
+                },
+              ],
+            },
+          ],
+          processCalculator: [null],
+        },
+      ],
+    });
   }
 }

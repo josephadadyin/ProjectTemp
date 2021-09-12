@@ -83,6 +83,7 @@ export class NewProdTempComponent implements OnInit {
     );
     this.attributesGroupAttributes = attrbs.attributesGroupAttributes;
   }
+
   selectProductTypeChangeHandler(event: any) {
     this.selectedProductType = event.target.value;
   }
@@ -123,14 +124,39 @@ export class NewProdTempComponent implements OnInit {
   }
 
   onSave(event: any) {
-    const templateName =
-      'New Tempalate hexode' + NewProdTempComponent.templateCounter;
-    NewProdTempComponent.templateCounter++;
-
-    this.postNewTemplate({
-      description: this.templateName,
-      product_type: this.selectedProductType,
-      product_template_attributes: this.attributesGroupAttributes,
-    });
+    const d = this.makeAddProcessPayload();
+    console.log('dddd', d);
+    axios
+      .get(
+        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/processes/'
+      )
+      .then((response) => {
+       console.log('resssss', response.data);
+       
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(function () {});
+  }
+  makeAddProcessPayload(){
+    return {
+      "description": this.processName,
+      "processProducts":[{
+        "product": this.processNumber,
+        "processProductAttributeValues": this.attributesGroupAttributes
+      }],
+      "processConversionTypes": [{
+        "conversionType": this.conversionNo,
+        "processConversionAttributeValues": [{
+          "attribute": {
+            "id": 17,
+            "description": "Cost"
+          },
+          "attributeValue": this.cost
+        }]
+      }],
+      "processCalculator": null
+    }
   }
 }
