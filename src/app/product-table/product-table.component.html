@@ -1,7 +1,6 @@
 <!-- <div class="container mt-5"> -->
 <div class="row">
-  <button value="click" class="btn add-product-btn ml-auto mr-4" (click)=" tables.push(tables.length)"
-    style="margin-bottom: 20px;">
+  <button value="click" class="btn add-product-btn ml-auto mr-4" (click)="saveProcess()" style="margin-bottom: 20px;">
     + Add New Process
   </button>
 </div>
@@ -10,7 +9,8 @@
   <div class="pt-2 row">
     <span> <label class="h5 pl-4 pr-1 ">Process Number: </label>
       <span class="h6 pr-2"> {{xprocessNumber}}</span></span>
-    <label class="h5 pl-5">Name: </label> <input type="text " class="form-control-sm ml-1" placeholder="Name"
+    <label class="h5 pl-5">Name: </label>
+    <input type="text " class="form-control-sm ml-1" placeholder="Name" [(ngModel)]="processName"
       (change)="ProcessNameChangeHandler($event)">
     <span> <label class="h5 pl-5 pr-1">Total: </label> <span class="h6"> 500$</span></span>
     <label class="h5  pl-5">Product of this process: </label><input type="text" class="form-control-sm ml-1"

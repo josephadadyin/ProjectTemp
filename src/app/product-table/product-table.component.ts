@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import axios from 'axios';
 
 @Component({
@@ -22,9 +22,9 @@ export class ProductTableComponent implements OnInit {
   enterCost;
   static processNumber = 1;
   xprocessNumber;
-  selectedProductNameIndex=0;
+  selectedProductNameIndex = 0;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.AddProduct();
@@ -33,9 +33,10 @@ export class ProductTableComponent implements OnInit {
     this.onProcessNumberChange.emit(this.xprocessNumber);
   }
   @Output() onProcessNameChange: EventEmitter<number> = new EventEmitter();
-@Output() onProcessNumberChange: EventEmitter<number> = new EventEmitter();
-@Output() onConversionChange: EventEmitter<number> = new EventEmitter();
-@Output() onCostChange: EventEmitter<number> = new EventEmitter();
+  @Output() onProcessNumberChange: EventEmitter<number> = new EventEmitter();
+  @Output() onConversionChange: EventEmitter<number> = new EventEmitter();
+  @Output() onCostChange: EventEmitter<number> = new EventEmitter();
+  @Input() xattributesGroupAttributes = {};
 
   public fieldArray: Array<any> = [];
   public newAttribute: any = {};
@@ -48,6 +49,55 @@ export class ProductTableComponent implements OnInit {
   addFieldValue1() {
     this.fieldArray1.push(this.newAttribute1);
     this.newAttribute1 = {};
+  }
+
+  makeAddProcessPayload() {
+    return {
+      description: this.processName,
+      processProducts: [
+        {
+          product: this.xprocessNumber,
+          processProductAttributeValues: this.xattributesGroupAttributes,
+        },
+      ],
+      processConversionTypes: [
+        {
+          conversionType: this.conversionName,
+          processConversionAttributeValues: [
+            {
+              attribute: {
+                id: 17,
+                description: 'Cost',
+              },
+              attributeValue: this.enterCost,
+            },
+          ],
+        },
+      ],
+      processCalculator: null,
+    };
+  }
+
+  saveProcess() {
+    const payload = this.makeAddProcessPayload();
+    console.log('dddd', JSON.stringify(payload));
+    axios
+      .post(
+        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/processes/',
+        payload
+      )
+      .then((response) => {
+        console.log('resssss', response.data);
+        ProductTableComponent.processNumber += 1;
+        this.xprocessNumber = ProductTableComponent.processNumber;
+        this.processName = '';
+        this.conversionName = '';
+        this.enterCost = '';
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(function () {});
   }
 
   // ==========================  Event Handler ===================
@@ -79,7 +129,7 @@ export class ProductTableComponent implements OnInit {
     console.log(event.target.value);
     this.onCostChange.emit(this.enterCost);
   }
-  
+
   // ======================= Product Get API ======================================
 
   AddProduct() {
@@ -98,7 +148,7 @@ export class ProductTableComponent implements OnInit {
       .catch((error) => {
         console.log(error);
       })
-      .then(function () {});
+      .then(function () { });
   }
 
   getxPrice(description) {
@@ -119,7 +169,7 @@ export class ProductTableComponent implements OnInit {
     )['attributeValue'];
   }
 
-  selectProductNameChangeHandler(event: any, index:any) {
+  selectProductNameChangeHandler(event: any, index: any) {
     console.log('indexindex', index);
     this.selectedProductNameIndex = index;
     this.selectProductName = event.target.value;
@@ -149,7 +199,7 @@ export class ProductTableComponent implements OnInit {
       .catch((error) => {
         console.log(error);
       })
-      .then(function () {});
+      .then(function () { });
   }
 
   // ============================= Process Post Api ========================
@@ -170,32 +220,32 @@ export class ProductTableComponent implements OnInit {
     console.log('Process post API is successfully Called:');
   }
 
-  saveProcess() {
-    console.log('SaveProcess function is called:');
-    this.ProcessPost({
-      description: this.processName,
-      processProducts: [
-        {
-          product: this.productOfProcess,
-          processProductAttributeValues: [
-            {
-              attribute: { description: this.selectProductName },
-              attributeValue: null,
-            },
-          ],
-          processConversionTypes: [
-            {
-              processConversionAttributeValues: [
-                {
-                  attribute: { description: this.conversionName },
-                  attributeValue: this.enterCost,
-                },
-              ],
-            },
-          ],
-          processCalculator: [null],
-        },
-      ],
-    });
-  }
+  // saveProcess() {
+  //   console.log('SaveProcess function is called:');
+  //   this.ProcessPost({
+  //     description: this.processName,
+  //     processProducts: [
+  //       {
+  //         product: this.productOfProcess,
+  //         processProductAttributeValues: [
+  //           {
+  //             attribute: { description: this.selectProductName },
+  //             attributeValue: null,
+  //           },
+  //         ],
+  //         processConversionTypes: [
+  //           {
+  //             processConversionAttributeValues: [
+  //               {
+  //                 attribute: { description: this.conversionName },
+  //                 attributeValue: this.enterCost,
+  //               },
+  //             ],
+  //           },
+  //         ],
+  //         processCalculator: [null],
+  //       },
+  //     ],
+  //   });
+  // }
 }
