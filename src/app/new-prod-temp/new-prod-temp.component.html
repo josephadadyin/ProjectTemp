@@ -59,10 +59,9 @@
     </div>
     <div class="row pl-4 pr-4 pb-4">
       <div class="col-md-3"> Process
-        <select class="form-control mb-3 font-weight-light">
-          <option><a href="https://www.wikipedia.org/"> Create new process</a></option>
-          <option> Process A</option>
-          <option> Process B</option>
+        <select name="" id="" class="form-control mb-3 font-weight-light" (change)="selectProcessChangeHandler($event)">
+          <option value="process">Total Process</option>
+          <option [ngValue]="data.id" *ngFor="let data of getProcesses">{{data.description}}</option>
         </select>
       </div>
       <div class="col-md-3"> Product Weight Calcuator
