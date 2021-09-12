@@ -1,21 +1,23 @@
 <!-- <div class="container mt-5"> -->
-<button value="click" class="btn btn-outline-primary mr-2" (click)=" tables.push(tables.length)"
-  style="margin-bottom: 20px;">
-  + Add New Process
-</button>
+<div class="row">
+  <button value="click" class="btn add-product-btn ml-auto mr-4" (click)=" tables.push(tables.length)"
+    style="margin-bottom: 20px;">
+    + Add New Process
+  </button>
+</div>
 <!-- *ngFor="let table of tables" -->
-<div class="col-md-12 col-sm-12 shadow pb-1 pt-2 mb-5">
-  <tr>
-    <label class="h6 pl-2 pr-1 ">Process Number: </label>{{xprocessNumber}}
-    <label class="h6 pl-5">Name: </label> <input type="text" class="ml-1" placeholder="Name"
+<div class="col-md-12 col-sm-12 shadow process-table-div pb-1 pt-2 mb-5">
+  <div class="pt-2 row">
+    <span> <label class="h5 pl-4 pr-1 ">Process Number: </label>
+      <span class="h6 pr-2"> {{xprocessNumber}}</span></span>
+    <label class="h5 pl-5">Name: </label> <input type="text " class="form-control-sm ml-1" placeholder="Name"
       (change)="ProcessNameChangeHandler($event)">
-    <label class="h6 pl-5 pr-1">Total: </label>500$
-    <label class="h6  pl-5">Product of this process: </label><input type="text" class="ml-1" placeholder="Final Product"
-      (change)="ProductOfProcessChangeHandler($event)">
-    <button class=" btn-default ml-5 mb-1 add-product-btn" type="button" (click)="addFieldValue();  addData()">+ Add
-      New
-      Product</button>
-  </tr>
+    <span> <label class="h5 pl-5 pr-1">Total: </label> <span class="h6"> 500$</span></span>
+    <label class="h5  pl-5">Product of this process: </label><input type="text" class="form-control-sm ml-1"
+      placeholder="Final Product" (change)="ProductOfProcessChangeHandler($event)">
+    <button class=" btn add-product-btn  mb-3 ml-auto   mr-3" type="button" (click)="addFieldValue();  addData()">+
+      Add New Product</button>
+  </div>
   <!-- ======================== Table 1 =========================== -->
   <table class="table table1 table-bordered pb-0 mb-0">
     <thead>
@@ -33,7 +35,7 @@
     <tbody>
       <ng-container>
         <!-- *ngFor="let data of AddProductData; let j = index" -->
-        <tr *ngFor="let field of fieldArray; let i = index">
+        <tr *ngFor="let field of fieldArray; let i = index" class="text-center">
           <td>
             <select name="" id="" class="form-control-sm" (change)="selectProductNameChangeHandler($event,i)">
               <option value="{{data.id}}" *ngFor="let data of AddProductData">{{data.description}}</option>
@@ -45,13 +47,13 @@
           <td>data.AvgDensity</td>
           <td>data.CostAddon</td>
           <td> <input type="number" placeholder="Waste" (change)="ProductWasteChangeHandler($event)"> </td>
-          <td><i class="fa fa-pencil pl-3" aria-hidden="true"></i>
-            <i class="fa fa-trash-o pl-4" aria-hidden="true"></i>
+          <td><i class="fa fa-pencil pl-5" aria-hidden="true"></i>
+            <i class="fa fa-trash-o pl-5" aria-hidden="true"></i>
           </td>
         </tr>
       </ng-container>
       <tr class="row-color text-left">
-        <td colspan="5">Total</td>
+        <td colspan="5" class="h6">Total</td>
         <td></td>
         <td colspan="2"></td>
       </tr>
@@ -59,13 +61,13 @@
   </table>
 
   <!-- ===================== Table 2 ========================= -->
-  <table class="table table2 table-bordered pb-5 mb-4">
+  <table class="table table2  pb-5 mb-4">
     <thead>
       <tr class="pb-0 row-color1">
         <label for="" class="p-2 pr-5 h6">Conversion Cost Calculation</label>
         <button class="btn btn-default ml-5" (click)="addFieldValue1()">+ Add New</button>
-        <td></td>
-        <td></td>
+        <td scope="col"></td>
+        <td scope="col"></td>
       </tr>
     </thead>
     <tbody *ngFor="let field of fieldArray1; let i = index">
@@ -75,14 +77,15 @@
             <option value="{{name.id}}" *ngFor="let name of ConversionName; let j = index">{{name.description}}</option>
           </select>
         </td>
-        <td scope="col"><input type="number" placeholder="Enter Cost" (change)="EnterCostChangeHandler($event)">
+        <td scope="col" class="tdcost"><input type="number" placeholder="Enter Cost"
+            (change)="EnterCostChangeHandler($event)">
         </td>
-        <td scope="col"><i class="fa fa-trash-o text-white" aria-hidden="true"></i></td>
+        <td scope="col"><i class="fa fa-trash-o text-white pl-5" aria-hidden="true"></i></td>
       </tr>
     </tbody>
   </table>
-  <div>
+  <!-- <div>
     <button class="btn btn-default ml-5" (click)="saveProcess()">Save</button>
-  </div>
+  </div> -->
 </div>
 <!-- </div> -->

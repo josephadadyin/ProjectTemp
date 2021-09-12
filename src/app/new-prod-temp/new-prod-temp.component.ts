@@ -7,11 +7,14 @@ import axios from 'axios';
   styleUrls: ['./new-prod-temp.component.scss'],
 })
 export class NewProdTempComponent implements OnInit {
+  getProcesses;
+  xproductName;
   productdata;
   attributeGroup;
   selectedDay;
   attributesGroupAttributes;
   addNewAttribute;
+  selectProcesses;
   static templateCounter = 1;
   templateName;
   selectedProductType;
@@ -27,6 +30,26 @@ export class NewProdTempComponent implements OnInit {
     this.ProductType();
     this.AttributeGroups();
     this.AddAtribute();
+    this.GetProcess();
+  }
+
+  GetProcess() {
+    axios
+      .get(
+        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/processes/'
+      )
+      .then((response) => {
+        this.getProcesses = response.data.results;
+        this.xproductName = this.getProcesses.map((d) => ({
+          description: d.description,
+          id: d.id,
+        }));
+        // console.log(this.addNewProduct);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(function () {});
   }
 
   ProductType() {
@@ -69,6 +92,10 @@ export class NewProdTempComponent implements OnInit {
       })
       .then(function () {});
   }
+  selectProcessChangeHandler(event: any) {
+    this.selectProcesses = event.target.value;
+  }
+
   selectAddNewAttributeHandler(event: any) {
     this.AddAtributex = event.target.value;
     console.log(this.AddAtributex);
@@ -90,24 +117,21 @@ export class NewProdTempComponent implements OnInit {
     this.selectedProductType = event.target.value;
   }
 
-  onProcessNameChangeHandler(name: any){
+  onProcessNameChangeHandler(name: any) {
     this.processName = name;
   }
 
-  ononConversionChangeHandler(no: any){
+  ononConversionChangeHandler(no: any) {
     this.conversionNo = no;
     console.log('this.ononConversionChangeHandler', this.conversionNo);
-    
   }
-  onCostChangeHandler(no: any){
+  onCostChangeHandler(no: any) {
     this.cost = no;
     console.log('this.pncost', this.cost);
-    
   }
-  onProcessNumberChangeHandler(no: any){
+  onProcessNumberChangeHandler(no: any) {
     this.processNumber = no;
     console.log('this.processNumber', this.processNumber);
-    
   }
 
   postNewTemplate(payload) {
@@ -134,32 +158,37 @@ export class NewProdTempComponent implements OnInit {
         payload
       )
       .then((response) => {
-       console.log('resssss', response.data);
-       
+        console.log('resssss', response.data);
       })
       .catch((error) => {
         console.log(error);
       })
       .then(function () {});
   }
-  makeAddProcessPayload(){
+  makeAddProcessPayload() {
     return {
-      "description": this.processName,
-      "processProducts":[{
-        "product": this.processNumber,
-        "processProductAttributeValues": this.attributesGroupAttributes
-      }],
-      "processConversionTypes": [{
-        "conversionType": this.conversionNo,
-        "processConversionAttributeValues": [{
-          "attribute": {
-            "id": 17,
-            "description": "Cost"
-          },
-          "attributeValue": this.cost
-        }]
-      }],
-      "processCalculator": null
-    }
+      description: this.processName,
+      processProducts: [
+        {
+          product: this.processNumber,
+          processProductAttributeValues: this.attributesGroupAttributes,
+        },
+      ],
+      processConversionTypes: [
+        {
+          conversionType: this.conversionNo,
+          processConversionAttributeValues: [
+            {
+              attribute: {
+                id: 17,
+                description: 'Cost',
+              },
+              attributeValue: this.cost,
+            },
+          ],
+        },
+      ],
+      processCalculator: null,
+    };
   }
 }
