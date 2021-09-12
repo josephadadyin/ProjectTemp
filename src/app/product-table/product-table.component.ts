@@ -39,16 +39,202 @@ export class ProductTableComponent implements OnInit {
   @Input() xattributesGroupAttributes = {};
 
   public fieldArray: Array<any> = [];
+  public selectedProducts: Array<any> = [];
+  public selectedConversion: Array<any> = [];
   public newAttribute: any = {};
   addFieldValue() {
-    this.fieldArray.push(this.newAttribute);
+    this.fieldArray.push(this.AddProductData);
     this.newAttribute = {};
   }
   public fieldArray1: Array<any> = [];
   public newAttribute1: any = {};
   addFieldValue1() {
-    this.fieldArray1.push(this.newAttribute1);
+    this.fieldArray1.push(this.ConversionName);
     this.newAttribute1 = {};
+    this.selectedConversion.push(this.ConversionName[0])
+  }
+
+  getProcessProducts() {
+    let processsArr = [];
+    for (let index = 0; index < this.selectedProducts.length; index++) {
+      const element = this.selectedProducts[index];
+      let arr = [];
+      const price = this.getxPrice(this.selectedProducts[index]);
+      const weight = this.getxWeight(this.selectedProducts[index]);
+      const density = this.getxDensity(this.selectedProducts[index]);
+      const avgDensdity = this.getxAvgDensity(this.selectedProducts[index]);
+      const costAddOn = this.getxCostAddOn(this.selectedProducts[index]);
+      const waste = this.getxPercentWaste(this.selectedProducts[index]);
+
+      if (price !== '') arr.push(this.getPriceAttribute(price));
+      if (weight !== '') arr.push(this.getWeightAttribute(weight))
+      if (density !== '') arr.push(this.getDensityAttribute(density))
+      if (avgDensdity !== '') arr.push(this.getAvgDensityAttribute(avgDensdity))
+      if (costAddOn !== '') arr.push(this.getCostAdOnAttribute(costAddOn))
+      if (waste !== '') arr.push(this.getAwasteAttribute(waste))
+
+      processsArr.push({
+        "product": element.id,
+        "processProductAttributeValues": arr
+      });
+
+
+    }
+
+    return processsArr;
+
+
+  }
+
+  getPriceAttribute(value) {
+    return {
+      "attribute": {
+        "description": "Cost",
+        "systemUom": {
+          "id": 13,
+          "description": "USD"
+        }
+      },
+      "attributeValue": value,
+      "attributeValueExpression": null,
+      "userConversionUom": "USD"
+    }
+  }
+
+
+  
+  
+
+  getWeightAttribute(weight) {
+    return {
+      "attribute": {
+        "description": "Weight",
+        "systemUom": {
+          "id": 7,
+          "description": "gm"
+        }
+      },
+      "attributeValue": weight,
+      "attributeValueExpression": null,
+      "userConversionUom": "mt"
+    }
+  }
+
+  getDensityAttribute(value) {
+    return {
+      "attribute": {
+        "description": "Density",
+        "systemUom": {
+          "id": 15,
+          "description": "gm/m3"
+        }
+      },
+      "attributeValue": value,
+      "attributeValueExpression": null,
+      "userConversionUom": "gm/m3"
+    }
+  }
+
+  getAvgDensityAttribute(value) {
+    return {
+      "attribute": {
+        "description": "AverageDensity",
+        "systemUom": {
+          "id": 15,
+          "description": "gm/m3"
+        }
+      },
+      "attributeValue": value,
+      "attributeValueExpression": null,
+      "userConversionUom": "gm/m3"
+    }
+  }
+
+  getAwasteAttribute(value) {
+    return {
+      "attribute": {
+        "description": "PercentWaste",
+        "systemUom": {
+          "id": 14,
+          "description": "count"
+        }
+      },
+      "attributeValue": value,
+      "attributeValueExpression": null,
+      "userConversionUom": "count"
+    }
+  }
+
+  getCostAdOnAttribute(value) {
+    return {
+      "attribute": {
+        "description": "CostAddOn",
+        "systemUom": {
+          "id": 13,
+          "description": "USD"
+        }
+      },
+      "attributeValue": value,
+      "attributeValueExpression": null,
+      "userConversionUom": "USD"
+    }
+  }
+
+
+
+  getConversionCostAttribute(value) {
+    return {
+      "attribute": {
+          "description": "Cost",
+          "systemUom": {
+              "id": 13,
+              "description": "USD"
+          }
+      },
+      "attributeValue": value,
+      "attributeValueExpression": null,
+      "userConversionUom": "USD"
+  }
+  }
+
+  getProcessConversionTypes() {
+    let processsArr = [];
+    for (let index = 0; index < this.selectedConversion.length; index++) {
+      const element = this.selectedConversion[index];
+      let arr = [];
+      const price = element.cost;
+      
+
+      if (price) arr.push(this.getConversionCostAttribute(price));
+      
+
+      processsArr.push({
+        "conversionType": element.id,
+        "processConversionAttributeValues":arr
+      });
+
+
+    }
+
+    return processsArr;
+  }
+
+  makeAddProductPayload() {
+    const processProducts = this.getProcessProducts();
+    const processConversionTypes = this.getProcessConversionTypes()
+    return {
+      "description": this.processName,
+      "businessAccount": null,
+      "productTemplate": null,
+      "process": {
+        "id": this.xprocessNumber,
+        "description": this.productOfProcess,
+        "processProducts": processProducts,
+        "processConversionTypes":processConversionTypes
+      },
+      "productAttributeValues": this.xattributesGroupAttributes
+
+    }
   }
 
   makeAddProcessPayload() {
@@ -79,11 +265,11 @@ export class ProductTableComponent implements OnInit {
   }
 
   saveProcess() {
-    const payload = this.makeAddProcessPayload();
+    const payload = this.makeAddProductPayload();
     console.log('dddd', JSON.stringify(payload));
     axios
       .post(
-        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/processes/',
+        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/products/',
         payload
       )
       .then((response) => {
@@ -97,13 +283,21 @@ export class ProductTableComponent implements OnInit {
       .catch((error) => {
         console.log(error);
       })
-      .then(function () {});
+      .then(function () { });
   }
 
   // ==========================  Event Handler ===================
-  ProductWeightChangeHandler(event: any) {
-    this.productWeight = event.target.value;
-    console.log(event.target.value);
+  ProductWeightChangeHandler(event: any, i: number) {
+    console.log('hellll', event.target.value);
+
+    for (let index = 0; index < this.selectedProducts[i].productAttributeValues.length; index++) {
+      const element = this.selectedProducts[i].productAttributeValues[index];
+      if (element.attribute.description === 'Weight') {
+        this.selectedProducts[i].productAttributeValues[index].attributeValue =
+          event.target.value;
+      }
+
+    }
   }
   ProductWasteChangeHandler(event: any) {
     this.productWaste = event.target.value;
@@ -119,14 +313,17 @@ export class ProductTableComponent implements OnInit {
     this.productOfProcess = event.target.value;
     console.log(event.target.value);
   }
-  selectConverionChangeHandler(event: any) {
+  selectConverionChangeHandler(event: any, i: number) {
     this.conversionName = event.target.value;
     console.log(event.target.value);
+    this.selectedConversion[i] = this.conversionName.find(d => (d.id.toString() === event.target.value));
     this.onConversionChange.emit(this.conversionName);
+
   }
-  EnterCostChangeHandler(event: any) {
+  EnterCostChangeHandler(event: any, i: number) {
     this.enterCost = event.target.value;
     console.log(event.target.value);
+    this.selectedConversion[i].cost = event.target.value;
     this.onCostChange.emit(this.enterCost);
   }
 
@@ -139,6 +336,8 @@ export class ProductTableComponent implements OnInit {
       )
       .then((response) => {
         this.AddProductData = response.data.results;
+        console.log('AddProductDataAddProductData', this.AddProductData);
+
         this.xproductName = this.AddProductData.map((d) => ({
           description: d.description,
           id: d.id,
@@ -151,38 +350,55 @@ export class ProductTableComponent implements OnInit {
       .then(function () { });
   }
 
-  getxPrice(description) {
-    const selectedProduct = this.AddProductData.find(
-      (d) => d.description === description
-    );
-    this.xselectCost = selectedProduct.productAttributeValues.find(
-      (d) => d.attribute.description === 'Cost'
-    )['attributeValue'];
+  getxPrice(selectedProduct) {
+    const result = selectedProduct ?
+      selectedProduct.productAttributeValues.find(d => (d.attribute.description === 'Cost')) : null;
+    return result ? result['attributeValue'] : '';
   }
 
-  getxDensity(description) {
-    const selectedProduct = this.AddProductData.find(
-      (d) => d.description === description
-    );
-    this.xselectDensity = selectedProduct.productAttributeValues.find(
-      (d) => d.attribute.description === 'Density'
-    )['attributeValue'];
+  getxWeight(selectedProduct) {
+    console.log('selectedProduct', selectedProduct);
+
+    const result = selectedProduct ?
+      selectedProduct.productAttributeValues.find(d => (d.attribute.description === 'Weight')) : null;
+    return result ? result['attributeValue'] : '';
   }
 
-  selectProductNameChangeHandler(event: any, index: any) {
-    console.log('indexindex', index);
-    this.selectedProductNameIndex = index;
+  getxDensity(selectedProduct) {
+    const result = selectedProduct ?
+      selectedProduct.productAttributeValues.find(d => (d.attribute.description === 'Density')) : null;
+    return result ? result['attributeValue'] : '';
+  }
+
+  getxAvgDensity(selectedProduct) {
+    const result = selectedProduct ?
+      selectedProduct.productAttributeValues.find(d => (d.attribute.description === 'AverageDensity')) : null;
+    return result ? result['attributeValue'] : '';
+  }
+
+  getxCostAddOn(selectedProduct) {
+    const result = selectedProduct ?
+      selectedProduct.productAttributeValues.find(d => (d.attribute.description === 'CostAddOn')) : null;
+    return result ? result['attributeValue'] : '';
+  }
+
+  getxPercentWaste(selectedProduct) {
+    const result = selectedProduct ?
+      selectedProduct.productAttributeValues.find(d => (d.attribute.description === 'PercentWaste')) : null;
+    return result ? result['attributeValue'] : '';
+  }
+
+  selectProductNameChangeHandler(event: any, index: number) {
+    this.selectedProducts[index] = this.AddProductData.find(d => (d.id.toString() === event.target.value));
+
     this.selectProductName = event.target.value;
-    console.log(event.target.value);
-    this.getxDensity(event.target.value);
-    this.getxPrice(event.target.value);
-    this.getxPrice(event.tar);
-    this.getxDensity(event.tar);
   }
   addData() {
-    const selectedProduct = this.xproductName[0];
-    this.getxPrice(selectedProduct.description);
-    this.getxDensity(selectedProduct.description);
+    this.selectedProducts.push(this.AddProductData[0])
+
+    // const selectedProduct = this.xproductName[0];
+    // this.getxPrice(selectedProduct.description);
+    // this.getxDensity(selectedProduct.description);
   }
 
   // ========================== Conversion Cost API ===================
@@ -194,7 +410,7 @@ export class ProductTableComponent implements OnInit {
       )
       .then((response) => {
         this.ConversionName = response.data.results;
-        // console.log(this.conversionName);
+        console.log(this.ConversionName);
       })
       .catch((error) => {
         console.log(error);

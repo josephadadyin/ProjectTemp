@@ -13,7 +13,8 @@
     <input type="text " class="form-control-sm ml-1" placeholder="Name" [(ngModel)]="processName"
       (change)="ProcessNameChangeHandler($event)">
     <span> <label class="h5 pl-5 pr-1">Total: </label> <span class="h6"> 500$</span></span>
-    <label class="h5  pl-5">Product of this process: </label><input type="text" class="form-control-sm ml-1"
+    <label class="h5  pl-5">Product of this process: </label>
+    <input type="text" class="form-control-sm ml-1" [(ngModel)]="productOfProcess"
       placeholder="Final Product" (change)="ProductOfProcessChangeHandler($event)">
     <button class=" btn add-product-btn  mb-3 ml-auto   mr-3" type="button" (click)="addFieldValue();  addData()">+
       Add New Product</button>
@@ -41,12 +42,16 @@
               <option value="{{data.id}}" *ngFor="let data of AddProductData">{{data.description}}</option>
             </select>
           </td>
-          <td>{{xselectCost}}</td>
-          <td><input type="number" placeholder="Weight" (change)="ProductWeightChangeHandler($event)"></td>
-          <td>{{xselectDensity}}</td>
-          <td>data.AvgDensity</td>
-          <td>data.CostAddon</td>
-          <td> <input type="number" placeholder="Waste" (change)="ProductWasteChangeHandler($event)"> </td>
+          <td>{{getxPrice(selectedProducts[i])}}</td>
+          <td><input type="number" placeholder="Weight" 
+            (change)="ProductWeightChangeHandler($event,i)"
+            value="{{getxWeight(selectedProducts[i])}}"></td>
+          <td>{{getxDensity(selectedProducts[i])}}</td>
+          <td>{{getxAvgDensity(selectedProducts[i])}}</td>
+          <td>{{getxCostAddOn(selectedProducts[i])}}</td>
+          <td> <input type="number" placeholder="Waste" 
+            (change)="ProductWasteChangeHandler($event)" 
+            value="{{getxPercentWaste(selectedProducts[i])}}"> </td>
           <td><i class="fa fa-pencil pl-5" aria-hidden="true"></i>
             <i class="fa fa-trash-o pl-5" aria-hidden="true"></i>
           </td>
@@ -73,12 +78,12 @@
     <tbody *ngFor="let field of fieldArray1; let i = index">
       <tr class="row-color1">
         <td scope="col">
-          <select name="" id="" class="form-control-sm" (change)="selectConverionChangeHandler($event)">
+          <select name="" id="" class="form-control-sm" (change)="selectConverionChangeHandler($event,i)">
             <option value="{{name.id}}" *ngFor="let name of ConversionName; let j = index">{{name.description}}</option>
           </select>
         </td>
         <td scope="col" class="tdcost"><input type="number" placeholder="Enter Cost"
-            (change)="EnterCostChangeHandler($event)">
+            (change)="EnterCostChangeHandler($event,i)">
         </td>
         <td scope="col"><i class="fa fa-trash-o text-white pl-5" aria-hidden="true"></i></td>
       </tr>
