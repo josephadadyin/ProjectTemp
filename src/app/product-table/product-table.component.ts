@@ -22,6 +22,7 @@ export class ProductTableComponent implements OnInit {
   enterCost;
   static processNumber = 1;
   xprocessNumber;
+  selectedProductNameIndex=0;
 
   constructor() {}
 
@@ -118,7 +119,9 @@ export class ProductTableComponent implements OnInit {
     )['attributeValue'];
   }
 
-  selectProductNameChangeHandler(event: any) {
+  selectProductNameChangeHandler(event: any, index:any) {
+    console.log('indexindex', index);
+    this.selectedProductNameIndex = index;
     this.selectProductName = event.target.value;
     console.log(event.target.value);
     this.getxDensity(event.target.value);

@@ -62,7 +62,7 @@ export class NewProdTempComponent implements OnInit {
         'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/attributes/'
       )
       .then((response) => {
-        this.addNewAttribute = response.data;
+        this.addNewAttribute = response.data;        
       })
       .catch((error) => {
         console.log(error);
@@ -72,6 +72,8 @@ export class NewProdTempComponent implements OnInit {
   selectAddNewAttributeHandler(event: any) {
     this.AddAtributex = event.target.value;
     console.log(this.AddAtributex);
+    const selectedAtt = this.addNewAttribute.results.find(d=>(d.id.toString() === event.target.value));
+    this.attributesGroupAttributes.push({"attribute":selectedAtt});    
     this.AddAtributevalue = true;
   }
 
@@ -124,11 +126,12 @@ export class NewProdTempComponent implements OnInit {
   }
 
   onSave(event: any) {
-    const d = this.makeAddProcessPayload();
-    console.log('dddd', d);
+    const payload = this.makeAddProcessPayload();
+    console.log('dddd', JSON.stringify(payload));
     axios
-      .get(
-        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/processes/'
+      .post(
+        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/processes/',
+        payload
       )
       .then((response) => {
        console.log('resssss', response.data);
