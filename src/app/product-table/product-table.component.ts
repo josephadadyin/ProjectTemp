@@ -22,7 +22,7 @@ export class ProductTableComponent implements OnInit {
   enterCost;
   static processNumber = 1;
   xprocessNumber;
-  selectedProductNameIndex=0;
+  selectedProductNameIndex = 0;
 
   constructor() {}
 
@@ -33,9 +33,9 @@ export class ProductTableComponent implements OnInit {
     this.onProcessNumberChange.emit(this.xprocessNumber);
   }
   @Output() onProcessNameChange: EventEmitter<number> = new EventEmitter();
-@Output() onProcessNumberChange: EventEmitter<number> = new EventEmitter();
-@Output() onConversionChange: EventEmitter<number> = new EventEmitter();
-@Output() onCostChange: EventEmitter<number> = new EventEmitter();
+  @Output() onProcessNumberChange: EventEmitter<number> = new EventEmitter();
+  @Output() onConversionChange: EventEmitter<number> = new EventEmitter();
+  @Output() onCostChange: EventEmitter<number> = new EventEmitter();
 
   public fieldArray: Array<any> = [];
   public newAttribute: any = {};
@@ -79,7 +79,7 @@ export class ProductTableComponent implements OnInit {
     console.log(event.target.value);
     this.onCostChange.emit(this.enterCost);
   }
-  
+
   // ======================= Product Get API ======================================
 
   AddProduct() {
@@ -119,7 +119,7 @@ export class ProductTableComponent implements OnInit {
     )['attributeValue'];
   }
 
-  selectProductNameChangeHandler(event: any, index:any) {
+  selectProductNameChangeHandler(event: any, index: any) {
     console.log('indexindex', index);
     this.selectedProductNameIndex = index;
     this.selectProductName = event.target.value;
