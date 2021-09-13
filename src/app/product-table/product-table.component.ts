@@ -23,6 +23,9 @@ export class ProductTableComponent implements OnInit {
   static processNumber = 1;
   xprocessNumber;
   selectedProductNameIndex = 0;
+  densityResult;
+  avgDesity;
+
   previousCreatedProcess = { description: '' };
 
   constructor() {}
@@ -292,6 +295,24 @@ export class ProductTableComponent implements OnInit {
   ProductWeightChangeHandler(event: any, i: number) {
     console.log('hellll', event.target.value);
 
+    this.productWeight = event.target.value;
+    // let data = this.fieldArray[i];
+    // data['weight'] = this.productWeight;
+    // data['avgDensity'] = (
+    //   data.waste
+    //     ? (Math.abs(this.productWeight - data.waste) * data.density) / 100
+    //     : (this.productWeight * data.density) / 100
+    // ).toFixed(6);
+    // this.fieldArray[i] = data;
+
+    this.avgDesity = (
+      this.productWaste
+        ? (Math.abs(this.productWeight - this.productWaste) *
+            this.densityResult) /
+          100
+        : (this.productWeight * this.densityResult) / 100
+    ).toFixed(6);
+
     for (
       let index = 0;
       index < this.selectedProducts[i].productAttributeValues.length;
@@ -304,9 +325,29 @@ export class ProductTableComponent implements OnInit {
       }
     }
   }
-  ProductWasteChangeHandler(event: any) {
+  ProductWasteChangeHandler(event: any, i: any) {
     this.productWaste = event.target.value;
     console.log(event.target.value);
+
+    // this.productWaste = event.target.value;
+    // let data = this.fieldArray[i];
+    // data['waste'] = this.productWaste;
+    // data['avgDensity'] = (
+    //   this.productWeight
+    //     ? (Math.abs(this.productWaste - this.productWeight) *
+    //         this.densityResult) /
+    //       100
+    //     : (this.productWaste * this.densityResult) / 100
+    // ).toFixed(6);
+    // this.fieldArray[i] = data;
+
+    // this.avgDesity = (
+    //   this.productWeight
+    //     ? (Math.abs(this.productWaste - this.productWeight) *
+    //         this.densityResult) /
+    //       100
+    //     : (this.productWaste * this.densityResult) / 100
+    // ).toFixed(6);
   }
 
   ProcessNameChangeHandler(event: any) {
@@ -382,6 +423,8 @@ export class ProductTableComponent implements OnInit {
           (d) => d.attribute.description === 'Density'
         )
       : null;
+    this.densityResult = result['attributeValue'];
+    console.log('this is density result', this.densityResult);
     return result ? result['attributeValue'] : '';
   }
 

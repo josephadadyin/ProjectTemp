@@ -49,9 +49,10 @@
           <td><input type="number" placeholder="Weight" (change)="ProductWeightChangeHandler($event,i)"
               value="{{getxWeight(selectedProducts[i])}}"></td>
           <td>{{getxDensity(selectedProducts[i])}}</td>
-          <td>{{getxAvgDensity(selectedProducts[i])}}</td>
+          <!-- <td>{{getxAvgDensity(selectedProducts[i])}}</td> -->
+          <td>{{avgDesity}}</td>
           <td>{{getxCostAddOn(selectedProducts[i])}}</td>
-          <td> <input type="number" placeholder="Waste" (change)="ProductWasteChangeHandler($event)"
+          <td> <input type="number" placeholder="Waste" (change)="ProductWasteChangeHandler($event,i)"
               value="{{getxPercentWaste(selectedProducts[i])}}"> </td>
           <td><i class="fa fa-pencil pl-5" aria-hidden="true"></i>
             <i class="fa fa-trash-o pl-5" aria-hidden="true"></i>
@@ -154,7 +155,7 @@
           <td>{{getxDensity(selectedProducts[i])}}</td>
           <td>{{getxAvgDensity(selectedProducts[i])}}</td>
           <td>{{getxCostAddOn(selectedProducts[i])}}</td>
-          <td> <input type="number" placeholder="Waste" (change)="ProductWasteChangeHandler($event)"
+          <td> <input type="number" placeholder="Waste" (change)="ProductWasteChangeHandler($event,i)"
               value="{{getxPercentWaste(selectedProducts[i])}}"> </td>
           <td><i class="fa fa-pencil pl-5" aria-hidden="true"></i>
             <i class="fa fa-trash-o pl-5" aria-hidden="true"></i>
