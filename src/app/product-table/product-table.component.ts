@@ -23,7 +23,7 @@ export class ProductTableComponent implements OnInit {
   static processNumber = 1;
   xprocessNumber;
   selectedProductNameIndex = 0;
-  previousCreatedProcess={description:''};
+  previousCreatedProcess = { description: '' };
 
   constructor() { }
 
@@ -58,28 +58,32 @@ export class ProductTableComponent implements OnInit {
 
   getProcessProducts() {
     let processsArr = [];
+
+
     for (let index = 0; index < this.selectedProducts.length; index++) {
+      console.log('this.selectedProducts', this.selectedProducts[index]);
       const element = this.selectedProducts[index];
-      let arr = [];
-      const price = this.getxPrice(this.selectedProducts[index]);
-      const weight = this.getxWeight(this.selectedProducts[index]);
-      const density = this.getxDensity(this.selectedProducts[index]);
-      const avgDensdity = this.getxAvgDensity(this.selectedProducts[index]);
-      const costAddOn = this.getxCostAddOn(this.selectedProducts[index]);
-      const waste = this.getxPercentWaste(this.selectedProducts[index]);
+      if (element) {
+        let arr = [];
+        const price = this.getxPrice(this.selectedProducts[index]);
+        const weight = this.getxWeight(this.selectedProducts[index]);
+        const density = this.getxDensity(this.selectedProducts[index]);
+        const avgDensdity = this.getxAvgDensity(this.selectedProducts[index]);
+        const costAddOn = this.getxCostAddOn(this.selectedProducts[index]);
+        const waste = this.getxPercentWaste(this.selectedProducts[index]);
 
-      if (price !== '') arr.push(this.getPriceAttribute(price));
-      if (weight !== '') arr.push(this.getWeightAttribute(weight))
-      if (density !== '') arr.push(this.getDensityAttribute(density))
-      if (avgDensdity !== '') arr.push(this.getAvgDensityAttribute(avgDensdity))
-      if (costAddOn !== '') arr.push(this.getCostAdOnAttribute(costAddOn))
-      if (waste !== '') arr.push(this.getAwasteAttribute(waste))
+        if (price !== '') arr.push(this.getPriceAttribute(price));
+        if (weight !== '') arr.push(this.getWeightAttribute(weight))
+        if (density !== '') arr.push(this.getDensityAttribute(density))
+        if (avgDensdity !== '') arr.push(this.getAvgDensityAttribute(avgDensdity))
+        if (costAddOn !== '') arr.push(this.getCostAdOnAttribute(costAddOn))
+        if (waste !== '') arr.push(this.getAwasteAttribute(waste))
 
-      processsArr.push({
-        "product": element.id,
-        "processProductAttributeValues": arr
-      });
-
+        processsArr.push({
+          "product": element.id,
+          "processProductAttributeValues": arr
+        });
+      }
 
     }
 
@@ -104,8 +108,8 @@ export class ProductTableComponent implements OnInit {
   }
 
 
-  
-  
+
+
 
   getWeightAttribute(weight) {
     return {
@@ -187,16 +191,16 @@ export class ProductTableComponent implements OnInit {
   getConversionCostAttribute(value) {
     return {
       "attribute": {
-          "description": "Cost",
-          "systemUom": {
-              "id": 13,
-              "description": "USD"
-          }
+        "description": "Cost",
+        "systemUom": {
+          "id": 13,
+          "description": "USD"
+        }
       },
       "attributeValue": value,
       "attributeValueExpression": null,
       "userConversionUom": "USD"
-  }
+    }
   }
 
   getProcessConversionTypes() {
@@ -205,14 +209,14 @@ export class ProductTableComponent implements OnInit {
       const element = this.selectedConversion[index];
       let arr = [];
       const price = element.cost;
-      
+
 
       if (price) arr.push(this.getConversionCostAttribute(price));
-      
+
 
       processsArr.push({
         "conversionType": element.id,
-        "processConversionAttributeValues":arr
+        "processConversionAttributeValues": arr
       });
 
 
@@ -232,7 +236,26 @@ export class ProductTableComponent implements OnInit {
         "id": this.xprocessNumber,
         "description": this.processName,
         "processProducts": processProducts,
-        "processConversionTypes":processConversionTypes
+        "processConversionTypes": processConversionTypes
+      },
+      "productAttributeValues": this.xattributesGroupAttributes
+
+    }
+  }
+
+  makeAddAllProductPayload() {
+    const processProducts = this.getProcessProducts();
+    processProducts.push(this.previousCreatedProcess);
+    const processConversionTypes = this.getProcessConversionTypes()
+    return {
+      "description": 'All Product Save Final',
+      "businessAccount": null,
+      "productTemplate": null,
+      "process": {
+        "id": 121,
+        "description": 'All Product Save',
+        "processProducts": processProducts,
+        "processConversionTypes": processConversionTypes
       },
       "productAttributeValues": this.xattributesGroupAttributes
 
@@ -266,13 +289,13 @@ export class ProductTableComponent implements OnInit {
     };
   }
 
-  findSelected(description){
+  findSelected(description) {
     for (let index = 0; index < this.AddProductData.length; index++) {
       const element = this.AddProductData[index];
-      if(element.description === description){
+      if (element.description === description) {
         this.selectedProducts[index] = element;
       }
-      
+
     }
   }
 
@@ -286,6 +309,35 @@ export class ProductTableComponent implements OnInit {
       )
       .then((response) => {
         console.log('resssss', response.data);
+
+        this.AddProductData.push(response.data);
+        this.previousCreatedProcess = response.data;
+        this.createdProcessArray.push(response.data);
+        ProductTableComponent.processNumber += 1;
+        this.xprocessNumber = ProductTableComponent.processNumber;
+        this.processName = '';
+        this.productOfProcess = '';
+        this.conversionName = '';
+        this.enterCost = '';
+        this.findSelected(this.previousCreatedProcess.description);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(function () { });
+  }
+
+  saveAllProcess() {
+    const payload = this.makeAddProductPayload();
+    console.log('dddd-------------', JSON.stringify(payload));
+    axios
+      .post(
+        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/products/',
+        payload
+      )
+      .then((response) => {
+        console.log('resssss', response.data);
+
         this.AddProductData.push(response.data);
         this.previousCreatedProcess = response.data;
         this.createdProcessArray.push(response.data);
