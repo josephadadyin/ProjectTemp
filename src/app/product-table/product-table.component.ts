@@ -23,6 +23,7 @@ export class ProductTableComponent implements OnInit {
   static processNumber = 1;
   xprocessNumber;
   selectedProductNameIndex = 0;
+  previousCreatedProcess={description:''};
 
   constructor() { }
 
@@ -39,6 +40,7 @@ export class ProductTableComponent implements OnInit {
   @Input() xattributesGroupAttributes = {};
 
   public fieldArray: Array<any> = [];
+  public createdProcessArray: Array<any> = [];
   public selectedProducts: Array<any> = [];
   public selectedConversion: Array<any> = [];
   public newAttribute: any = {};
@@ -223,12 +225,12 @@ export class ProductTableComponent implements OnInit {
     const processProducts = this.getProcessProducts();
     const processConversionTypes = this.getProcessConversionTypes()
     return {
-      "description": this.processName,
+      "description": this.productOfProcess,
       "businessAccount": null,
       "productTemplate": null,
       "process": {
         "id": this.xprocessNumber,
-        "description": this.productOfProcess,
+        "description": this.processName,
         "processProducts": processProducts,
         "processConversionTypes":processConversionTypes
       },
@@ -264,6 +266,16 @@ export class ProductTableComponent implements OnInit {
     };
   }
 
+  findSelected(description){
+    for (let index = 0; index < this.AddProductData.length; index++) {
+      const element = this.AddProductData[index];
+      if(element.description === description){
+        this.selectedProducts[index] = element;
+      }
+      
+    }
+  }
+
   saveProcess() {
     const payload = this.makeAddProductPayload();
     console.log('dddd', JSON.stringify(payload));
@@ -274,11 +286,16 @@ export class ProductTableComponent implements OnInit {
       )
       .then((response) => {
         console.log('resssss', response.data);
+        this.AddProductData.push(response.data);
+        this.previousCreatedProcess = response.data;
+        this.createdProcessArray.push(response.data);
         ProductTableComponent.processNumber += 1;
         this.xprocessNumber = ProductTableComponent.processNumber;
         this.processName = '';
+        this.productOfProcess = '';
         this.conversionName = '';
         this.enterCost = '';
+        this.findSelected(this.previousCreatedProcess.description);
       })
       .catch((error) => {
         console.log(error);
