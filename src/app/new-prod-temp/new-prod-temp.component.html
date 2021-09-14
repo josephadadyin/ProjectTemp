@@ -74,7 +74,8 @@
       (onProcessNumberChange)="onProcessNumberChangeHandler($event)"
       (onConversionChange)="ononConversionChangeHandler($event)" 
       (onCostChange)="onCostChangeHandler($event)"
-      [xattributesGroupAttributes]="attributesGroupAttributes">
+      [xattributesGroupAttributes]="attributesGroupAttributes"
+      (afterSave)="onafterSave($event)">
     </app-product-table>
     <!-- <div class="ml-auto text-right pb-4">
       <button class="btn btn-color btn-lg pe-2 px-4 text-white " (click)="onSave($event)">Save</button>

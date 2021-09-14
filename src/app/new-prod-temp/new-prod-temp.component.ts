@@ -133,6 +133,9 @@ export class NewProdTempComponent implements OnInit {
     this.processNumber = no;
     console.log('this.processNumber', this.processNumber);
   }
+  onafterSave(no: any){
+    this.attributesGroupAttributes = [];
+  }
 
   postNewTemplate(payload) {
     axios
