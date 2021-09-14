@@ -28,9 +28,10 @@ export class ProductTableComponent implements OnInit {
   avgDesity;
 
   createdProcess
+  xselectedProduct = { id: 1, description: '' };
 
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.AddProduct();
@@ -61,8 +62,8 @@ export class ProductTableComponent implements OnInit {
     this.fieldArray1.push(this.ConversionName);
     this.newAttribute1 = {};
     this.selectedConversion.push(this.ConversionName[0]);
-    console.log('this.selectedConversion',this.selectedConversion);
-    
+    console.log('this.selectedConversion', this.selectedConversion);
+
   }
 
   getProcessProducts() {
@@ -252,9 +253,9 @@ export class ProductTableComponent implements OnInit {
     };
   }
 
-  updateSchemaProduct(){
-    return this.createdProcessResponseArray.map(d=>(
-      {...d,product:d.id,processProductAttributeValues:d.productAttributeValues}
+  updateSchemaProduct() {
+    return this.createdProcessResponseArray.map(d => (
+      { product: d.id, processProductAttributeValues: d.productAttributeValues }
     ))
   }
 
@@ -296,7 +297,7 @@ export class ProductTableComponent implements OnInit {
 
   saveProcess() {
     console.log('this.selectedProducts0000000', this.selectedProducts);
-    if(!this.xattributesGroupAttributes || this.xattributesGroupAttributes.length === 0 || !this.processName || !this.productOfProcess){
+    if (!this.xattributesGroupAttributes || this.xattributesGroupAttributes.length === 0 || !this.processName || !this.productOfProcess) {
       alert('Fill Required Field');
       return;
     }
@@ -310,7 +311,7 @@ export class ProductTableComponent implements OnInit {
       .then((response) => {
 
         const view = {
-          attributes:this.xattributesGroupAttributes,
+          attributes: this.xattributesGroupAttributes,
           processName: this.processName,
           processNo: this.xprocessNumber,
           productOfProcess: this.productOfProcess,
@@ -320,8 +321,8 @@ export class ProductTableComponent implements OnInit {
         }
         this.createdProcessViewArray.push(view);
 
-        console.log(' this.createdProcessViewArray this.createdProcessViewArray',  this.createdProcessViewArray);
-        
+        console.log(' this.createdProcessViewArray this.createdProcessViewArray', this.createdProcessViewArray);
+
 
         console.log('resssss', response.data);
 
@@ -336,10 +337,11 @@ export class ProductTableComponent implements OnInit {
         this.enterCost = '';
         // this.findSelected(this.previousCreatedProcess.description);
         this.afterSave.emit();
-        this.selectedProducts=[];
-        this.selectedConversion=[];
-        this.fieldArray=[];
-        this.fieldArray1=[];
+        this.selectedProducts = [];
+        this.selectedConversion = [];
+        this.xselectedProduct = { id: response.data.id, description: '' };
+        // this.fieldArray=[];
+        // this.fieldArray1=[];
       })
       .catch((error) => {
         console.log(error);
@@ -373,7 +375,7 @@ export class ProductTableComponent implements OnInit {
       .catch((error) => {
         console.log(error);
       })
-      .then(function () {});
+      .then(function () { });
   }
 
   // ==========================  Event Handler ===================
@@ -393,20 +395,21 @@ export class ProductTableComponent implements OnInit {
     this.avgDesity = (
       this.productWaste
         ? (Math.abs(this.productWeight - this.productWaste) *
-            this.densityResult) /
-          100
+          this.densityResult) /
+        100
         : (this.productWeight * this.densityResult) / 100
     ).toFixed(6);
-
-    for (
-      let index = 0;
-      index < this.selectedProducts[i].productAttributeValues.length;
-      index++
-    ) {
-      const element = this.selectedProducts[i].productAttributeValues[index];
-      if (element.attribute.description === 'Weight') {
-        this.selectedProducts[i].productAttributeValues[index].attributeValue =
-          event.target.value;
+    if (this.selectedProducts[i]) {
+      for (
+        let index = 0;
+        index < this.selectedProducts[i].productAttributeValues.length;
+        index++
+      ) {
+        const element = this.selectedProducts[i].productAttributeValues[index];
+        if (element.attribute.description === 'Weight') {
+          this.selectedProducts[i].productAttributeValues[index].attributeValue =
+            event.target.value;
+        }
       }
     }
   }
@@ -479,14 +482,14 @@ export class ProductTableComponent implements OnInit {
       .catch((error) => {
         console.log(error);
       })
-      .then(function () {});
+      .then(function () { });
   }
 
   getxPrice(selectedProduct) {
     const result = selectedProduct
       ? selectedProduct.productAttributeValues.find(
-          (d) => d.attribute.description === 'Cost'
-        )
+        (d) => d.attribute.description === 'Cost'
+      )
       : null;
     return result ? result['attributeValue'] : '';
   }
@@ -496,8 +499,8 @@ export class ProductTableComponent implements OnInit {
 
     const result = selectedProduct
       ? selectedProduct.productAttributeValues.find(
-          (d) => d.attribute.description === 'Weight'
-        )
+        (d) => d.attribute.description === 'Weight'
+      )
       : null;
     return result ? result['attributeValue'] : '';
   }
@@ -505,10 +508,10 @@ export class ProductTableComponent implements OnInit {
   getxDensity(selectedProduct) {
     const result = selectedProduct
       ? selectedProduct.productAttributeValues.find(
-          (d) => d.attribute.description === 'Density'
-        )
+        (d) => d.attribute.description === 'Density'
+      )
       : null;
-    this.densityResult = result ? result['attributeValue']:'';
+    this.densityResult = result ? result['attributeValue'] : '';
     console.log('this is density result', this.densityResult);
     return result ? result['attributeValue'] : '';
   }
@@ -516,8 +519,8 @@ export class ProductTableComponent implements OnInit {
   getxAvgDensity(selectedProduct) {
     const result = selectedProduct
       ? selectedProduct.productAttributeValues.find(
-          (d) => d.attribute.description === 'AverageDensity'
-        )
+        (d) => d.attribute.description === 'AverageDensity'
+      )
       : null;
     return result ? result['attributeValue'] : '';
   }
@@ -525,8 +528,8 @@ export class ProductTableComponent implements OnInit {
   getxCostAddOn(selectedProduct) {
     const result = selectedProduct
       ? selectedProduct.productAttributeValues.find(
-          (d) => d.attribute.description === 'CostAddOn'
-        )
+        (d) => d.attribute.description === 'CostAddOn'
+      )
       : null;
     return result ? result['attributeValue'] : '';
   }
@@ -534,8 +537,8 @@ export class ProductTableComponent implements OnInit {
   getxPercentWaste(selectedProduct) {
     const result = selectedProduct
       ? selectedProduct.productAttributeValues.find(
-          (d) => d.attribute.description === 'PercentWaste'
-        )
+        (d) => d.attribute.description === 'PercentWaste'
+      )
       : null;
     return result ? result['attributeValue'] : '';
   }
@@ -548,9 +551,10 @@ export class ProductTableComponent implements OnInit {
     this.selectProductName = event.target.value;
   }
   addData() {
-    this.selectedProducts.push(this.AddProductData[0]);
-    console.log('this.selectedProductsthis.selectedProducts----', this.AddProductData[0]);
-    
+    if (this.selectedProducts && this.AddProductData) {
+      this.selectedProducts.push(this.AddProductData[0]);
+      console.log('this.selectedProductsthis.selectedProducts----', this.AddProductData[0]);
+    }
 
     // const selectedProduct = this.xproductName[0];
     // this.getxPrice(selectedProduct.description);
@@ -571,7 +575,7 @@ export class ProductTableComponent implements OnInit {
       .catch((error) => {
         console.log(error);
       })
-      .then(function () {});
+      .then(function () { });
   }
 
   // ============================= Process Post Api ========================

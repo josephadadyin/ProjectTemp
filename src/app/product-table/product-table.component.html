@@ -40,9 +40,12 @@
         <!-- *ngFor="let data of AddProductData; let j = index" -->
         <tr *ngFor="let field of fieldArray; let i = index" class="text-center">
           <td>
-            <select name="" id="" class="form-control-sm" (change)="selectProductNameChangeHandler($event,i)">
-              <option value="{{data.id}}" *ngFor="let data of AddProductData"
-                [selected]="data.description === previousCreatedProcess.description">{{data.description}}</option>
+            <select name="" id="" class="form-control-sm" 
+            [(ngModel)]="xselectedProduct.id" 
+            (change)="selectProductNameChangeHandler($event,i)">
+              <option value="{{data.id}}" *ngFor="let data of AddProductData">
+                {{data.description}}
+              </option>
             </select>
           </td>
           <td>{{getxPrice(selectedProducts[i])}}</td>
@@ -144,21 +147,21 @@
       <ng-container>
         <!-- *ngFor="let data of AddProductData; let j = index" -->
         <tr *ngFor="let field of createdProcess.selectedProducts" class="text-center">
-          <td *ngIf="field.description">
+          <td *ngIf="field && field.description">
             <select name="" id="" class="form-control-sm">
               <option value="{{data.id}}" *ngFor="let data of AddProductData"
                 [selected]="data.description === field.description">{{data.description}}</option>
             </select>
           </td>
-          <td *ngIf="field.description">{{getxPrice(field)}}</td>
-          <td *ngIf="field.description"><input type="number" placeholder="Weight" 
+          <td *ngIf="field && field.description">{{getxPrice(field)}}</td>
+          <td *ngIf="field && field.description"><input type="number" placeholder="Weight" 
               value="{{getxWeight(field)}}"></td>
-          <td *ngIf="field.description">{{getxDensity(field)}}</td>
-          <td *ngIf="field.description">{{getxAvgDensity(field)}}</td>
-          <td *ngIf="field.description">{{getxCostAddOn(field)}}</td>
-          <td *ngIf="field.description"> <input type="number" placeholder="Waste" 
+          <td *ngIf="field && field.description">{{getxDensity(field)}}</td>
+          <td *ngIf="field && field.description">{{getxAvgDensity(field)}}</td>
+          <td *ngIf="field && field.description">{{getxCostAddOn(field)}}</td>
+          <td *ngIf="field && field.description"> <input type="number" placeholder="Waste" 
               value="{{getxPercentWaste(field)}}"> </td>
-          <td *ngIf="field.description"><i class="fa fa-pencil pl-5" aria-hidden="true"></i>
+          <td *ngIf="field && field.description"><i class="fa fa-pencil pl-5" aria-hidden="true"></i>
             <i class="fa fa-trash-o pl-5" aria-hidden="true"></i>
           </td>
         </tr>
