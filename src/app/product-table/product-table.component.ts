@@ -25,7 +25,8 @@ export class ProductTableComponent implements OnInit {
   selectedProductNameIndex = 0;
   previousCreatedProcess = { description: '' };
   densityResult;
-  avgDesity;
+  avgDesity='';
+  xcostAddon='';
 
   createdProcess
   xselectedProduct = { id: 1, description: '' };
@@ -66,6 +67,25 @@ export class ProductTableComponent implements OnInit {
 
   }
 
+  calculateAvgDenstiy(weight,waste,density){
+    const xweight = weight ? parseFloat(weight) : 0;
+    const xwaste = waste ? parseFloat(waste) : 0;
+    const xdensity = density ? parseFloat(density): 0;
+
+    return (waste? (Math.abs(xweight- xwaste) * xdensity)/100: (xweight * xdensity)/100).toFixed(6);
+  }
+
+  calculateAddOn(weight,waste,price){
+    const xweight = weight ? parseFloat(weight) : 0;
+    console.log('xweight',xweight);
+    
+    const xwaste = waste ? parseFloat(waste) : 0;
+    console.log('xwaste',xwaste);
+    const xprice = price ? parseFloat(price): 0;
+    console.log('xprice',xprice);
+    return (((xweight + xwaste)*xprice)/100).toFixed(6);   
+  }
+
   getProcessProducts() {
     let processsArr = [];
     for (let index = 0; index < this.selectedProducts.length; index++) {
@@ -74,16 +94,17 @@ export class ProductTableComponent implements OnInit {
       const price = this.getxPrice(this.selectedProducts[index]);
       const weight = this.getxWeight(this.selectedProducts[index]);
       const density = this.getxDensity(this.selectedProducts[index]);
-      const avgDensdity = this.getxAvgDensity(this.selectedProducts[index]);
+      // const avgDensdity = this.getxAvgDensity(this.selectedProducts[index]);
       const costAddOn = this.getxCostAddOn(this.selectedProducts[index]);
       const waste = this.getxPercentWaste(this.selectedProducts[index]);
 
+      
       if (price !== '') arr.push(this.getPriceAttribute(price));
       if (weight !== '') arr.push(this.getWeightAttribute(weight));
       if (density !== '') arr.push(this.getDensityAttribute(density));
-      if (avgDensdity !== '')
-        arr.push(this.getAvgDensityAttribute(avgDensdity));
-      if (costAddOn !== '') arr.push(this.getCostAdOnAttribute(costAddOn));
+      if (this.avgDesity !== '')
+        arr.push(this.getAvgDensityAttribute(this.avgDesity));
+      if (this.xcostAddon != '') arr.push(this.getCostAdOnAttribute(this.xcostAddon));
       if (waste !== '') arr.push(this.getAwasteAttribute(waste));
 
       processsArr.push({
@@ -392,13 +413,19 @@ export class ProductTableComponent implements OnInit {
     // ).toFixed(6);
     // this.fieldArray[i] = data;
 
-    this.avgDesity = (
-      this.productWaste
-        ? (Math.abs(this.productWeight - this.productWaste) *
-          this.densityResult) /
-        100
-        : (this.productWeight * this.densityResult) / 100
-    ).toFixed(6);
+    // this.avgDesity = (
+    //   this.productWaste
+    //     ? (Math.abs(this.productWeight - this.productWaste) *
+    //       this.densityResult) /
+    //     100
+    //     : (this.productWeight * this.densityResult) / 100
+    // ).toFixed(6);
+
+    this.avgDesity = this.calculateAvgDenstiy(this.productWeight,this.productWaste,this.densityResult);
+
+    const price = this.getxPrice(this.selectedProducts[i])
+    this.xcostAddon = this.calculateAddOn(this.productWeight,this.productWaste,price);
+
     if (this.selectedProducts[i]) {
       for (
         let index = 0;
@@ -416,7 +443,10 @@ export class ProductTableComponent implements OnInit {
   ProductWasteChangeHandler(event: any, i: any) {
     this.productWaste = event.target.value;
     console.log(event.target.value);
+    this.avgDesity = this.calculateAvgDenstiy(this.productWeight,this.productWaste,this.densityResult);
 
+    const price = this.getxPrice(this.selectedProducts[i])
+    this.xcostAddon = this.calculateAddOn(this.productWeight,this.productWaste,price);
     // this.productWaste = event.target.value;
     // let data = this.fieldArray[i];
     // data['waste'] = this.productWaste;
@@ -517,6 +547,8 @@ export class ProductTableComponent implements OnInit {
   }
 
   getxAvgDensity(selectedProduct) {
+    console.log('selectedProduct', selectedProduct);
+    
     const result = selectedProduct
       ? selectedProduct.productAttributeValues.find(
         (d) => d.attribute.description === 'AverageDensity'
