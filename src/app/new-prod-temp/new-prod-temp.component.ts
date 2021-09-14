@@ -24,6 +24,8 @@ export class NewProdTempComponent implements OnInit {
   processNumber;
   conversionNo;
   cost;
+  selectedAttribute={id:-1,Name:'Select One'};
+  selectedAddAttribute={id:-1,Name:'Select One'};
   constructor() {}
 
   ngOnInit(): void {
@@ -98,6 +100,7 @@ export class NewProdTempComponent implements OnInit {
 
   selectAddNewAttributeHandler(event: any) {
     this.AddAtributex = event.target.value;
+    if(event.target.value === '-1') return;
     console.log(this.AddAtributex);
     const selectedAtt = this.addNewAttribute.results.find(d=>(d.id.toString() === event.target.value));
     this.attributesGroupAttributes.push({"attribute":selectedAtt});    
@@ -107,6 +110,7 @@ export class NewProdTempComponent implements OnInit {
   selectChangeHandler(event: any) {
     this.selectedDay = event.target.value;
     console.log(event.target.value);
+    if(event.target.value === '-1') {this.attributesGroupAttributes = []; return};
     const attrbs = this.attributeGroup.find(
       (d) => d.id.toString() === event.target.value.toString()
     );
@@ -135,6 +139,8 @@ export class NewProdTempComponent implements OnInit {
   }
   onafterSave(no: any){
     this.attributesGroupAttributes = [];
+    this.selectedAttribute = {id:-1,Name:'Select One'};
+    this.selectedAddAttribute = {id:-1,Name:'Select One'};
   }
 
   postNewTemplate(payload) {

@@ -42,7 +42,7 @@ export class ProductTableComponent implements OnInit {
   @Output() onProcessNumberChange: EventEmitter<number> = new EventEmitter();
   @Output() onConversionChange: EventEmitter<number> = new EventEmitter();
   @Output() onCostChange: EventEmitter<number> = new EventEmitter();
-  @Input() xattributesGroupAttributes = {};
+  @Input() xattributesGroupAttributes = [];
   @Output() afterSave: EventEmitter<number> = new EventEmitter();
 
   public fieldArray: Array<any> = [];
@@ -296,7 +296,10 @@ export class ProductTableComponent implements OnInit {
 
   saveProcess() {
     console.log('this.selectedProducts0000000', this.selectedProducts);
-    
+    if(!this.xattributesGroupAttributes || this.xattributesGroupAttributes.length === 0 || !this.processName || !this.productOfProcess){
+      alert('Fill Required Field');
+      return;
+    }
     const payload = this.makeAddProductPayload();
     console.log('dddd', JSON.stringify(payload));
     axios
