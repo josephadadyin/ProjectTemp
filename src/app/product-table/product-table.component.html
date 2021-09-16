@@ -13,12 +13,12 @@
       <span class="h6 pr-2"> {{xprocessNumber}}</span></span>
     <label class="h5 pl-5">Name: </label>
     <input type="text " class="form-control-sm ml-1" placeholder="Name" [(ngModel)]="processName"
-      (change)="ProcessNameChangeHandler($event)">
+      (change)="onProcessNameChangeHandler($event)">
     <span> <label class="h5 pl-5 pr-1">Total: </label> <span class="h6"> 500$</span></span>
     <label class="h5  pl-5">Product of this process: </label>
     <input type="text" class="form-control-sm ml-1" [(ngModel)]="productOfProcess" placeholder="Final Product"
-      (change)="ProductOfProcessChangeHandler($event)">
-    <button class=" btn add-product-btn  mb-3 ml-auto   mr-3" type="button" (click)="addFieldValue();  addData()">+
+      (change)="onProductOfProcessChangeHandler($event)">
+    <button class=" btn add-product-btn  mb-3 ml-auto   mr-3" type="button" (click)="addANewProduct()">+
       Add New Product</button>
   </div>
   <!-- ======================== Table 1 =========================== -->
@@ -38,19 +38,18 @@
     <tbody>
       <ng-container>
         <!-- *ngFor="let data of AddProductData; let j = index" -->
-        <tr *ngFor="let field of fieldArray; let i = index" class="text-center">
+        <tr *ngFor="let product of processSchema.products; let i = index" class="text-center">
           <td>
             <select name="" id="" class="form-control-sm" 
-            [(ngModel)]="xselectedProduct.id" 
-            (change)="selectProductNameChangeHandler($event,i)">
-              <option value="{{data.id}}" *ngFor="let data of AddProductData">
+            (change)="onSelectProductNameChangeHandler($event,i)">
+              <option value="{{data.id}}" [selected]="product.id == data.id" *ngFor="let data of productList">
                 {{data.description}}
               </option>
             </select>
           </td>
-          <td>{{getxPrice(selectedProducts[i])}}</td>
-          <td><input type="number" placeholder="Weight" (change)="ProductWeightChangeHandler($event,i)"
-              value="{{getxWeight(selectedProducts[i])}}"></td>
+          <td>{{getAttributeValueByName(product,'Cost')}}</td>
+          <td><input type="number" placeholder="Weight" (change)="onProductWeightChangeHandler($event,i)"
+              value="{{getAttributeValueByName(product,'Weight')}}"></td>
           <td>{{getxDensity(selectedProducts[i])}}</td>
           <!-- <td>{{getxAvgDensity(selectedProducts[i])}}</td> -->
           <td>{{avgDesity}}</td>
@@ -114,98 +113,4 @@
 
 
 
-<div class="col-md-12 col-sm-12 shadow process-table-div pb-1 pt-2 mb-5"
-  *ngFor="let createdProcess of createdProcessViewArray">
-  <div class="pt-2 row">
-    <span> <label class="h5 pl-4 pr-1 ">Process Number: </label>
-      <span class="h6 pr-2"> {{createdProcess.processNo}}</span></span>
-    <label class="h5 pl-5">Name: </label>
-    <input type="text " class="form-control-sm ml-1" placeholder="Name"
-      [(ngModel)]="createdProcess.processName">
-    <span> <label class="h5 pl-5 pr-1">Total: </label> <span class="h6"> 500$</span></span>
-    <label class="h5  pl-5">Product of this process: </label>
-    <input type="text" class="form-control-sm ml-1" [(ngModel)]="createdProcess.productOfProcess"
-      placeholder="Final Product">
-    <!-- <button class=" btn add-product-btn  mb-3 ml-auto   mr-3" type="button" (click)="addFieldValue();  addData()">+
-        Add New Product</button> -->
-  </div>
-  <!-- ======================== Table 1 =========================== -->
-  <table class="table table1 table-bordered pb-0 mb-0">
-    <thead>
-      <tr class="row-color">
-        <td scope="col">Product Name</td>
-        <td scope="col">USD/MT price</td>
-        <td scope="col">%USED(WEIGHT)</td>
-        <td scope="col">DENSITY</td>
-        <td scope="col">AVG DENSITY</td>
-        <td scope="col">COST ADDON</td>
-        <td scope="col">WASTE %</td>
-        <td scope="col">Status</td>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container>
-        <!-- *ngFor="let data of AddProductData; let j = index" -->
-        <tr *ngFor="let field of createdProcess.selectedProducts" class="text-center">
-          <td *ngIf="field && field.description">
-            <select name="" id="" class="form-control-sm">
-              <option value="{{data.id}}" *ngFor="let data of AddProductData"
-                [selected]="data.description === field.description">{{data.description}}</option>
-            </select>
-          </td>
-          <td *ngIf="field && field.description">{{getxPrice(field)}}</td>
-          <td *ngIf="field && field.description"><input type="number" placeholder="Weight" 
-              value="{{getxWeight(field)}}"></td>
-          <td *ngIf="field && field.description">{{getxDensity(field)}}</td>
-          <td *ngIf="field && field.description">{{getxAvgDensity(field)}}</td>
-          <td *ngIf="field && field.description">{{getxCostAddOn(field)}}</td>
-          <td *ngIf="field && field.description"> <input type="number" placeholder="Waste" 
-              value="{{getxPercentWaste(field)}}"> </td>
-          <td *ngIf="field && field.description"><i class="fa fa-pencil pl-5" aria-hidden="true"></i>
-            <i class="fa fa-trash-o pl-5" aria-hidden="true"></i>
-          </td>
-        </tr>
-      </ng-container>
-      <tr class="row-color text-left">
-        <td colspan="5" class="h6">Total</td>
-        <td></td>
-        <td colspan="2"></td>
-      </tr>
-    </tbody>
-  </table>
-  
 
-  <!-- ===================== Table 2 ========================= -->
-  <table class="table table2  pb-5 mb-4">
-    <thead>
-      <tr class="pb-0 row-color1">
-        <label for="" class="p-2 pr-5 h6">Conversion Cost Calculation</label>
-        <button class="btn btn-default ml-5" (click)="addFieldValue1()">+ Add New</button>
-        <td scope="col"></td>
-        <td scope="col"></td>
-      </tr>
-    </thead>
-    <tbody *ngFor="let field of createdProcess.selectedConversion; let i = index">
-      <tr class="row-color1">
-        <td scope="col">
-          <select name="" id="" class="form-control-sm" (change)="selectConverionChangeHandler($event,i)">
-            <option value="{{name.id}}" *ngFor="let name of ConversionName;"
-            [selected]="name.description === field.description">{{name.description}}</option>
-          </select>
-        </td>
-        <td scope="col" class="tdcost">
-          <input type="number" placeholder="Enter Cost" [(ngModel)]="field.cost"
-            (change)="EnterCostChangeHandler($event,i)">
-        </td>
-        <td scope="col"><i class="fa fa-trash-o text-white pl-5" aria-hidden="true"></i></td>
-      </tr>
-    </tbody>
-  </table>
-  <!-- <div>
-      <button class="btn btn-default ml-5" (click)="saveProcess()">Save</button>
-    </div> -->
-</div>
-
-<div>
-  <button class="btn btn-default ml-5" (click)="saveAllProcess()">Save</button>
-</div>

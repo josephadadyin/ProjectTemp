@@ -25,7 +25,7 @@
           <div class="col-md-3">
             Select Attribute
             <select class="form-control mb-3 font-weight-light" 
-            (change)="selectChangeHandler($event)" [(ngModel)]="selectedAttribute.id">
+            (change)="selectAttributeChangeHandler($event)" [(ngModel)]="selectedAttribute.id">
               <option value="-1">Select Attribute</option>
               <option value="{{item.id}}" *ngFor="let item of attributeGroup">
                 {{item.description}}
@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="row">
-          <div *ngFor="let attribt of attributesGroupAttributes" class="col-2 ml-4">
+          <div *ngFor="let attribt of processSchema.selectedAttributes.attributesGroupAttributes" class="col-2 ml-4">
             <input type="checkbox" [checked]="true"> {{attribt.attribute.description}}
           </div>
         </div>
@@ -61,7 +61,7 @@
     <div class="row pl-4 pr-4 pb-4">
       <div class="col-md-3"> Process
         <select name="" id="" class="form-control mb-3 font-weight-light" (change)="selectProcessChangeHandler($event)">
-          <option value="process">Total Process</option>
+          <option value="-1">Total Process</option>
           <option [ngValue]="data.id" *ngFor="let data of getProcesses">{{data.description}}</option>
         </select>
       </div>
