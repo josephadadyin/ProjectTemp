@@ -27,7 +27,7 @@
       <tr class="row-color">
         <td scope="col">Product Name</td>
         <td scope="col">USD/MT price</td>
-        <td scope="col">%USED(WEIGHT)</td>
+        <td scope="col">%USED</td>
         <td scope="col">DENSITY</td>
         <td scope="col">AVG DENSITY</td>
         <td scope="col">COST ADDON</td>
@@ -40,22 +40,22 @@
         <!-- *ngFor="let data of AddProductData; let j = index" -->
         <tr *ngFor="let product of processSchema.products; let i = index" class="text-center">
           <td>
+            {{i}}
             <select name="" id="" class="form-control-sm" 
             (change)="onSelectProductNameChangeHandler($event,i)">
-              <option value="{{data.id}}" [selected]="product.id == data.id" *ngFor="let data of productList">
+              <option value="{{data.id}}" [selected]="product.id === data.id" *ngFor="let data of productList">
                 {{data.description}}
               </option>
             </select>
           </td>
           <td>{{getAttributeValueByName(product,'Cost')}}</td>
-          <td><input type="number" placeholder="Weight" (change)="onProductWeightChangeHandler($event,i)"
-              value="{{getAttributeValueByName(product,'Weight')}}"></td>
-          <td>{{getxDensity(selectedProducts[i])}}</td>
-          <!-- <td>{{getxAvgDensity(selectedProducts[i])}}</td> -->
-          <td>{{avgDesity}}</td>
-          <td>{{xcostAddon}}</td>
-          <td> <input type="number" placeholder="Waste" (change)="ProductWasteChangeHandler($event,i)"
-              value="{{getxPercentWaste(selectedProducts[i])}}"> </td>
+          <td><input type="number" placeholder="PercentUsed" (change)="onProductPercentUsedChangeHandler($event,i)"
+              value="{{getAttributeValueByName(product,'PercentUsed')}}"></td>
+          <td>{{getAttributeValueByName(product,'PercentUsed')}}</td>
+          <td>{{getAttributeValueByName(product,'AverageDensity')}}</td>
+          <td>{{getAttributeValueByName(product,'CostAddOn')}}</td>
+          <td> <input type="number" placeholder="Waste" (change)="onProductWasteChangeHandler($event,i)"
+              value="{{getAttributeValueByName(product,'PercentWaste')}}"> </td>
           <td><i class="fa fa-pencil pl-5" aria-hidden="true"></i>
             <i class="fa fa-trash-o pl-5" aria-hidden="true"></i>
           </td>
@@ -74,20 +74,20 @@
     <thead>
       <tr class="pb-0 row-color1">
         <label for="" class="p-2 pr-5 h6">Conversion Cost Calculation</label>
-        <button class="btn btn-default ml-5" (click)="addFieldValue1()">+ Add New</button>
+        <button class="btn btn-default ml-5" (click)="addConversionCost()">+ Add New</button>
         <td scope="col"></td>
         <td scope="col"></td>
       </tr>
     </thead>
-    <tbody *ngFor="let field of fieldArray1; let i = index">
+    <tbody *ngFor="let field of addedConversion; let i = index">
       <tr class="row-color1">
         <td scope="col">
           <select name="" id="" class="form-control-sm" (change)="selectConverionChangeHandler($event,i)">
-            <option value="{{name.id}}" *ngFor="let name of ConversionName; let j = index">{{name.description}}</option>
+            <option value="{{name.id}}" [selected]="addedConversion[i].id === name.id" *ngFor="let name of ConversionName; let j = index">{{name.description}}</option>
           </select>
         </td>
         <td scope="col" class="tdcost"><input type="number" placeholder="Enter Cost"
-            (change)="EnterCostChangeHandler($event,i)" [(ngModel)]="enterCost">
+            (change)="EnterCostChangeHandler($event,i)" [(ngModel)]="field.cost">
         </td>
         <td scope="col"><i class="fa fa-trash-o text-white pl-5" aria-hidden="true"></i></td>
       </tr>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output,ChangeDetectorRef  } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectorRef } from '@angular/core';
 import axios from 'axios';
 
 @Component({
@@ -10,7 +10,7 @@ export class ProductTableComponent implements OnInit {
   processSchema = {
     "productType": { "id": "", "name": "" },
     "productCode": "",
-    "selectedAttributes": {"id":"","description":"", "attributesGroupAttributes":[]},
+    "selectedAttributes": { "id": "", "description": "", "attributesGroupAttributes": [] },
     "process": { "id": "", "name": "" },
     "productWeightCalculator": { "id": "", "name": "" },
     "productPicture": {},
@@ -18,7 +18,7 @@ export class ProductTableComponent implements OnInit {
     "processName": "",
     "totalCost": "",
     "productOfProcess": "",
-    "products": [], 
+    "products": [],
     /** prodts schema per product
      * {
         "id": "",
@@ -29,24 +29,35 @@ export class ProductTableComponent implements OnInit {
         "productAttributeValues":[]
       }
     */
-    "conversionCost": [
-      {
-        "name": "",
-        "id": "",
-        "cost": ""
-      }
-    ]
+    "processConversionTypes": []
+    // {
+    //   "conversionType": "",
+    //   "processConversionAttributeValues": [{
+    //     "attribute": {
+    //       "description": 'Cost',
+    //       "systemUom": {
+    //         "id": 13,
+    //         "description": 'USD',
+    //       },
+    //     },
+    //     "attributeValue": "",
+    //     "attributeValueExpression": null,
+    //     "userConversionUom": 'USD',
+    //   }]
+    // }
   }
-  
+
   xprocessNumber;
   processName;
   productOfProcess;
   productList;
   selectedProductFromDropDown;
+  public addedConversion: Array<any> = [];
 
 
 
-  
+
+
   constructor(private changeDetection: ChangeDetectorRef) { }
 
   ngOnInit(): void {
@@ -65,10 +76,52 @@ export class ProductTableComponent implements OnInit {
     console.log(event.target.value);
   }
   onSelectProductNameChangeHandler(event: any, index: number) {
+    console.log('index', index);
+
     const selectedProduct = this.productList.find(
-        (d) => d.id.toString() === event.target.value
-      );      
-      this.processSchema.products[index] = selectedProduct;
+      (d) => d.id.toString() === event.target.value
+    );
+    this.processSchema.products[index] = selectedProduct;
+  }
+  Conversion() {
+    axios
+      .get(
+        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/conversion_types/'
+      )
+      .then((response) => {
+        this.ConversionName = response.data.results;
+        console.log(this.ConversionName);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(function () { });
+  }
+  addConversionCost() {
+    this.addedConversion.push({...this.ConversionName[0],cost:''});
+    // this.processSchema.processConversionTypes.push(this.getConversionSchema(this.ConversionName[0].id, null));
+    // this.newAttribute1 = {};
+    // this.selectedConversion.push(this.ConversionName[0]);
+    // console.log('this.selectedConversion', this.selectedConversion);
+
+  }
+
+  getConversionSchema (id,value){
+    return{
+      "conversionType": id,
+      "processConversionAttributeValues": [{
+        "attribute": {
+          "description": 'Cost',
+          "systemUom": {
+            "id": 13,
+            "description": 'USD',
+          },
+        },
+        "attributeValue": value,
+        "attributeValueExpression": null,
+        "userConversionUom": 'USD',
+      }]
+    }
   }
 
   getProducts() {
@@ -78,8 +131,8 @@ export class ProductTableComponent implements OnInit {
       )
       .then((response) => {
         this.productList = response.data.results;
-        console.log('this.productList',this.productList);
-        
+        console.log('this.productList', this.productList);
+
         // console.log('productListproductList', this.productList);
 
         // this.xproductName = this.productList.map((d) => ({
@@ -93,12 +146,12 @@ export class ProductTableComponent implements OnInit {
       })
       .then(function () { });
   }
-  addANewProduct(){
+  addANewProduct() {
     this.processSchema.products.push(this.productList[0]);
-    console.log('this.processSchema.products',this.processSchema.products);
-    
+    console.log('this.processSchema.products', this.processSchema.products);
+
   }
-  getAttributeValueByName(selectedProduct,attributeName) {  
+  getAttributeValueByName(selectedProduct, attributeName) {
     const result = selectedProduct
       ? selectedProduct.productAttributeValues.find(
         (d) => d.attribute.description === attributeName
@@ -106,53 +159,219 @@ export class ProductTableComponent implements OnInit {
       : null;
     return result ? result['attributeValue'] : '';
   }
-  onProductWeightChangeHandler(event: any, i: number) {
+
+  onProductPercentUsedChangeHandler(event: any, i: number) {
     console.log('hellll', event.target.value);
+    const productPercetUsed = event.target.value;
 
-    this.productWeight = event.target.value;
-    // let data = this.fieldArray[i];
-    // data['weight'] = this.productWeight;
-    // data['avgDensity'] = (
-    //   data.waste
-    //     ? (Math.abs(this.productWeight - data.waste) * data.density) / 100
-    //     : (this.productWeight * data.density) / 100
-    // ).toFixed(6);
-    // this.fieldArray[i] = data;
+    const selectedProduct = this.processSchema.products[i];
 
-    // this.avgDesity = (
-    //   this.productWaste
-    //     ? (Math.abs(this.productWeight - this.productWaste) *
-    //       this.densityResult) /
-    //     100
-    //     : (this.productWeight * this.densityResult) / 100
-    // ).toFixed(6);
+    if (this.isProductAttribute(selectedProduct, 'PercentUsed')) {
+      this.setProductAttribute(i, 'PercentUsed', productPercetUsed);
+    } else {
+      this.processSchema.products[i].productAttributeValues.push(this.addPercentUsed(productPercetUsed))
+    }
 
-    this.avgDesity = this.calculateAvgDenstiy(this.productWeight,this.productWaste,this.densityResult);
+    const productWaste = this.getAttributeValueByName(selectedProduct, 'PercentWaste');
+    const productdensity = this.getAttributeValueByName(selectedProduct, 'Density');
+    const productAvgDesity = this.calculateAvgDenstiy(productPercetUsed, productWaste, productdensity);
 
-    const price = this.getxPrice(this.selectedProducts[i])
-    this.xcostAddon = this.calculateAddOn(this.productWeight,this.productWaste,price);
 
-    if (this.selectedProducts[i]) {
-      for (
-        let index = 0;
-        index < this.selectedProducts[i].productAttributeValues.length;
-        index++
-      ) {
-        const element = this.selectedProducts[i].productAttributeValues[index];
-        if (element.attribute.description === 'Weight') {
-          this.selectedProducts[i].productAttributeValues[index].attributeValue =
-            event.target.value;
-        }
+    if (this.isProductAttribute(selectedProduct, 'AverageDensity')) {
+      this.setProductAttribute(i, 'AverageDensity', productAvgDesity);
+    } else {
+      this.processSchema.products[i].productAttributeValues.push(this.addNewAverageDensity(productAvgDesity))
+    }
+
+
+    const productCost = this.getAttributeValueByName(selectedProduct, 'Cost');
+    const costAddon = this.calculateAddOn(productPercetUsed, productWaste, productCost);
+    if (this.isProductAttribute(selectedProduct, 'CostAddOn')) {
+      this.setProductAttribute(i, 'CostAddOn', costAddon);
+    } else {
+      this.processSchema.products[i].productAttributeValues.push(this.addNewCostAddOn(costAddon))
+    }
+  }
+
+  onProductWasteChangeHandler(event: any, i: any) {
+    // this.productWaste = event.target.value;
+    // console.log(event.target.value);
+    // this.avgDesity = this.calculateAvgDenstiy(this.productWeight, this.productWaste, this.densityResult);
+
+    // const price = this.getxPrice(this.selectedProducts[i])
+    // this.xcostAddon = this.calculateAddOn(this.productWeight, this.productWaste, price);
+
+
+
+    console.log('hellll', event.target.value);
+    const productWaste = event.target.value;
+
+    const selectedProduct = this.processSchema.products[i];
+
+    if (this.isProductAttribute(selectedProduct, 'PercentWaste')) {
+      this.setProductAttribute(i, 'PercentWaste', productWaste);
+    } else {
+      this.processSchema.products[i].productAttributeValues.push(this.addPercentWaste(productWaste))
+    }
+
+    const productPercetUsed = this.getAttributeValueByName(selectedProduct, 'PercentUsed');
+    const productdensity = this.getAttributeValueByName(selectedProduct, 'Density');
+    const productAvgDesity = this.calculateAvgDenstiy(productPercetUsed, productWaste, productdensity);
+
+
+    if (this.isProductAttribute(selectedProduct, 'AverageDensity')) {
+      this.setProductAttribute(i, 'AverageDensity', productAvgDesity);
+    } else {
+      this.processSchema.products[i].productAttributeValues.push(this.addNewAverageDensity(productAvgDesity))
+    }
+
+
+    const productCost = this.getAttributeValueByName(selectedProduct, 'Cost');
+    const costAddon = this.calculateAddOn(productPercetUsed, productWaste, productCost);
+    if (this.isProductAttribute(selectedProduct, 'CostAddOn')) {
+      this.setProductAttribute(i, 'CostAddOn', costAddon);
+    } else {
+      this.processSchema.products[i].productAttributeValues.push(this.addNewCostAddOn(costAddon))
+    }
+
+  }
+
+  setProductAttribute(i, attributeName, value) {
+    const product = this.processSchema.products[i];
+    for (let index = 0; index < this.processSchema.products[i].productAttributeValues.length; index++) {
+      const element = this.processSchema.products[i].productAttributeValues[index];
+      if (element.attribute.description === attributeName) {
+        this.processSchema.products[i].productAttributeValues[index].attributeValue = value;
       }
     }
   }
 
+  addNewAverageDensity(value) {
+    return {
+      "attribute": {
+        // "id": 498,
+        "description": "AverageDensity",
+        "systemUom": {
+          "id": 15,
+          "description": "gm/m3"
+        }
+      },
+      "attributeValue": value,
+      "attributeValueExpression": null,
+      "userConversionUom": "gm/m3"
+    }
+  }
+  addNewCostAddOn(value) {
+    return {
+      "attribute": {
+        "id": 498,
+        "description": "CostAddOn",
+        "systemUom": {
+          "id": 13,
+          "description": "USD"
+        }
+      },
+      "attributeValue": value,
+      "attributeValueExpression": null,
+      "userConversionUom": "USD"
+    }
+  }
 
+  addPercentUsed(value) {
+    return {
+      // "id": 145,
+      "attribute": {
+        // "id": 23,
+        "description": "PercentUsed",
+        "systemUom": {
+          "id": 14,
+          "description": "count"
+        }
+      },
+      "attributeValue": value,
+      "userConversionUom": null
+    }
+  }
 
+  addPercentWaste(value) {
+    return {
+      // "id": 149,
+      "attribute": {
+        // "id": 26,
+        "description": "PercentWaste",
+        "systemUom": {
+          "id": 14,
+          "description": "count"
+        }
+      },
+      "attributeValue": value,
+      "userConversionUom": null
+    }
+  }
+
+  isProductAttribute(selectedProduct, attributeName) {
+    return selectedProduct.productAttributeValues.find(
+      (d) => d.attribute.description === attributeName
+    )
+  }
+
+  calculateAvgDenstiy(percetageUsed, waste, density) {
+    const xpercetageUsed = percetageUsed ? parseFloat(percetageUsed) : 0;
+    const xwaste = waste ? parseFloat(waste) : 0;
+    const xdensity = density ? parseFloat(density) : 0;
+
+    return (waste ? (Math.abs(xpercetageUsed - xwaste) * xdensity) / 100 : (xpercetageUsed * xdensity) / 100).toFixed(6);
+  }
+
+  calculateAddOn(percetageUsed, waste, price) {
+    const xpercetageUsed = percetageUsed ? parseFloat(percetageUsed) : 0;
+    console.log('xweight', xpercetageUsed);
+
+    const xwaste = waste ? parseFloat(waste) : 0;
+    console.log('xwaste', xwaste);
+    const xprice = price ? parseFloat(price) : 0;
+    console.log('xprice', xprice);
+    return (((xpercetageUsed + xwaste) * xprice) / 100).toFixed(6);
+  }
+
+  selectConverionChangeHandler(event: any, i: number) {
+    const conversionId = event.target.value;
+    this.addedConversion[i] = this.addedConversion.find(d=>(d.id.toString()===conversionId));
+    // console.log(event.target.value);
+    // const selectedConversion = this.processSchema.processConversionTypes.find(d=>(d.conversionType.toString()===conversionId));
+
+    // this.processSchema.processConversionTypes.push(this.getConversionSchema(conversionId, null));
+    // this.processSchema.processConversionTypes[i] = this.ConversionName.find(
+    //   (d) => d.id.toString() === event.target.value
+    // );
+    // this.onConversionChange.emit(this.conversionName);
+  }
+  EnterCostChangeHandler(event: any, i: number) {
   
-  
-  
-  
+    // this.enterCost = event.target.value;
+    this.addedConversion[i].cost = event.target.value;
+    // console.log(event.target.value);
+    // this.selectedConversion[i].cost = event.target.value;
+    // this.onCostChange.emit(this.enterCost);
+  }
+
+  getProcessConversionTypes() {
+    let processsArr = [];
+    for (let index = 0; index < this.selectedConversion.length; index++) {
+      const element = this.selectedConversion[index];
+      let arr = [];
+      const price = element.cost;
+
+      if (price) arr.push(this.getConversionCostAttribute(price));
+
+      processsArr.push({
+        conversionType: element.id,
+        processConversionAttributeValues: arr,
+      });
+    }
+
+    return processsArr;
+  }
 
 
 
@@ -161,8 +380,14 @@ export class ProductTableComponent implements OnInit {
 
 
 
-  
-  
+
+
+
+
+
+
+
+
   getxPrice(selectedProduct) {
     const result = selectedProduct
       ? selectedProduct.productAttributeValues.find(
@@ -179,22 +404,22 @@ export class ProductTableComponent implements OnInit {
   xselectDensity = '';
   ConversionName;
   productWeight;
-  productWaste='';
+  productWaste = '';
   conversionName;
   enterCost;
   static processNumber = 1;
-  
+
   selectedProductNameIndex = 0;
   previousCreatedProcess = { description: '' };
   densityResult;
-  avgDesity='';
-  xcostAddon='';
+  avgDesity = '';
+  xcostAddon = '';
 
   createdProcess
   xselectedProduct = { id: 1, description: '' };
 
 
-  
+
   @Output() onProcessNameChange: EventEmitter<number> = new EventEmitter();
   @Output() onProcessNumberChange: EventEmitter<number> = new EventEmitter();
   @Output() onConversionChange: EventEmitter<number> = new EventEmitter();
@@ -212,34 +437,12 @@ export class ProductTableComponent implements OnInit {
     this.fieldArray.push(this.productList);
     this.newAttribute = {};
   }
-  public fieldArray1: Array<any> = [];
   public newAttribute1: any = {};
-  addFieldValue1() {
-    this.fieldArray1.push(this.ConversionName);
-    this.newAttribute1 = {};
-    this.selectedConversion.push(this.ConversionName[0]);
-    console.log('this.selectedConversion', this.selectedConversion);
 
-  }
 
-  calculateAvgDenstiy(weight,waste,density){
-    const xweight = weight ? parseFloat(weight) : 0;
-    const xwaste = waste ? parseFloat(waste) : 0;
-    const xdensity = density ? parseFloat(density): 0;
 
-    return (waste? (Math.abs(xweight- xwaste) * xdensity)/100: (xweight * xdensity)/100).toFixed(6);
-  }
 
-  calculateAddOn(weight,waste,price){
-    const xweight = weight ? parseFloat(weight) : 0;
-    console.log('xweight',xweight);
-    
-    const xwaste = waste ? parseFloat(waste) : 0;
-    console.log('xwaste',xwaste);
-    const xprice = price ? parseFloat(price): 0;
-    console.log('xprice',xprice);
-    return (((xweight + xwaste)*xprice)/100).toFixed(6);   
-  }
+
 
   getProcessProducts() {
     let processsArr = [];
@@ -253,7 +456,7 @@ export class ProductTableComponent implements OnInit {
       // const costAddOn = this.getxCostAddOn(this.selectedProducts[index]);
       const waste = this.getxPercentWaste(this.selectedProducts[index]);
 
-      
+
       if (price !== '') arr.push(this.getPriceAttribute(price));
       if (weight !== '') arr.push(this.getWeightAttribute(weight));
       if (density !== '') arr.push(this.getDensityAttribute(density));
@@ -376,23 +579,7 @@ export class ProductTableComponent implements OnInit {
     };
   }
 
-  getProcessConversionTypes() {
-    let processsArr = [];
-    for (let index = 0; index < this.selectedConversion.length; index++) {
-      const element = this.selectedConversion[index];
-      let arr = [];
-      const price = element.cost;
-
-      if (price) arr.push(this.getConversionCostAttribute(price));
-
-      processsArr.push({
-        conversionType: element.id,
-        processConversionAttributeValues: arr,
-      });
-    }
-
-    return processsArr;
-  }
+ 
 
   makeAddProductPayload() {
     const processProducts = this.getProcessProducts();
@@ -555,57 +742,18 @@ export class ProductTableComponent implements OnInit {
   }
 
   // ==========================  Event Handler ===================
+
+
+
+
+
   
-  ProductWasteChangeHandler(event: any, i: any) {
-    this.productWaste = event.target.value;
-    console.log(event.target.value);
-    this.avgDesity = this.calculateAvgDenstiy(this.productWeight,this.productWaste,this.densityResult);
-
-    const price = this.getxPrice(this.selectedProducts[i])
-    this.xcostAddon = this.calculateAddOn(this.productWeight,this.productWaste,price);
-    // this.productWaste = event.target.value;
-    // let data = this.fieldArray[i];
-    // data['waste'] = this.productWaste;
-    // data['avgDensity'] = (
-    //   this.productWeight
-    //     ? (Math.abs(this.productWaste - this.productWeight) *
-    //         this.densityResult) /
-    //       100
-    //     : (this.productWaste * this.densityResult) / 100
-    // ).toFixed(6);
-    // this.fieldArray[i] = data;
-
-    // this.avgDesity = (
-    //   this.productWeight
-    //     ? (Math.abs(this.productWaste - this.productWeight) *
-    //         this.densityResult) /
-    //       100
-    //     : (this.productWaste * this.densityResult) / 100
-    // ).toFixed(6);
-  }
-
- 
-  
-  selectConverionChangeHandler(event: any, i: number) {
-    this.conversionName = event.target.value;
-    console.log(event.target.value);
-    this.selectedConversion[i] = this.conversionName.find(
-      (d) => d.id.toString() === event.target.value
-    );
-    this.onConversionChange.emit(this.conversionName);
-  }
-  EnterCostChangeHandler(event: any, i: number) {
-    this.enterCost = event.target.value;
-    console.log(event.target.value);
-    this.selectedConversion[i].cost = event.target.value;
-    this.onCostChange.emit(this.enterCost);
-  }
 
   // ======================= Product Get API ======================================
 
-  
 
-  
+
+
 
   getxWeight(selectedProduct) {
     console.log('selectedProduct', selectedProduct);
@@ -631,7 +779,7 @@ export class ProductTableComponent implements OnInit {
 
   getxAvgDensity(selectedProduct) {
     console.log('selectedProduct', selectedProduct);
-    
+
     const result = selectedProduct
       ? selectedProduct.productAttributeValues.find(
         (d) => d.attribute.description === 'AverageDensity'
@@ -658,7 +806,7 @@ export class ProductTableComponent implements OnInit {
     return result ? result['attributeValue'] : '';
   }
 
-  
+
   addData() {
     if (this.selectedProducts && this.productList) {
       this.selectedProducts.push(this.productList[0]);
@@ -672,20 +820,7 @@ export class ProductTableComponent implements OnInit {
 
   // ========================== Conversion Cost API ===================
 
-  Conversion() {
-    axios
-      .get(
-        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/conversion_types/'
-      )
-      .then((response) => {
-        this.ConversionName = response.data.results;
-        console.log(this.ConversionName);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .then(function () { });
-  }
+  
 
   // ============================= Process Post Api ========================
 
