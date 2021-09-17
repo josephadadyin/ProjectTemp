@@ -40,7 +40,6 @@
         <!-- *ngFor="let data of AddProductData; let j = index" -->
         <tr *ngFor="let product of processSchema.products; let i = index" class="text-center">
           <td>
-            {{i}}
             <select name="" id="" class="form-control-sm" 
             (change)="onSelectProductNameChangeHandler($event,i)">
               <option value="{{data.id}}" [selected]="product.id === data.id" *ngFor="let data of productList">
@@ -87,7 +86,7 @@
           </select>
         </td>
         <td scope="col" class="tdcost"><input type="number" placeholder="Enter Cost"
-            (change)="EnterCostChangeHandler($event,i)" [(ngModel)]="field.cost">
+            (change)="EnterCostChangeHandler($event,i)" value={{getConversionCost(field)}}>
         </td>
         <td scope="col"><i class="fa fa-trash-o text-white pl-5" aria-hidden="true"></i></td>
       </tr>

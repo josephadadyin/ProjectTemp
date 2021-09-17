@@ -203,7 +203,7 @@ export class NewProdTempComponent implements OnInit {
     console.log('this.processNumber', this.processNumber);
   }
   onafterSave(no: any) {
-    this.attributesGroupAttributes = [];
+    this.processSchema.selectedAttributes.attributesGroupAttributes = [];
     this.selectedAttribute = { id: -1, Name: 'Select One' };
     this.selectedAddAttribute = { id: -1, Name: 'Select One' };
   }
