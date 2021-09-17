@@ -14,7 +14,7 @@
     <label class="h5 pl-5">Name: </label>
     <input type="text " class="form-control-sm ml-1" placeholder="Name" [(ngModel)]="processName"
       (change)="onProcessNameChangeHandler($event)">
-    <span> <label class="h5 pl-5 pr-1">Total: </label> <span class="h6"> 500$</span></span>
+    <span> <label class="h5 pl-5 pr-1">Total: </label> <span class="h6">{{totalCost}}</span></span>
     <label class="h5  pl-5">Product of this process: </label>
     <input type="text" class="form-control-sm ml-1" [(ngModel)]="productOfProcess" placeholder="Final Product"
       (change)="onProductOfProcessChangeHandler($event)">
@@ -60,10 +60,10 @@
           </td>
         </tr>
       </ng-container>
-      <tr class="row-color text-left">
-        <td colspan="5" class="h6">Total</td>
-        <td></td>
-        <td colspan="2"></td>
+      <tr>
+        <td colspan="4" class="h6" style="padding-left: 60px;">Total</td>
+        <td class="row-color">{{totalAverageDensity}}</td>
+        <td class="row-color">{{totalCostAddOn}}</td>
       </tr>
     </tbody>
   </table>
@@ -91,6 +91,10 @@
         <td scope="col"><i class="fa fa-trash-o text-white pl-5" aria-hidden="true"></i></td>
       </tr>
     </tbody>
+    <tr class="row-color text-left">
+      <td class="h6">Total</td>
+      <td class="">{{totalConversionCost}}</td>
+    </tr>
   </table>
 </div>
 
