@@ -67,6 +67,9 @@ export class ProductTableComponent implements OnInit {
   productOfProcess;
   productList;
   selectedProductFromDropDown;
+  public createdProcessViewArray: Array<any> = [];
+  public reverseCreatedProcessViewArray: Array<any> = [];
+
   public addedConversion: Array<any> = [];
   @Input() xattributesGroupAttributes = [];
 
@@ -408,6 +411,9 @@ export class ProductTableComponent implements OnInit {
         }
         this.createdProcessViewArray.push(view);
 
+        this.reverseCreatedProcessViewArray = JSON.parse(JSON.stringify(this.createdProcessViewArray));
+        this.reverseCreatedProcessViewArray.reverse();
+
         console.log(' this.createdProcessViewArray this.createdProcessViewArray', this.createdProcessViewArray);
 
 
@@ -513,6 +519,52 @@ export class ProductTableComponent implements OnInit {
 
     return processsArr;
   }
+
+  saveAllProcess() {
+    console.log('dddd-------------');
+    const payload = this.makeAllProcessAddProductPayload();
+    console.log('dddd-------------', JSON.stringify(payload));
+    axios
+      .post(
+        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/products/',
+        payload
+      )
+      .then((response) => {
+        console.log('resssss', response.data);
+
+        // this.productList.push(response.data);
+        // this.previousCreatedProcess = response.data;
+        // this.createdProcessResponseArray.push(response.data);
+        // ProductTableComponent.processNumber += 1;
+        // this.xprocessNumber = ProductTableComponent.processNumber;
+        // this.processName = '';
+        // this.productOfProcess = '';
+        // this.conversionName = '';
+        // this.enterCost = '';
+        // this.findSelected(this.previousCreatedProcess.description);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(function () { });
+  }
+  makeAllProcessAddProductPayload() {
+    const processProducts = this.getProcessProducts();
+    const processConversionTypes = this.getProcessConversionTypes();
+    const modifiedAsSchema = this.updateSchemaProduct();
+    return {
+      description: this.productOfProcess,
+      businessAccount: null,
+      productTemplate: null,
+      process: {
+        id: 1,
+        description: this.processName,
+        processProducts: [...processProducts, ...modifiedAsSchema],
+        processConversionTypes: processConversionTypes,
+      },
+      productAttributeValues: this.xattributesGroupAttributes,
+    };
+  }
   
 
 
@@ -581,7 +633,6 @@ export class ProductTableComponent implements OnInit {
 
   public fieldArray: Array<any> = [];
   public createdProcessResponseArray: Array<any> = [];
-  public createdProcessViewArray: Array<any> = [];
   public selectedProducts: Array<any> = [];
   public selectedConversion: Array<any> = [];
   public newAttribute: any = {};
@@ -694,23 +745,7 @@ export class ProductTableComponent implements OnInit {
 
   
 
-  makeAllProcessAddProductPayload() {
-    const processProducts = this.getProcessProducts();
-    const processConversionTypes = this.getProcessConversionTypes();
-    const modifiedAsSchema = this.updateSchemaProduct();
-    return {
-      description: this.productOfProcess,
-      businessAccount: null,
-      productTemplate: null,
-      process: {
-        id: 1,
-        description: this.processName,
-        processProducts: [...processProducts, ...modifiedAsSchema],
-        processConversionTypes: processConversionTypes,
-      },
-      productAttributeValues: this.xattributesGroupAttributes,
-    };
-  }
+  
 
   updateSchemaProduct() {
     return this.createdProcessResponseArray.map(d => (
@@ -756,34 +791,7 @@ export class ProductTableComponent implements OnInit {
 
   
 
-  saveAllProcess() {
-    console.log('dddd-------------');
-    const payload = this.makeAllProcessAddProductPayload();
-    console.log('dddd-------------', JSON.stringify(payload));
-    axios
-      .post(
-        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/products/',
-        payload
-      )
-      .then((response) => {
-        console.log('resssss', response.data);
-
-        // this.productList.push(response.data);
-        // this.previousCreatedProcess = response.data;
-        // this.createdProcessResponseArray.push(response.data);
-        // ProductTableComponent.processNumber += 1;
-        // this.xprocessNumber = ProductTableComponent.processNumber;
-        // this.processName = '';
-        // this.productOfProcess = '';
-        // this.conversionName = '';
-        // this.enterCost = '';
-        // this.findSelected(this.previousCreatedProcess.description);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .then(function () { });
-  }
+  
 
   // ==========================  Event Handler ===================
 
