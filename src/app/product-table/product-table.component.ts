@@ -420,8 +420,8 @@ export class ProductTableComponent implements OnInit {
         this.xprocessNumber = ProductTableComponent.processNumber;
         this.processName = '';
         this.productOfProcess = '';
-        this.conversionName = '';
-        this.enterCost = '';
+        // this.conversionName = '';
+        // this.enterCost = '';
         // this.findSelected(this.previousCreatedProcess.description);
         this.afterSave.emit();
         this.processSchema.products=[];
@@ -883,33 +883,4 @@ export class ProductTableComponent implements OnInit {
       });
     console.log('Process post API is successfully Called:');
   }
-
-  // saveProcess() {
-  //   console.log('SaveProcess function is called:');
-  //   this.ProcessPost({
-  //     description: this.processName,
-  //     processProducts: [
-  //       {
-  //         product: this.productOfProcess,
-  //         processProductAttributeValues: [
-  //           {
-  //             attribute: { description: this.selectProductName },
-  //             attributeValue: null,
-  //           },
-  //         ],
-  //         processConversionTypes: [
-  //           {
-  //             processConversionAttributeValues: [
-  //               {
-  //                 attribute: { description: this.conversionName },
-  //                 attributeValue: this.enterCost,
-  //               },
-  //             ],
-  //           },
-  //         ],
-  //         processCalculator: [null],
-  //       },
-  //     ],
-  //   });
-  // }
 }

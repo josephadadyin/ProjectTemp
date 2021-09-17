@@ -129,7 +129,7 @@ export class NewProdTempComponent implements OnInit {
     );
     this.processSchema.selectedAttributes = attrbs??{id:"",description:"",attributesGroupAttributes:[]};
    
-    // this.attributesGroupAttributes = attrbs.attributesGroupAttributes;
+    this.attributesGroupAttributes = attrbs.attributesGroupAttributes;
   }
 
   selectAddNewAttributeHandler(event: any) {
