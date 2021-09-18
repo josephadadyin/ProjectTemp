@@ -68,14 +68,15 @@ export class ProductTableComponent implements OnInit {
   productList;
   selectedProductFromDropDown;
   totalAverageDensity;
-  totalCostAddOn=0.0;
-  totalConversionCost=0.0;
-  totalCost=0.0;
+  totalCostAddOn = 0.0;
+  totalConversionCost = 0.0;
+  totalCost = 0.0;
   public createdProcessViewArray: Array<any> = [];
   public reverseCreatedProcessViewArray: Array<any> = [];
 
   public addedConversion: Array<any> = [];
   @Input() xattributesGroupAttributes = [];
+  @Input() xselectedProcess = { id: '', description: '', processProducts: [], processConversionTypes: [], processCalculator: [], calculatorMeta: null };
 
 
   constructor(private changeDetection: ChangeDetectorRef) { }
@@ -118,14 +119,14 @@ export class ProductTableComponent implements OnInit {
       .then(function () { });
   }
   addConversionCost() {
-    this.addedConversion.push({...this.ConversionName[0],cost:''});
+    this.addedConversion.push({ ...this.ConversionName[0], cost: '' });
     this.calculateTotalConversioncost();
     this.calcluateTotalCost();
 
   }
 
-  getConversionSchema (id,value){
-    return{
+  getConversionSchema(id, value) {
+    return {
       "conversionType": id,
       "processConversionAttributeValues": [{
         "attribute": {
@@ -164,39 +165,39 @@ export class ProductTableComponent implements OnInit {
     this.calcluateTotalCost();
 
   }
-  calculateTotalAverageDensity(){
+  calculateTotalAverageDensity() {
     this.totalAverageDensity = 0;
-    for (let index = 0; index <  this.processSchema.products.length; index++) {
-      const product =  this.processSchema.products[index];
-      let avgDenst = this.getAttributeValueByName(product,'AverageDensity');
+    for (let index = 0; index < this.processSchema.products.length; index++) {
+      const product = this.processSchema.products[index];
+      let avgDenst = this.getAttributeValueByName(product, 'AverageDensity');
       avgDenst = avgDenst ?? 0;
       this.totalAverageDensity += avgDenst;
     }
   }
 
-  calculateTotalCostAddOn(){
+  calculateTotalCostAddOn() {
     this.totalCostAddOn = 0;
-    for (let index = 0; index <  this.processSchema.products.length; index++) {
-      const product =  this.processSchema.products[index];
-      let costAddon = this.getAttributeValueByName(product,'CostAddOn');
+    for (let index = 0; index < this.processSchema.products.length; index++) {
+      const product = this.processSchema.products[index];
+      let costAddon = this.getAttributeValueByName(product, 'CostAddOn');
       costAddon = costAddon ?? 0;
       this.totalCostAddOn += costAddon;
     }
   }
 
-  calculateTotalConversioncost(){
-    this.totalConversionCost=0.0;
+  calculateTotalConversioncost() {
+    this.totalConversionCost = 0.0;
     for (let index = 0; index < this.addedConversion.length; index++) {
       const element = this.addedConversion[index];
-      console.log('element.cost',element.cost);
-      
-      const cost = !element.cost || element.cost ==='' ?  0.0:parseFloat(element.cost);
+      console.log('element.cost', element.cost);
+
+      const cost = !element.cost || element.cost === '' ? 0.0 : parseFloat(element.cost);
       this.totalConversionCost += cost;
     }
   }
 
-  calcluateTotalCost(){
-    this.totalCost =0.0;
+  calcluateTotalCost() {
+    this.totalCost = 0.0;
     const total = parseFloat(this.totalCostAddOn.toString()) + parseFloat(this.totalConversionCost.toString());
     this.totalCost = parseFloat(total.toFixed(2));
   }
@@ -382,11 +383,11 @@ export class ProductTableComponent implements OnInit {
 
   selectConverionChangeHandler(event: any, i: number) {
     const conversionId = event.target.value;
-    console.log('conversionId',conversionId);
-    
-    const selectedConversion =this.ConversionName.find(d=>(d.id.toString()===conversionId));
+    console.log('conversionId', conversionId);
+
+    const selectedConversion = this.ConversionName.find(d => (d.id.toString() === conversionId));
     // const cost = selectedConversion ? this.addedConversion[i].cost:''
-    this.addedConversion[i] = {...selectedConversion}
+    this.addedConversion[i] = { ...selectedConversion }
     this.calculateTotalConversioncost();
     this.calcluateTotalCost();
     // console.log(event.target.value);
@@ -399,7 +400,7 @@ export class ProductTableComponent implements OnInit {
     // this.onConversionChange.emit(this.conversionName);
   }
   EnterCostChangeHandler(event: any, i: number) {
-  
+
     // this.enterCost = event.target.value;
     this.addedConversion[i].cost = event.target.value;
     this.calculateTotalConversioncost();
@@ -409,15 +410,15 @@ export class ProductTableComponent implements OnInit {
     // this.onCostChange.emit(this.enterCost);
   }
 
-  getConversionCost(field){
-    console.log('field',field);
-    
+  getConversionCost(field) {
+    console.log('field', field);
+
     return field.cost;
   }
-  
 
   saveProcess() {
     console.log('this.selectedProducts0000000', this.xattributesGroupAttributes);
+    this.xselectedProduct = null;
     if (!this.xattributesGroupAttributes || this.xattributesGroupAttributes.length === 0 || !this.processName || !this.productOfProcess) {
       alert('Fill Required Field');
       return;
@@ -438,7 +439,7 @@ export class ProductTableComponent implements OnInit {
           productOfProcess: this.productOfProcess,
           selectedProducts: this.processSchema.products,
           selectedConversion: this.addedConversion,
-          totalAverageDensity:this.totalAverageDensity
+          totalAverageDensity: this.totalAverageDensity
 
         }
         this.createdProcessViewArray.push(view);
@@ -462,10 +463,10 @@ export class ProductTableComponent implements OnInit {
         // this.enterCost = '';
         // this.findSelected(this.previousCreatedProcess.description);
         this.afterSave.emit();
-        this.processSchema.products=[];
+        this.processSchema.products = [];
         this.processSchema.products.push(response.data);
-        this.addedConversion=[];
-        this.totalAverageDensity='';
+        this.addedConversion = [];
+        this.totalAverageDensity = '';
         // this.selectedProducts = [];
         // this.selectedConversion = [];
         // this.xselectedProduct = { id: response.data.id, description: '' };
@@ -493,7 +494,7 @@ export class ProductTableComponent implements OnInit {
       productAttributeValues: this.xattributesGroupAttributes,
     };
   }
-  getProcessProducts(){
+  getProcessProducts() {
     let processsArr = [];
     for (let index = 0; index < this.processSchema.products.length; index++) {
       const element = this.processSchema.products[index];
@@ -598,8 +599,30 @@ export class ProductTableComponent implements OnInit {
       productAttributeValues: this.xattributesGroupAttributes,
     };
   }
-  
 
+  onProcessSelectedFromParent(value) {
+    console.log('vaqlue', value);
+    this.xprocessNumber = value.id;
+    this.processName = value.description;
+    this.processSchema.products = value.processProducts.map((d, index) => ({
+      id: d.id,
+      description: 'description' + index,
+      productAttributeValues: d.processProductAttributeValues
+    }));
+    this.addedConversion = [];
+    for (let index = 0; index < value.processConversionTypes.length; index++) {
+      const element = value.processConversionTypes[index];
+      if (element.attribute.description === 'Cost') {
+        const obj = { id: element.id, cost: element.attribute.attributeValue };
+        this.addedConversion.push(obj);
+      }
+    }
+
+    this.calculateTotalAverageDensity();
+    this.calculateTotalCostAddOn();
+    this.calcluateTotalCost();
+
+  }
 
 
 
@@ -680,7 +703,7 @@ export class ProductTableComponent implements OnInit {
 
 
 
-  
+
 
   getPriceAttribute(value) {
     return {
@@ -772,13 +795,13 @@ export class ProductTableComponent implements OnInit {
     };
   }
 
- 
 
- 
 
-  
 
-  
+
+
+
+
 
   updateSchemaProduct() {
     return this.createdProcessResponseArray.map(d => (
@@ -822,9 +845,9 @@ export class ProductTableComponent implements OnInit {
     }
   }
 
-  
 
-  
+
+
 
   // ==========================  Event Handler ===================
 
@@ -832,7 +855,7 @@ export class ProductTableComponent implements OnInit {
 
 
 
-  
+
 
   // ======================= Product Get API ======================================
 
@@ -905,7 +928,7 @@ export class ProductTableComponent implements OnInit {
 
   // ========================== Conversion Cost API ===================
 
-  
+
 
   // ============================= Process Post Api ========================
 

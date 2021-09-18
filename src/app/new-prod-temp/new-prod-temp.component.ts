@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import axios from 'axios';
+import { ProductTableComponent } from '../product-table/product-table.component';
 
 @Component({
   selector: 'app-new-prod-temp',
@@ -48,7 +49,8 @@ export class NewProdTempComponent implements OnInit {
   getProcesses;
   xproductName;
   selectProcesses;
-
+  selectedProcess;
+  @ViewChild(ProductTableComponent) child:ProductTableComponent;
 
 
   
@@ -145,6 +147,11 @@ export class NewProdTempComponent implements OnInit {
   
   selectProcessChangeHandler(event: any) {
     this.selectProcesses = event.target.value;
+    console.log('event.target.value',event.target.value);
+
+    this.selectedProcess = this.getProcesses.find(d=>(d.id.toString()===event.target.value));
+    this.child.onProcessSelectedFromParent(this.selectedProcess);
+    
   }
 
 

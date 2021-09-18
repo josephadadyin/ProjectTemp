@@ -62,7 +62,7 @@
       <div class="col-md-3"> Process
         <select name="" id="" class="form-control mb-3 font-weight-light" (change)="selectProcessChangeHandler($event)">
           <option value="-1">Total Process</option>
-          <option [ngValue]="data.id" *ngFor="let data of getProcesses">{{data.description}}</option>
+          <option value="{{data.id}}" *ngFor="let data of getProcesses">{{data.description}}</option>
         </select>
       </div>
       <div class="col-md-3"> Product Weight Calcuator
@@ -79,6 +79,7 @@
       (onConversionChange)="ononConversionChangeHandler($event)" 
       (onCostChange)="onCostChangeHandler($event)"
       [xattributesGroupAttributes]="attributesGroupAttributes"
+      [xselectedProcess]="selectedProcess"
       (afterSave)="onafterSave($event)">
     </app-product-table>
     <!-- <div class="ml-auto text-right pb-4">
