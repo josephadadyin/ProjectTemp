@@ -172,6 +172,7 @@ export class NewProdTempComponent implements OnInit {
   processNumber;
   conversionNo;
   cost;
+  productCode;
   selectedAttribute = { id: -1, Name: 'Select One' };
   selectedAddAttribute = { id: -1, Name: 'Select One' };
   constructor() { }
@@ -185,7 +186,9 @@ export class NewProdTempComponent implements OnInit {
 
   
 
-  
+  oProductCodeChangeHandler(event: any) {
+    this.productCode = event.target.value;
+  }
 
   selectProductTypeChangeHandler(event: any) {
     this.selectedProductType = event.target.value;
