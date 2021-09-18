@@ -169,9 +169,9 @@
         </tr>
       </ng-container>
       <tr class="row-color text-left">
-        <td colspan="5" class="h6">Total</td>
-        <td></td>
-        <td colspan="2"></td>
+        <td colspan="4" class="h6" style="padding-left: 60px;">Total</td>
+        <td class="row-color">{{createdProcess.totalAverageDensity}}</td>
+        <td class="row-color">{{createdProcess.totalCostAddOn}}</td>
       </tr>
     </tbody>
   </table>
@@ -203,6 +203,10 @@
         <td scope="col"><i class="fa fa-trash-o text-white pl-5" aria-hidden="true"></i></td>
       </tr>
     </tbody>
+    <tr class="row-color text-left">
+      <td class="h6">Total</td>
+      <td class="">{{createdProcess.totalConversionCost}}</td>
+    </tr>
   </table>
 </div>
 

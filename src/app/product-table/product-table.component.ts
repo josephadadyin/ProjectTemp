@@ -506,7 +506,8 @@ export class ProductTableComponent implements OnInit {
           selectedProducts: this.processSchema.products,
           selectedConversion: this.addedConversion,
           totalAverageDensity: this.totalAverageDensity,
-          totalCost:this.totalCost
+          totalCost:this.totalCost,
+          totalCostAddOn:this.totalCostAddOn
 
         }
         this.createdProcessViewArray.push(view);
