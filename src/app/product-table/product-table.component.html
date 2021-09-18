@@ -122,7 +122,7 @@
     <label class="h5 pl-5">Name: </label>
     <input type="text " class="form-control-sm ml-1" placeholder="Name"
       [(ngModel)]="createdProcess.processName">
-    <span> <label class="h5 pl-5 pr-1">Total: </label> <span class="h6"> 500$</span></span>
+    <span> <label class="h5 pl-5 pr-1">Total: </label> <span class="h6"> {{createdProcess.totalCost}}</span></span>
     <label class="h5  pl-5">Product of this process: </label>
     <input type="text" class="form-control-sm ml-1" [(ngModel)]="createdProcess.productOfProcess"
       placeholder="Final Product">
