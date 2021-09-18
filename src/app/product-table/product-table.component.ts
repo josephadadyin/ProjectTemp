@@ -254,6 +254,7 @@ export class ProductTableComponent implements OnInit {
 
   onProductPercentUsedChangeHandler(event: any, i: number) {
     const productPercetUsed = event.target.value;
+    if(productPercetUsed < 0 || productPercetUsed >= 100) return;
     const selectedProduct = this.processSchema.products[i];
 
     if (this.isProductAttribute(selectedProduct, 'PercentUsed')) {
@@ -289,6 +290,7 @@ export class ProductTableComponent implements OnInit {
 
   onProductWasteChangeHandler(event: any, i: any) {
     const productWaste = event.target.value;
+    if(productWaste < 0 || productWaste >= 100) return;
 
     const selectedProduct = this.processSchema.products[i];
 
