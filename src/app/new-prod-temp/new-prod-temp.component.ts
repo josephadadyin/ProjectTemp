@@ -113,7 +113,6 @@ export class NewProdTempComponent implements OnInit {
           description: d.description,
           id: d.id,
         }));
-        // console.log(this.addNewProduct);
       })
       .catch((error) => {
         console.log(error);
@@ -137,12 +136,11 @@ export class NewProdTempComponent implements OnInit {
   selectAddNewAttributeHandler(event: any) {
     this.AddAtributex = event.target.value;
     if (event.target.value === '-1') return;
-    // console.log(this.AddAtributex);
     const selectedAtt = this.addNewAttribute.results.find(d => (d.id.toString() === event.target.value));
-    this.processSchema.selectedAttributes.attributesGroupAttributes.push({ "attribute": selectedAtt });
-    
-    // this.selectedAttributes.attributesGroupAttributes.push({ "attribute": selectedAtt });
-    // this.AddAtributevalue = true;
+    if(selectedAtt){
+      delete selectedAtt['id'];
+      this.processSchema.selectedAttributes.attributesGroupAttributes.push({ "attribute": selectedAtt });
+    }
   }
   
   selectProcessChangeHandler(event: any) {

@@ -1,12 +1,8 @@
-<!-- <div class="container mt-5"> -->
 <div class="row">
-  <!-- <button value="click" class="btn add-product-btn ml-auto mr-4" (click)="saveProcess(); tables.push(tables.length)"
-    style="margin-bottom: 20px;"> -->
   <button value="click" class="btn add-product-btn ml-auto mr-4" (click)="saveProcess()" style="margin-bottom: 20px;">
     + Add New Process
   </button>
 </div>
-<!-- *ngFor="let table of tables" -->
 <div class="col-md-12 col-sm-12 shadow process-table-div pb-1 pt-2 mb-5">
   <div class="pt-2 row">
     <span> <label class="h5 pl-4 pr-1 ">Process Number: </label>
@@ -37,7 +33,6 @@
     </thead>
     <tbody>
       <ng-container>
-        <!-- *ngFor="let data of AddProductData; let j = index" -->
         <tr *ngFor="let product of processSchema.products; let i = index" class="text-center">
           <td>
             <select name="" id="" class="form-control-sm" 
@@ -140,7 +135,7 @@
       <tr class="row-color">
         <td scope="col">Product Name</td>
         <td scope="col">USD/MT price</td>
-        <td scope="col">%USED(WEIGHT)</td>
+        <td scope="col">%USED</td>
         <td scope="col">DENSITY</td>
         <td scope="col">AVG DENSITY</td>
         <td scope="col">COST ADDON</td>

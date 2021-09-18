@@ -11,7 +11,7 @@
           <div class="col-md-3"> Product Type
             <select class="form-control mb-3 font-weight-light" *ngIf="productdata && productdata.results"
               (change)="selectProductTypeChangeHandler($event)">
-              <option value="product">Select Product Tyoe</option>
+              <option value="product">Select Product Type</option>
               <option value="{{item.id}}" *ngFor="let item of productdata.results">
                 {{item.description}}
               </option>

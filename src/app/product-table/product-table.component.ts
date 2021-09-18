@@ -67,7 +67,7 @@ export class ProductTableComponent implements OnInit {
   productOfProcess;
   productList;
   selectedProductFromDropDown;
-  totalAverageDensity;
+  totalAverageDensity= 0.0;
   totalCostAddOn = 0.0;
   totalConversionCost = 0.0;
   totalCost = 0.0;
@@ -171,17 +171,17 @@ export class ProductTableComponent implements OnInit {
       const product = this.processSchema.products[index];
       let avgDenst = this.getAttributeValueByName(product, 'AverageDensity');
       avgDenst = avgDenst ?? 0;
-      this.totalAverageDensity += avgDenst;
+      this.totalAverageDensity += parseFloat(avgDenst);
     }
   }
 
   calculateTotalCostAddOn() {
-    this.totalCostAddOn = 0;
+    this.totalCostAddOn = 0.0;
     for (let index = 0; index < this.processSchema.products.length; index++) {
       const product = this.processSchema.products[index];
       let costAddon = this.getAttributeValueByName(product, 'CostAddOn');
-      costAddon = costAddon ?? 0;
-      this.totalCostAddOn += costAddon;
+      costAddon = costAddon ?? 0.0;
+      this.totalCostAddOn += parseFloat(costAddon);
     }
   }
 
@@ -466,7 +466,10 @@ export class ProductTableComponent implements OnInit {
         this.processSchema.products = [];
         this.processSchema.products.push(response.data);
         this.addedConversion = [];
-        this.totalAverageDensity = '';
+        this.totalAverageDensity = 0.0;
+        this.totalCostAddOn = 0.0;
+        this.totalCost = 0.0;
+        this.totalConversionCost = 0.0;
         // this.selectedProducts = [];
         // this.selectedConversion = [];
         // this.xselectedProduct = { id: response.data.id, description: '' };
@@ -606,9 +609,11 @@ export class ProductTableComponent implements OnInit {
     this.processName = value.description;
     this.processSchema.products = value.processProducts.map((d, index) => ({
       id: d.id,
-      description: 'description' + index,
+      description: 'demo description' + index,
       productAttributeValues: d.processProductAttributeValues
     }));
+    // this.processSchema.products = [{id:2,productAttributeValues:[]}] keep for testing
+    
     this.addedConversion = [];
     for (let index = 0; index < value.processConversionTypes.length; index++) {
       const element = value.processConversionTypes[index];
@@ -809,58 +814,15 @@ export class ProductTableComponent implements OnInit {
     ))
   }
 
-  // makeAddProcessPayload() {
-  //   return {
-  //     description: this.processName,
-  //     processProducts: [
-  //       {
-  //         product: this.xprocessNumber,
-  //         processProductAttributeValues: this.xattributesGroupAttributes,
-  //       },
-  //     ],
-  //     processConversionTypes: [
-  //       {
-  //         conversionType: this.conversionName,
-  //         processConversionAttributeValues: [
-  //           {
-  //             attribute: {
-  //               id: 17,
-  //               description: 'Cost',
-  //             },
-  //             attributeValue: this.enterCost,
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //     processCalculator: null,
-  //   };
+
+  // findSelected(description) {
+  //   for (let index = 0; index < this.productList.length; index++) {
+  //     const element = this.productList[index];
+  //     if (element.description === description) {
+  //       this.selectedProducts[index] = element;
+  //     }
+  //   }
   // }
-
-  findSelected(description) {
-    for (let index = 0; index < this.productList.length; index++) {
-      const element = this.productList[index];
-      if (element.description === description) {
-        this.selectedProducts[index] = element;
-      }
-    }
-  }
-
-
-
-
-
-  // ==========================  Event Handler ===================
-
-
-
-
-
-
-
-  // ======================= Product Get API ======================================
-
-
-
 
 
   getxWeight(selectedProduct) {
@@ -915,16 +877,16 @@ export class ProductTableComponent implements OnInit {
   }
 
 
-  addData() {
-    if (this.selectedProducts && this.productList) {
-      this.selectedProducts.push(this.productList[0]);
-      console.log('this.selectedProductsthis.selectedProducts----', this.productList[0]);
-    }
+  // addData() {
+  //   if (this.selectedProducts && this.productList) {
+  //     this.selectedProducts.push(this.productList[0]);
+  //     console.log('this.selectedProductsthis.selectedProducts----', this.productList[0]);
+  //   }
 
     // const selectedProduct = this.xproductName[0];
     // this.getxPrice(selectedProduct.description);
     // this.getxDensity(selectedProduct.description);
-  }
+  // }
 
   // ========================== Conversion Cost API ===================
 
@@ -932,19 +894,19 @@ export class ProductTableComponent implements OnInit {
 
   // ============================= Process Post Api ========================
 
-  ProcessPost(payload) {
-    console.log('ProcessPostAPi Is called');
-    axios
-      .post(
-        'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/processes/',
-        payload
-      )
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    console.log('Process post API is successfully Called:');
-  }
+  // ProcessPost(payload) {
+  //   console.log('ProcessPostAPi Is called');
+  //   axios
+  //     .post(
+  //       'https://dadyin-product-server-7b6gj.ondigitalocean.app/api/processes/',
+  //       payload
+  //     )
+  //     .then(function (response) {
+  //       console.log(response);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  //   console.log('Process post API is successfully Called:');
+  // }
 }
