@@ -35,11 +35,12 @@
           <div class="col-md-3">
             + Add new Attribute
             <select class="form-control mb-3 font-weight-light  " 
-             (change)="selectAddNewAttributeHandler($event)" 
-             [(ngModel)]="selectedAddAttribute.id"
+             (change)="selectAddNewAttributeHandler($event)"
              *ngIf="addNewAttribute">
               <option value="-1">Add Attribute</option>
-              <option value="{{item.id}}" *ngFor="let item of addNewAttribute.results">
+              <option value="{{item.id}}" 
+              [selected]="selectedAddAttribute.id === item.id"
+              *ngFor="let item of addNewAttribute.results">
                 {{item.description}}
               </option>
             </select>

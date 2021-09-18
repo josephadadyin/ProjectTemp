@@ -136,8 +136,9 @@ export class NewProdTempComponent implements OnInit {
   selectAddNewAttributeHandler(event: any) {
     this.AddAtributex = event.target.value;
     if (event.target.value === '-1') return;
-    const selectedAtt = this.addNewAttribute.results.find(d => (d.id.toString() === event.target.value));
+    const selectedAtt = this.addNewAttribute.results.find(d => (d.id && d.id.toString() === event.target.value));
     if(selectedAtt){
+      this.selectedAddAttribute = selectedAtt;
       delete selectedAtt['id'];
       this.processSchema.selectedAttributes.attributesGroupAttributes.push({ "attribute": selectedAtt });
     }
