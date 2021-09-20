@@ -1,12 +1,8 @@
-<!-- <div class="container mt-5"> -->
 <div class="row">
-  <!-- <button value="click" class="btn add-product-btn ml-auto mr-4" (click)="saveProcess(); tables.push(tables.length)"
-    style="margin-bottom: 20px;"> -->
   <button value="click" class="btn add-product-btn ml-auto mr-4" (click)="saveProcess()" style="margin-bottom: 20px;">
     + Add New Process
   </button>
 </div>
-<!-- *ngFor="let table of tables" -->
 <div class="col-md-12 col-sm-12 shadow process-table-div pb-1 pt-2 mb-5">
   <div class="pt-2 row">
     <span> <label class="h5 pl-4 pr-1 ">Process Number: </label>
@@ -14,7 +10,7 @@
     <label class="h5 pl-5">Name: </label>
     <input type="text " class="form-control-sm ml-1" placeholder="Name" [(ngModel)]="processName"
       (change)="onProcessNameChangeHandler($event)">
-    <span> <label class="h5 pl-5 pr-1">Total: </label> <span class="h6"> 500$</span></span>
+    <span> <label class="h5 pl-5 pr-1">Total: </label> <span class="h6">{{totalCost}}</span></span>
     <label class="h5  pl-5">Product of this process: </label>
     <input type="text" class="form-control-sm ml-1" [(ngModel)]="productOfProcess" placeholder="Final Product"
       (change)="onProductOfProcessChangeHandler($event)">
@@ -37,10 +33,8 @@
     </thead>
     <tbody>
       <ng-container>
-        <!-- *ngFor="let data of AddProductData; let j = index" -->
         <tr *ngFor="let product of processSchema.products; let i = index" class="text-center">
           <td>
-            {{i}}
             <select name="" id="" class="form-control-sm" 
             (change)="onSelectProductNameChangeHandler($event,i)">
               <option value="{{data.id}}" [selected]="product.id === data.id" *ngFor="let data of productList">
@@ -51,7 +45,7 @@
           <td>{{getAttributeValueByName(product,'Cost')}}</td>
           <td><input type="number" placeholder="PercentUsed" (change)="onProductPercentUsedChangeHandler($event,i)"
               value="{{getAttributeValueByName(product,'PercentUsed')}}"></td>
-          <td>{{getAttributeValueByName(product,'PercentUsed')}}</td>
+          <td>{{getAttributeValueByName(product,'Density')}}</td>
           <td>{{getAttributeValueByName(product,'AverageDensity')}}</td>
           <td>{{getAttributeValueByName(product,'CostAddOn')}}</td>
           <td> <input type="number" placeholder="Waste" (change)="onProductWasteChangeHandler($event,i)"
@@ -61,10 +55,10 @@
           </td>
         </tr>
       </ng-container>
-      <tr class="row-color text-left">
-        <td colspan="5" class="h6">Total</td>
-        <td></td>
-        <td colspan="2"></td>
+      <tr>
+        <td colspan="4" class="h6" style="padding-left: 60px;">Total</td>
+        <td class="row-color">{{totalAverageDensity}}</td>
+        <td class="row-color">{{totalCostAddOn}}</td>
       </tr>
     </tbody>
   </table>
@@ -87,21 +81,138 @@
           </select>
         </td>
         <td scope="col" class="tdcost"><input type="number" placeholder="Enter Cost"
-            (change)="EnterCostChangeHandler($event,i)" [(ngModel)]="field.cost">
+            (change)="EnterCostChangeHandler($event,i)" value={{getConversionCost(field)}}>
         </td>
         <td scope="col"><i class="fa fa-trash-o text-white pl-5" aria-hidden="true"></i></td>
       </tr>
     </tbody>
+    <tr class="row-color text-left">
+      <td class="h6">Total</td>
+      <td class="">{{totalConversionCost}}</td>
+    </tr>
   </table>
-  <!-- <div>
-    <button class="btn btn-default ml-5" (click)="saveProcess()">Save</button>
-  </div> -->
 </div>
-<!-- </div> -->
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-md-12 col-sm-12 shadow process-table-div pb-1 pt-2 mb-5"
+  *ngFor="let createdProcess of reverseCreatedProcessViewArray">
+  <div class="pt-2 row">
+    <span> <label class="h5 pl-4 pr-1 ">Process Number: </label>
+      <span class="h6 pr-2"> {{createdProcess.processNo}}</span></span>
+    <label class="h5 pl-5">Name: </label>
+    <input type="text " class="form-control-sm ml-1" placeholder="Name"
+      [(ngModel)]="createdProcess.processName">
+    <span> <label class="h5 pl-5 pr-1">Total: </label> <span class="h6"> {{createdProcess.totalCost}}</span></span>
+    <label class="h5  pl-5">Product of this process: </label>
+    <input type="text" class="form-control-sm ml-1" [(ngModel)]="createdProcess.productOfProcess"
+      placeholder="Final Product">
+    <!-- <button class=" btn add-product-btn  mb-3 ml-auto   mr-3" type="button" (click)="addFieldValue();  addData()">+
+        Add New Product</button> -->
+  </div>
+  <!-- ======================== Table 1 =========================== -->
+  <table class="table table1 table-bordered pb-0 mb-0">
+    <thead>
+      <tr class="row-color">
+        <td scope="col">Product Name</td>
+        <td scope="col">USD/MT price</td>
+        <td scope="col">%USED</td>
+        <td scope="col">DENSITY</td>
+        <td scope="col">AVG DENSITY</td>
+        <td scope="col">COST ADDON</td>
+        <td scope="col">WASTE %</td>
+        <td scope="col">Status</td>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container>
+        <!-- *ngFor="let data of AddProductData; let j = index" -->
+        <tr *ngFor="let product of createdProcess.selectedProducts" class="text-center">
+         
+          <td *ngIf="product && product.description">
+            <select name="" id="" class="form-control-sm">
+              <option value="{{data.id}}" *ngFor="let data of productList"
+              [selected]="product.id === data.id">{{data.description}}</option>
+            </select>
+          </td>
+
+          <td *ngIf="product && product.description">{{getAttributeValueByName(product,'Cost')}}</td>
+          <td *ngIf="product && product.description"><input type="number" placeholder="Weight" 
+            value="{{getAttributeValueByName(product,'PercentUsed')}}"></td>
+          <td *ngIf="product && product.description">{{getAttributeValueByName(product,'Density')}}</td>
+          <td *ngIf="product && product.description">{{getAttributeValueByName(product,'AverageDensity')}}</td>
+          <td *ngIf="product && product.description">{{getAttributeValueByName(product,'CostAddOn')}}</td>
+          <td *ngIf="product && product.description"> <input type="number" placeholder="Waste" 
+            value="{{getAttributeValueByName(product,'PercentWaste')}}"> </td>
+          <td *ngIf="product && product.description"><i class="fa fa-pencil pl-5" aria-hidden="true"></i>
+            <i class="fa fa-trash-o pl-5" aria-hidden="true"></i>
+          </td>
+        </tr>
+      </ng-container>
+      <tr class="row-color text-left">
+        <td colspan="4" class="h6" style="padding-left: 60px;">Total</td>
+        <td class="row-color">{{createdProcess.totalAverageDensity}}</td>
+        <td class="row-color">{{createdProcess.totalCostAddOn}}</td>
+      </tr>
+    </tbody>
+  </table>
+  
+
+  <!-- ===================== Table 2 ========================= -->
+  <table class="table table2  pb-5 mb-4">
+    <thead>
+      <tr class="pb-0 row-color1">
+        <label for="" class="p-2 pr-5 h6">Conversion Cost Calculation</label>
+        <button class="btn btn-default ml-5" (click)="addConversionCost()">+ Add New</button>
+        <td scope="col"></td>
+        <td scope="col"></td>
+      </tr>
+    </thead>
+
+
+    <tbody *ngFor="let field of createdProcess.selectedConversion; let i = index">
+      <tr class="row-color1">
+        <td scope="col">
+          <select name="" id="" class="form-control-sm">
+            <option value="{{name.id}}" *ngFor="let name of ConversionName;"
+            [selected]="createdProcess.selectedConversion[i].id === name.id">{{name.description}}</option>
+          </select>
+        </td>
+        <td scope="col" class="tdcost">
+          <input type="number" placeholder="Enter Cost" value={{getConversionCost(field)}}>
+        </td>
+        <td scope="col"><i class="fa fa-trash-o text-white pl-5" aria-hidden="true"></i></td>
+      </tr>
+    </tbody>
+    <tr class="row-color text-left">
+      <td class="h6">Total</td>
+      <td class="">{{createdProcess.totalConversionCost}}</td>
+    </tr>
+  </table>
+</div>
+
+<div>
+  <button class="btn btn-default ml-5" (click)="saveAllProcess()">Save</button>
+</div>
 
 
 

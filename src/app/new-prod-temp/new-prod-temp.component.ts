@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import axios from 'axios';
+import { ProductTableComponent } from '../product-table/product-table.component';
 
 @Component({
   selector: 'app-new-prod-temp',
@@ -48,7 +49,8 @@ export class NewProdTempComponent implements OnInit {
   getProcesses;
   xproductName;
   selectProcesses;
-
+  selectedProcess;
+  @ViewChild(ProductTableComponent) child:ProductTableComponent;
 
 
   
@@ -111,7 +113,6 @@ export class NewProdTempComponent implements OnInit {
           description: d.description,
           id: d.id,
         }));
-        // console.log(this.addNewProduct);
       })
       .catch((error) => {
         console.log(error);
@@ -129,22 +130,27 @@ export class NewProdTempComponent implements OnInit {
     );
     this.processSchema.selectedAttributes = attrbs??{id:"",description:"",attributesGroupAttributes:[]};
    
-    // this.attributesGroupAttributes = attrbs.attributesGroupAttributes;
+    this.attributesGroupAttributes = attrbs.attributesGroupAttributes;
   }
 
   selectAddNewAttributeHandler(event: any) {
     this.AddAtributex = event.target.value;
     if (event.target.value === '-1') return;
-    // console.log(this.AddAtributex);
-    const selectedAtt = this.addNewAttribute.results.find(d => (d.id.toString() === event.target.value));
-    this.processSchema.selectedAttributes.attributesGroupAttributes.push({ "attribute": selectedAtt });
-    
-    // this.selectedAttributes.attributesGroupAttributes.push({ "attribute": selectedAtt });
-    // this.AddAtributevalue = true;
+    const selectedAtt = this.addNewAttribute.results.find(d => (d.id && d.id.toString() === event.target.value));
+    if(selectedAtt){
+      this.selectedAddAttribute = selectedAtt;
+      delete selectedAtt['id'];
+      this.processSchema.selectedAttributes.attributesGroupAttributes.push({ "attribute": selectedAtt });
+    }
   }
   
   selectProcessChangeHandler(event: any) {
     this.selectProcesses = event.target.value;
+    console.log('event.target.value',event.target.value);
+
+    this.selectedProcess = this.getProcesses.find(d=>(d.id.toString()===event.target.value));
+    this.child.onProcessSelectedFromParent(this.selectedProcess);
+    
   }
 
 
@@ -167,6 +173,7 @@ export class NewProdTempComponent implements OnInit {
   processNumber;
   conversionNo;
   cost;
+  productCode;
   selectedAttribute = { id: -1, Name: 'Select One' };
   selectedAddAttribute = { id: -1, Name: 'Select One' };
   constructor() { }
@@ -180,7 +187,9 @@ export class NewProdTempComponent implements OnInit {
 
   
 
-  
+  oProductCodeChangeHandler(event: any) {
+    this.productCode = event.target.value;
+  }
 
   selectProductTypeChangeHandler(event: any) {
     this.selectedProductType = event.target.value;
@@ -203,7 +212,7 @@ export class NewProdTempComponent implements OnInit {
     console.log('this.processNumber', this.processNumber);
   }
   onafterSave(no: any) {
-    this.attributesGroupAttributes = [];
+    this.processSchema.selectedAttributes.attributesGroupAttributes = [];
     this.selectedAttribute = { id: -1, Name: 'Select One' };
     this.selectedAddAttribute = { id: -1, Name: 'Select One' };
   }

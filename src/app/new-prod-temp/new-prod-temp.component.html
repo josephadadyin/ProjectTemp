@@ -11,14 +11,14 @@
           <div class="col-md-3"> Product Type
             <select class="form-control mb-3 font-weight-light" *ngIf="productdata && productdata.results"
               (change)="selectProductTypeChangeHandler($event)">
-              <option value="product">Select Product Tyoe</option>
+              <option value="-1">Select Product Type</option>
               <option value="{{item.id}}" *ngFor="let item of productdata.results">
                 {{item.description}}
               </option>
             </select>
           </div>
-          <div class="col-md-3"> Clone From Templete
-            <input type="text" class="form-control mb-3" placeholder="Product Code">
+          <div class="col-md-3"> Template Description
+            <input type="text" class="form-control mb-3" placeholder="Product Code" (change)="oProductCodeChangeHandler($event)">
           </div>
         </div>
         <div class="row pl-4 pr-4 ">
@@ -36,10 +36,11 @@
             + Add new Attribute
             <select class="form-control mb-3 font-weight-light  "
              (change)="selectAddNewAttributeHandler($event)"
-             [(ngModel)]="selectedAddAttribute.id"
              *ngIf="addNewAttribute">
               <option value="-1">Add Attribute</option>
-              <option value="{{item.id}}" *ngFor="let item of addNewAttribute.results">
+              <option value="{{item.id}}"
+              [selected]="selectedAddAttribute.id === item.id"
+              *ngFor="let item of addNewAttribute.results">
                 {{item.description}}
               </option>
             </select>
@@ -62,7 +63,7 @@
       <div class="col-md-3"> Process
         <select name="" id="" class="form-control mb-3 font-weight-light" (change)="selectProcessChangeHandler($event)">
           <option value="-1">Total Process</option>
-          <option [ngValue]="data.id" *ngFor="let data of getProcesses">{{data.description}}</option>
+          <option value="{{data.id}}" *ngFor="let data of getProcesses">{{data.description}}</option>
         </select>
       </div>
       <div class="col-md-3"> Product Weight Calcuator
@@ -79,10 +80,11 @@
       (onConversionChange)="ononConversionChangeHandler($event)"
       (onCostChange)="onCostChangeHandler($event)"
       [xattributesGroupAttributes]="attributesGroupAttributes"
+      [producttypevalue]="productCode"
+      [productTemplateDescription]="selectedProductType"
+      [xselectedProcess]="selectedProcess"
       (afterSave)="onafterSave($event)">
     </app-product-table>
-    <!-- <div class="ml-auto text-right pb-4">
-      <button class="btn btn-color btn-lg pe-2 px-4 text-white " (click)="onSave($event)">Save</button>
-    </div> -->
+
   </div>
 </div>
